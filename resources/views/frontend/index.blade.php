@@ -1,4 +1,4 @@
-@extends('main')
+@extends('frontend.main')
 @section('title',$title)
 @section('style')
 @stop

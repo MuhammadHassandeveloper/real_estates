@@ -9,6 +9,7 @@ class FrontEndController extends Controller
     public function index() {
         $data = [];
         $data['title'] = 'Home';
-        return view('index',$data);
+        return view('frontend.index',$data);
     }
+
 }

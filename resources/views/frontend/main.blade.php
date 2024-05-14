@@ -20,11 +20,11 @@
 <div id="main-wrapper">
 
 <!-- header page -->
-@include('components.header')
+@include('frontend.components.header')
 <!-- Start right Content here -->
 @yield('content')
 <!-- Page-footer -->
-@include('components.footer')
+@include('frontend.components.footer')
 <!-- end main content-->
 
 </div>
