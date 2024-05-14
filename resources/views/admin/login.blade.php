@@ -34,7 +34,7 @@
                                 <div class="card-body p-sm-5 m-lg-4">
                                     <div class="text-center">
                                         <h5 class="fs-3xl">Welcome Back</h5>
-                                        <p class="text-muted">Sign in to continue to {{p>
+                                        <p class="text-muted">Sign in to continue to {{ \App\Helpers\AppHelper::site_name() }}.</p>
                                     </div>
                                     <div class="p-2">
                                         <form action="{{ url('post-login') }}">
@@ -54,12 +54,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="" id="auth-remember-check">
-                                                <label class="form-check-label" for="auth-remember-check">Remember me</label>
-                                            </div>
-
-                                            <div class="mt-4">
+                                            <div class="mt-2">
                                                 <button class="btn btn-primary w-100" type="submit">Sign In</button>
                                             </div>
                                         </form>
@@ -79,21 +74,13 @@
     <!--end container-->
 </section>
 
-<!-- JAVASCRIPT -->
-<script src="assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="assets/libs/simplebar/simplebar.min.js"></script>
-<script src="assets/js/plugins.js"></script>
-
-
-
-<script src="assets/js/pages/password-addon.init.js"></script>
-
-<!--Swiper slider js-->
-<script src="assets/libs/swiper/swiper-bundle.min.js"></script>
-
-<!-- swiper.init js -->
-<script src="assets/js/pages/swiper.init.js"></script>
-
-</body>
+<script src="{{ asset('admin/assets/libs/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ asset('admin/assets/libs/simplebar/simplebar.min.js') }}"></script>
+<script src="{{ asset('admin/assets/js/plugins.js') }}"></script>
+<script src="{{ asset('admin/assets/libs/list.js/list.min.js') }}"></script>
+<script src="{{ asset('admin/assets/libs/echarts/echarts.min.js') }}"></script>
+<script src="{{ asset('admin/assets/libs/apexcharts/apexcharts.min.js') }}"></script>
+<script src="{{ asset('admin/assets/js/pages/dashboard-real-estate.init.js') }}"></script>
+<script src="{{ asset('admin/assets/js/app.js') }}"></script></body>
 
 </html>

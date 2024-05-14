@@ -21,6 +21,10 @@ Route::get('/post-login',[AuthController::class,'postLogin'])->name('post.login'
 Route::get('/admin/login',[AuthController::class,'getLoginPage'])->name('admin.get_login');
 
 
-#admin routes
-Route::get('/admin/dashboard',[AdminDashboardController::class,'index'])->name('admin.index');
-
+// Define the routes within prefix
+Route::group(['middleware' => 'admin','prefix' => '/'], function () {
+    // admin dashboard routes
+    Route::group(array('prefix' => 'admin'), function () {
+        Route::get('/dashboard',[AdminDashboardController::class,'index'])->name('admin.index');
+    });
+});

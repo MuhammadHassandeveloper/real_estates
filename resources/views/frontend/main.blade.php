@@ -44,8 +44,30 @@
 <script src="{{ asset('assets/js/custom.js') }}"></script>
 <script src="{{ asset('assets/js/cl-switch.js') }}"></script>
 @yield('script')
-<!-- ============================================================== -->
-<!-- This page plugins -->
-<!-- ============================================================== -->
+
+
+<script>
+    var forms = document.querySelectorAll('form');
+    forms.forEach(function(form) {
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+            var submitButton = form.querySelector('button[type="submit"]');
+            var originalText = submitButton.innerText; // Store the original text
+            var $button = $(submitButton);
+            $($button).html(`
+                <span class="text-dark">processing...</span>
+                <span class="text-end text-dark spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>`
+            );
+            submitButton.disabled = true;
+            setTimeout(function() {
+                form.submit();
+            }, 1000);
+            setTimeout(function() {
+                $($button).html(originalText);
+                submitButton.disabled = false;
+            }, 3000);
+        });
+    });
+</script>
 </body>
 </html>
