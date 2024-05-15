@@ -25,19 +25,17 @@
 <div id="layout-wrapper">
 <!-- header page -->
 @include('admin.components.header')
-
 <!-- header page -->
 @include('admin.components.sidebar')
-<!-- Start right Content here -->
-@yield('content')
-<!-- Page-footer -->
-@include('admin.components.footer')
-<!-- end main content-->
-
+    <div class="main-content">
+        <!-- Start right Content here -->
+        @yield('content')
+        <!-- Page-footer -->
+        @include('admin.components.footer')
+        <!-- end main content-->
+    </div>
 </div>
 <!-- End Main wrapper -->
-
-
 <!-- JAVASCRIPT -->
 <script src="{{ asset('admin/assets/libs/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <script src="{{ asset('admin/assets/libs/simplebar/simplebar.min.js') }}"></script>

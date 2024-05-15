@@ -1,5 +1,6 @@
 @extends('frontend.main')
 @section('title',$title)
+@section('login-page','active')
 @section('style')
 @stop
 @section('content')
@@ -11,35 +12,58 @@
                 <div class="col-lg-3"></div>
                 <div class="col-lg-6 col-sm-12">
                     <div class="modal-body">
-                        <h4 class="modal-header-title">Log In</h4>
-                            <form action="{{ url('post-login') }}" class="login-form">
-                                @csrf
-                            <div class="form-group">
-                                <label>Email</label>
-                                <div class="input-with-icon">
-                                    <input type="text" name="email" class="form-control" placeholder="Email">
-                                    <i class="ti-email"></i>
+                        <div class="hero-search-wrap">
+                            <div class="hero-search mb-2">
+                                <h1>Login</h1>
+                            </div>
+                            <div class="hero-search-content">
+                                <form action="{{ url('post-login') }}" class="login-form">
+                                    @csrf
+                                    <div class="row mt-2">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="form-group">
+                                            <div class="input-with-icon">
+                                                <input type="text" name="email" class="form-control" placeholder="Email">
+                                                <i class="ti-email"></i>
+                                            </div>
+                                            @error('email')
+                                            <span class="text-danger error" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                            @enderror
+
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label>Password</label>
-                                <div class="input-with-icon">
-                                    <input type="password" name="password" class="form-control" placeholder="Password">
-                                    <i class="ti-unlock"></i>
+                                    <div class="row mt-2">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="form-group">
+                                            <div class="input-with-icon">
+                                                <input type="password" name="password" class="form-control" placeholder="Password">
+                                                <i class="ti-unlock"></i>
+                                            </div>
+                                            @error('password')
+                                            <span class="text-danger error" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                            @enderror
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="modal-divider">
-                                <span>Don't have an account ?
-                                    <a href="{{ url('signup') }}">Signup</a>
-                                </span>
-                            </div>
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-md full-width pop-login">Login</button>
-                            </div>
+                                    <div class="modal-divider">
+                                        <span>Don't have an account ?
+                                            <a href="{{ url('signup') }}">Signup</a>
+                                        </span>
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="submit" class="btn search-btn">Login</button>
+                                    </div>
 
-                        </form>
+                                </form>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
                 <div class="col-lg-3"></div>

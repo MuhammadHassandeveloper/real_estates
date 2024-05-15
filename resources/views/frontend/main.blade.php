@@ -10,6 +10,11 @@
         h4.modal-header-title {
             font-size: 2em !important;
         }
+        .text-danger {
+            display: flex;
+            margin-top: 8px;
+            font-size: 12px !important
+        }
     </style>
     @yield('style')
 </head>
@@ -60,8 +65,8 @@
             var originalText = submitButton.innerText; // Store the original text
             var $button = $(submitButton);
             $($button).html(`
-                <span class="text-dark">processing...</span>
-                <span class="text-end text-dark spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>`
+                <span class="text-light">processing...</span>
+                <span class="text-end text-light spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>`
             );
             submitButton.disabled = true;
             setTimeout(function() {
@@ -73,6 +78,11 @@
             }, 3000);
         });
     });
+
+    //error message hide
+    setTimeout(function() {
+        $('.error').hide();
+    }, 5000);
 </script>
 </body>
 </html>

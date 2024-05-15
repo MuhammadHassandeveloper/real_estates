@@ -2,8 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FrontEndController;
-use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\AuthController;
+
+use App\Http\Controllers\AdminDashboardController;
+use App\Http\Controllers\AdminPropertyController;
+
 
 // clear all
 Route::get('/all-clear', function () {
@@ -33,5 +36,17 @@ Route::group(['middleware' => 'admin','prefix' => '/'], function () {
     // admin dashboard routes
     Route::group(array('prefix' => 'admin'), function () {
         Route::get('/dashboard',[AdminDashboardController::class,'index'])->name('admin.index');
-    });
+        Route::group(['prefix' => 'property-types'], function () {
+            Route::get('/',[AdminPropertyController::class,'property_types'])->name('admin.property_types');
+        });
+
+        Route::group(['prefix' => 'property-features'], function () {
+            Route::get('/',[AdminPropertyController::class,'property_features'])->name('admin.property_features');
+        });
+
+        Route::group(['prefix' => 'properties'], function () {
+            Route::get('/',[AdminPropertyController::class,'properties'])->name('admin.properties');
+        });
+});
+
 });

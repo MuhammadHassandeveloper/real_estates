@@ -1,6 +1,12 @@
 @extends('frontend.main')
 @section('title',$title)
+@section('login-page','active')
 @section('style')
+    <style>
+        .hero-search-wrap {
+            max-width: 700px !important;
+        }
+    </style>
 @stop
 @section('content')
 
@@ -9,11 +15,13 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-2"></div>
-                <div class="col-lg-8 col-sm-12">
+                <div class="col-lg-10 col-sm-12">
                     <div class="modal-body">
-                        <h4 class="modal-header-title">Sign Up</h4>
-                        <div class="login-form">
-                            <form action="{{ url('user-store') }}" method="post">
+                        <div class="hero-search-wrap mx">
+                            <div class="hero-search-content">
+                                <h4 class="modal-header-title">Sign Up</h4>
+                                <div class="login-form hero-search-content">
+                                    <form action="{{ url('user-store') }}" method="post">
                                 @csrf
                                 <div class="row">
                                     <div class="col-lg-6 col-md-6">
@@ -129,9 +137,11 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <button type="submit" class="btn btn-md full-width pop-login">Sign Up</button>
+                                    <button type="submit" class="btn search-btn">Sign Up</button>
                                 </div>
                             </form>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

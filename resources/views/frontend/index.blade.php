@@ -1,11 +1,12 @@
 @extends('frontend.main')
 @section('title',$title)
+@section('home-page','active')
 @section('style')
 @stop
 @section('content')
 
     <!-- ============================ Hero Banner  Start================================== -->
-    <div class="image-cover hero-banner" style="background:url(assets/img/a.jpg) no-repeat;">
+    <div class="image-cover hero-banner" style="background:url('{{ asset('assets/img/a.jpg') }}') no-repeat;">
         <div class="container">
             <div class="hero-search-wrap">
                 <div class="hero-search">

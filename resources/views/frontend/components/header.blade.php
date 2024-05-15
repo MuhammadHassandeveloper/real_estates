@@ -36,13 +36,13 @@
             <div class="nav-menus-wrapper" style="transition-property: none;">
                 <ul class="nav-menu">
 
-                    <li class="active">
+                    <li class="@yield('home-page')">
                         <a href="{{ url('/') }}">Home<span class="submenu-indicator"></span></a>
                     </li>
 
 
-                    @if (!Sentinel::check()) {
-                    <li>
+                    @if (!Sentinel::check())
+                    <li class="@yield('login-page')">
                         <a href="{{ url('login') }}">
                             <i class="fas fa-user-circle mr-1"></i>Login
                         </a>
