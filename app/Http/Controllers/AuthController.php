@@ -2,12 +2,94 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
+
+    public function loginForm() {
+        if (Sentinel::check()) {
+            return redirect()->back()->with('error', 'You have been already  login.');
+        }
+        $data = array();
+        $data['title'] = 'Login';
+        return view('frontend/login', $data);
+    }
+
+    public function signupForm() {
+
+        if (Sentinel::check()) {
+            return redirect()->back()->with('error', 'You have been already  login.');
+        }
+
+        $data = array();
+        $data['title'] = 'Signup';
+        return view('frontend/signup', $data);
+    }
+
+
+
+    public function userStore(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'first_name' => 'required|string',
+            'last_name' => 'required|string',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|min:8',
+            'phone' => 'required|numeric|min:11|unique:users,phone',
+            'role_type' => 'required',
+        ]);
+
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $data = [];
+        $data['first_name'] = $request->first_name;
+        $data['last_name'] = $request->last_name;
+        $data['phone'] = $request->phone;
+        $password = Hash::make($request->input('password'));
+        $user = Sentinel::register(array(
+            'email' => $request->email,
+            'password' => $password,
+
+        ));
+
+        $activations =  DB::table('activations')->insert(
+            [
+                'user_id' => $user->id,
+                'code' => Str::random(60),
+                'completed' => 1,
+                'completed_at' => date('Y-m-d H:i:s'),
+                'created_at' =>  date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ]
+        );
+
+        $data['password'] = Hash::make($request->input('password'));
+        User::where('id', $user->id)->update($data);
+        $role = null;
+        if($request->has('role_type') && $request->input('role_type') == 'customer' ) {
+            $role = Sentinel::findRoleByName('customer');
+         }elseif($request->has('role_type') && $request->input('role_type') == 'agent' ) {
+          $role = Sentinel::findRoleByName('agent');
+        }elseif($request->has('agency') && $request->input('role_type') == 'agency' ) {
+            $role = Sentinel::findRoleByName('agency');
+        }
+        if ($role) {
+            $role->users()->attach($user);
+            return redirect()->to('login')->with('success', 'Registration successful. Please log in.');
+        } else {
+            return back()->with('error', 'Registration not successful');
+        }
+    }
 
 
     public function postLogin(Request $request)

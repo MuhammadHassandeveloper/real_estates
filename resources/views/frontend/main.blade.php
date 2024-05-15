@@ -6,6 +6,11 @@
     <title>{{ \App\Helpers\AppHelper::site_name() }} - @yield('title')</title>
     <link href="{{ asset('assets/css/styles.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/css/colors.css') }}" rel="stylesheet">
+    <style>
+        h4.modal-header-title {
+            font-size: 2em !important;
+        }
+    </style>
     @yield('style')
 </head>
 

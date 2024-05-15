@@ -15,6 +15,13 @@ Route::get('/all-clear', function () {
 #forntend routes
 Route::get('/',[FrontEndController::class,'index'])->name('frontend.index');
 
+Route::get('/login',[AuthController::class,'loginForm'])->name('frontend.login_form');
+Route::get('/signup',[AuthController::class,'signupForm'])->name('frontend.signup_form');
+Route::post('/user-store',[AuthController::class,'userStore'])->name('frontend.user_store');
+
+
+Route::get('/',[FrontEndController::class,'index'])->name('frontend.index');
+
 
 #auth  routes
 Route::get('/post-login',[AuthController::class,'postLogin'])->name('post.login');
