@@ -3,167 +3,266 @@
 @section('properties-drops','show')
 @section('property_create','active')
 @section('style')
-    <link href="{{ asset('admin/assets/libs/dropzone/dropzone.css') }}" rel="stylesheet" type="text/css">
+    <link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet">
+    <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet">
 @stop
 @section('content')
     <div class="page-content">
         <div class="container-fluid">
             <div class="row">
+                <div class="col-12">
+                    <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                        <h4 class="mb-sm-0">Add Property</h4>
+                        <div class="page-title-right">
+                            <ol class="breadcrumb m-0">
+                                <li class="breadcrumb-item"><a href="{{ url('agent/dashboard') }}">Real Estate</a></li>
+                                <li class="breadcrumb-item active">Add Property</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
                 <div class="col-lg-12">
                     <div class="card" id="agentList">
                         <div class="card-body">
-                            <form action="#!">
-                                <div class="mb-3">
-                                    <label class="form-label">Property Images<span class="text-danger">*</span></label>
-                                    <div class="dropzone property-dropzone border border-1 border-dashed text-center dz-clickable">
+                            <div class="card-body">
+                                <form action="{{ route('agent.store_property') }}" method="POST" enctype="multipart/form-data" id="propertyForm">
+                                    @csrf
+                                    <div class="mb-3">
+                                        <label class="form-label">Property Images<span class="text-danger">*</span></label>
+                                        <input type="file" class="filepond" name="property_images[]" multiple data-max-file-size="2MB" data-max-files="15">
+                                        <ul class="list-unstyled mb-0" id="property-preview"></ul>
+                                    </div>
 
-                                        <div class="dz-message needsclick">
+
+                                    <div class="row">
+                                        <div class="col-lg-6 col-12">
                                             <div class="mb-3">
-                                                <i class="bi bi-cloud-download fs-1"></i>
+                                                <label for="Property-title-input" class="form-label">Property title<span class="text-danger">*</span></label>
+                                                <input type="text" id="Property-title-input" name="title" class="form-control" placeholder="Enter property title" value="{{ old('title') }}" required>
+                                                @error('title')
+                                                <span class="text-danger error" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                                @enderror
                                             </div>
+                                        </div>
+                                        <div class="col-lg-6 col-12">
+                                            <div class="mb-3">
+                                                <label for="Property-type-input" class="form-label">Property Type<span class="text-danger">*</span></label>
+                                                <select class="form-select" name="property_type_id" id="Property-type-input" data-choices="" data-choices-search-false="">
+                                                    <option value="" selected>Select Property Type</option>
+                                                    @if($ptypes)
+                                                        @foreach($ptypes as $ptype)
+                                                            <option value="{{ $ptype->id }}" {{ old('property_type_id') == $ptype->id ? 'selected' : '' }}>{{ $ptype->name }}</option>
+                                                        @endforeach
+                                                    @endif
+                                                </select>
+                                                @error('property_type_id')
+                                                <span class="text-danger error" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-6">
+                                            <div class="mb-3">
+                                                <label for="bedroom-input" class="form-label">Bedroom<span class="text-danger">*</span></label>
+                                                <input type="number" id="bedroom-input" name="bedrooms" class="form-control" placeholder="Enter Bedroom" value="{{ old('bedrooms') }}" required>
+                                                @error('bedrooms')
+                                                <span class="text-danger error" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                </span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-6">
+                                            <div class="mb-3">
+                                                <label for="bathroom-input" class="form-label">Bathroom<span class="text-danger">*</span></label>
+                                                <input type="number" class="form-control" name="bathrooms" id="bathroom-input" placeholder="Enter Bathroom" value="{{ old('bathrooms') }}" required>
+                                                @error('bathrooms')
+                                                <span class="text-danger error" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-6">
+                                            <div class="mb-3">
+                                                <label for="room-input" class="form-label">Rooms<span class="text-danger">*</span></label>
+                                                <input type="number" class="form-control" name="rooms" id="room-input" placeholder="Enter rooms" value="{{ old('rooms') }}" required>
+                                                @error('rooms')
+                                                <span class="text-danger error" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-6">
+                                            <div class="mb-3">
+                                                <label for="garage-input" class="form-label">Garages<span class="text-danger">*</span></label>
+                                                <input type="number" class="form-control" name="garages" id="garage-input" placeholder="Enter garages" value="{{ old('garages') }}" required>
+                                                @error('garages')
+                                                <span class="text-danger error" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-6">
+                                            <div class="mb-3">
+                                                <label for="sqft-input" class="form-label">SQFT<span class="text-danger">*</span></label>
+                                                <input type="number" class="form-control" name="size_sqft" id="sqft-input" placeholder="Enter sqft" value="{{ old('size_sqft') }}" required>
+                                                @error('size_sqft')
+                                                <span class="text-danger error" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-6">
+                                            <div class="mb-3">
+                                                <label for="Property-price-input" class="form-label">Price<span class="text-danger">*</span></label>
+                                                <div class="input-group">
+                                                    <span class="input-group-text">$</span>
+                                                    <input type="number" class="form-control" id="Property-price-input" name="price" placeholder="Enter price" value="{{ old('price') }}" required>
+                                                </div>
+                                                @error('price')
+                                                <span class="text-danger error" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="mb-3">
+                                                <label for="street-address" class="form-label">Street Address<span class="text-danger">*</span></label>
+                                                <input type="text" class="form-control" name="address" id="street-address" placeholder="Enter street address" value="{{ old('address') }}" required>
+                                                @error('address')
+                                                <span class="text-danger error" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-6">
+                                            <div class="mb-3">
+                                                <label for="city-input" class="form-label">City<span class="text-danger">*</span></label>
+                                                <input type="text" class="form-control" name="city" id="city-input" placeholder="Enter city" value="{{ old('city') }}" required>
+                                                @error('city')
+                                                <span class="text-danger error" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-6">
+                                            <div class="mb-3">
+                                                <label for="state-input" class="form-label">State<span class="text-danger">*</span></label>
+                                                <input type="text" class="form-control" name="state" id="state-input" placeholder="Enter state" value="{{ old('state') }}" required>
+                                                @error('state')
+                                                <span class="text-danger error" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-6">
+                                            <div class="mb-3">
+                                                <label for="country-input" class="form-label">Country<span class="text-danger">*</span></label>
+                                                <input type="text" class="form-control" name="country" id="country-input" placeholder="Enter country" value="{{ old('country') }}" required>
+                                                @error('country')
+                                                <span class="text-danger error" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-6">
+                                            <div class="mb-3">
+                                                <label for="zipcode-input" class="form-label">Zipcode<span class="text-danger">*</span></label>
+                                                <input type="text" class="form-control" name="zip_code" id="zipcode-input" placeholder="20325" value="{{ old('zip_code') }}" required>
+                                                @error('zip_code')
+                                                <span class="text-danger error" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                                @enderror
+                                            </div>
+                                        </div>
 
-                                            <h5 class="fs-md mb-0">Drop files here or click to upload.</h5>
+                                        <div class="col-lg-4 col-6">
+                                            <div class="mb-3">
+                                                <label for="building_age-input" class="form-label">Building age<span class="text-danger">*</span></label>
+                                                <input type="text" class="form-control" name="building_age" id="building_age-input" placeholder="25" value="{{ old('building_age') }}" required="">
+                                                @error('building_age')
+                                                <span class="text-danger error" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                                @enderror
+                                            </div>
+                                        </div><!--end col-->
+
+                                        <div class="col-lg-4 col-6">
+                                            <div class="mb-3">
+                                                <label for="is_featured" class="form-label">Is Featured<span class="text-danger">*</span></label>
+                                                <select class="form-select" name="is_featured" id="is_featured">
+                                                    <option value="0" {{ old('is_featured') == '0' ? 'selected' : '' }}>No</option>
+                                                    <option value="1" {{ old('is_featured') == '1' ? 'selected' : '' }}>Yes</option>
+                                                </select>
+                                                @error('is_featured')
+                                                <span class="text-danger error" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                                @enderror
+                                            </div>
+                                        </div>
+
+                                        @if($ftypes)
+                                            @foreach($ftypes as $ftype)
+                                                <div class="col-lg-4 col-6">
+                                                    <div class="mb-3 form-check">
+                                                        <input type="checkbox" name="property_features[]" class="form-check-input" id="additionalFeatures{{ $ftype->id }}" value="{{ $ftype->id }}" {{ in_array($ftype->id, old('property_features', [])) ? 'checked' : '' }}>
+                                                        <label class="form-check-label" for="additionalFeatures{{ $ftype->id }}">{{ $ftype->name }}</label>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                        @endif
+
+                                        <div class="col-lg-12 col-12">
+                                            <div class="mb-3">
+                                                <label for="short_description" class="form-label">Short Description</label>
+                                                <textarea class="form-control" name="short_description" id="short_description" rows="3">{{ old('short_description') }}</textarea>
+                                                @error('short_description')
+                                                <span class="text-danger error" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                                @enderror
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-12 col-12">
+                                            <div class="mb-3">
+                                                <label for="long_description" class="form-label">Long Description</label>
+                                                <textarea class="form-control" name="long_description" id="long_description" rows="6">{{ old('long_description') }}</textarea>
+                                                @error('long_description')
+                                                <span class="text-danger error" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                                @enderror
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-lg-12">
+                                        <div class="hstack gap-2 justify-content-end">
+                                            <button type="submit" class="btn btn-primary"><i class="bi bi-clipboard2-check align-baseline me-1"></i> Save</button>
                                         </div>
                                     </div>
 
-                                    <ul class="list-unstyled mb-0" id="property-preview">
-
-                                    </ul>
-                                    <!-- end dropzon-preview -->
                                 </div>
 
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <div class="mb-3">
-                                            <label for="Property-title-input" class="form-label">Property title<span class="text-danger">*</span></label>
-                                            <input type="text" id="Property-title-input" class="form-control" placeholder="Enter property title" required="">
-                                        </div>
-                                    </div><!--end col-->
-                                    <div class="col-lg-12">
-                                        <div class="mb-3">
-                                            <label for="Property-type-input" class="form-label">Property Type<span class="text-danger">*</span></label>
-
-                                            <select class="form-select" id="Property-type-input" data-choices="" data-choices-search-false="">
-                                                <option value="">Select Property Type</option>
-                                                <option value="Villa">Villa</option>
-                                                <option value="Residency">Residency</option>
-                                                <option value="Apartment">Apartment</option>
-                                                <option value="Others">Other</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="mb-3">
-                                            <label for="bedroom-input" class="form-label">Bedroom<span class="text-danger">*</span></label>
-                                            <input type="number" id="bedroom-input" class="form-control" placeholder="Enter Bedroom" required="">
-                                        </div>
-                                    </div><!--end col-->
-                                    <div class="col-lg-6">
-                                        <div class="mb-3">
-                                            <label for="bathroom-input" class="form-label">Bathroom<span class="text-danger">*</span></label>
-                                            <input type="number" class="form-control" id="bathroom-input" placeholder="Enter Bathroom" required="">
-                                        </div>
-                                    </div><!--end col-->
-                                    <div class="col-lg-6">
-                                        <div class="mb-3">
-                                            <label for="sqft-input" class="form-label">SQFT<span class="text-danger">*</span></label>
-                                            <input type="number" class="form-control" id="sqft-input" placeholder="Enter sqft" required="">
-                                        </div>
-                                    </div><!--end col-->
-                                    <div class="col-lg-6">
-                                        <div class="mb-3">
-                                            <label for="Property-price-input" class="form-label">Price<span class="text-danger">*</span></label>
-                                            <div class="input-group">
-                                                <span class="input-group-text">$</span>
-                                                <input type="number" class="form-control" id="Property-price-input" placeholder="Enter price" required="">
-                                            </div>
-                                        </div>
-                                    </div><!--end col-->
-                                    <div class="col-lg-12">
-                                        <div class="mb-3">
-                                            <label for="street-address" class="form-label">Street Address<span class="text-danger">*</span></label>
-                                            <input type="text" class="form-control" id="street-address" placeholder="Enter street address" required="">
-                                        </div>
-                                    </div><!--end col-->
-                                    <div class="col-lg-4">
-                                        <div class="mb-3">
-                                            <label for="state-input" class="form-label">State<span class="text-danger">*</span></label>
-                                            <input type="text" class="form-control" id="state-input" placeholder="Enter state" required="">
-                                        </div>
-                                    </div><!--end col-->
-                                    <div class="col-lg-4">
-                                        <div class="mb-3">
-                                            <label for="country-input" class="form-label">Country<span class="text-danger">*</span></label>
-                                            <input type="text" class="form-control" id="country-input" placeholder="Enter country" required="">
-                                        </div>
-                                    </div><!--end col-->
-                                    <div class="col-lg-4">
-                                        <div class="mb-3">
-                                            <label for="zipcode-input" class="form-label">Zipcode<span class="text-danger">*</span></label>
-                                            <input type="text" class="form-control" id="zipcode-input" placeholder="254 325" required="">
-                                        </div>
-                                    </div><!--end col-->
-                                    <div class="col-lg-4">
-                                        <div class="mb-3 form-check">
-                                            <input type="checkbox" class="form-check-input" id="additionalFeatures">
-                                            <label class="form-check-label" for="additionalFeatures">Swimming pool</label>
-                                        </div>
-                                    </div><!--end col-->
-                                    <div class="col-lg-4">
-                                        <div class="mb-3 form-check">
-                                            <input type="checkbox" class="form-check-input" id="additionalFeatures2">
-                                            <label class="form-check-label" for="additionalFeatures2">Air conditioning</label>
-                                        </div>
-                                    </div><!--end col-->
-                                    <div class="col-lg-4">
-                                        <div class="mb-3 form-check">
-                                            <input type="checkbox" class="form-check-input" id="additionalFeatures3">
-                                            <label class="form-check-label" for="additionalFeatures3">Electricity</label>
-                                        </div>
-                                    </div><!--end col-->
-                                    <div class="col-lg-4">
-                                        <div class="mb-3 form-check">
-                                            <input type="checkbox" class="form-check-input" id="additionalFeatures4">
-                                            <label class="form-check-label" for="additionalFeatures4">Near Green Zone</label>
-                                        </div>
-                                    </div><!--end col-->
-                                    <div class="col-lg-4">
-                                        <div class="mb-3 form-check">
-                                            <input type="checkbox" class="form-check-input" id="additionalFeatures5">
-                                            <label class="form-check-label" for="additionalFeatures5">Near Shop</label>
-                                        </div>
-                                    </div><!--end col-->
-                                    <div class="col-lg-4">
-                                        <div class="mb-3 form-check">
-                                            <input type="checkbox" class="form-check-input" id="additionalFeatures6">
-                                            <label class="form-check-label" for="additionalFeatures6">Near School</label>
-                                        </div>
-                                    </div><!--end col-->
-                                    <div class="col-lg-4">
-                                        <div class="mb-3 form-check">
-                                            <input type="checkbox" class="form-check-input" id="additionalFeatures7">
-                                            <label class="form-check-label" for="additionalFeatures7">Parking Available</label>
-                                        </div>
-                                    </div><!--end col-->
-                                    <div class="col-lg-4">
-                                        <div class="mb-3 form-check">
-                                            <input type="checkbox" class="form-check-input" id="additionalFeatures8">
-                                            <label class="form-check-label" for="additionalFeatures8">Internet</label>
-                                        </div>
-                                    </div><!--end col-->
-                                    <div class="col-lg-4">
-                                        <div class="mb-3 form-check">
-                                            <input type="checkbox" class="form-check-input" id="additionalFeatures9">
-                                            <label class="form-check-label" for="additionalFeatures9">Balcony</label>
-                                        </div>
-                                    </div><!--end col-->
-                                    <div class="col-lg-12">
-                                        <div class="hstack gap-2 justify-content-end">
-                                            <button type="button" class="btn btn-secondary"><i class="bi bi-repeat align-baseline me-1"></i> Reset</button>
-                                            <button type="button" class="btn btn-primary"><i class="bi bi-clipboard2-check align-baseline me-1"></i> Save</button>
-                                        </div>
-                                    </div>
-                                </div><!--end row-->
                             </form>
                         </div>
                     </div>
@@ -175,17 +274,18 @@
     <!-- End Page-content -->
 @stop
 @section('script')
-    <!-- dropzone js -->
-{{--    <script type="text/javascript">--}}
-{{--        Dropzone.autoDiscover = false;--}}
-{{--        var dropzone = new Dropzone('.dropzone', {--}}
-{{--            url: '/upload', // Specify the URL where files should be uploaded--}}
-{{--            thumbnailWidth: 200,--}}
-{{--            maxFilesize: 1,--}}
-{{--            acceptedFiles: ".jpeg,.jpg,.png,.gif",--}}
-{{--            addRemoveLinks: true // Enable remove file option--}}
-{{--        });--}}
+    <!-- Include necessary FilePond JS and CSS -->
+    <script src="https://unpkg.com/filepond@^4/dist/filepond.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
 
-{{--    </script>--}}
+    <script>
+        FilePond.registerPlugin(
+            FilePondPluginFileValidateSize,
+            FilePondPluginFileValidateType
+        );
+
+        const pond = FilePond.create(document.querySelector('.filepond'));
+    </script>
 @endsection
 
