@@ -38,10 +38,16 @@ Route::group(['middleware' => 'admin','prefix' => '/'], function () {
         Route::get('/dashboard',[AdminDashboardController::class,'index'])->name('admin.index');
         Route::group(['prefix' => 'property-types'], function () {
             Route::get('/',[AdminPropertyController::class,'property_types'])->name('admin.property_types');
+            Route::post('/store',[AdminPropertyController::class,'property_types_store'])->name('admin.property_types_store');
+            Route::post('/update',[AdminPropertyController::class,'property_types_update'])->name('admin.property_types_update');
+            Route::post('/delete',[AdminPropertyController::class,'property_types_delete'])->name('admin.property_types_delete');
         });
 
         Route::group(['prefix' => 'property-features'], function () {
             Route::get('/',[AdminPropertyController::class,'property_features'])->name('admin.property_features');
+            Route::post('/store',[AdminPropertyController::class,'property_features_store'])->name('admin.property_features_store');
+            Route::post('/update',[AdminPropertyController::class,'property_features_update'])->name('admin.property_features_update');
+            Route::post('/delete',[AdminPropertyController::class,'property_features_delete'])->name('admin.property_features_delete');
         });
 
         Route::group(['prefix' => 'properties'], function () {
