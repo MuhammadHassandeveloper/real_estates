@@ -52,6 +52,6 @@ class Property extends Model
 
     public function features()
     {
-        return $this->belongsToMany(PropertyFeature::class, 'property_property_feature');
+        return $this->belongsToMany(PropertyFeature::class, 'property_features');
     }
 }

@@ -3,6 +3,14 @@
 @section('properties-drops','show')
 @section('properties_list','active')
 @section('style')
+    <style>
+        .row>* {
+            width: 100%;
+            max-width: 100%;
+            padding-left: 0px !important;
+        }
+
+    </style>
 @stop
 @section('content')
     <div class="page-content">
@@ -55,14 +63,14 @@
                                         @foreach($properties as $property)
                                             <tr data-id="{{ $property->id }}">
                                             <td class="propert_id">
-                                                <a href="{{ route('agent.detail_property',$property->id) }}" class="fw-medium link-primary">#{{ $i++  }}</a>
+                                                <a href="{{url('agent/property-detail',$property->id)}}" class="fw-medium link-primary">#{{ $i++  }}</a>
                                             </td>
                                             <td class="propert_type">
                                                 {{ $property->propertyType->name }}
                                             </td>
                                             <td>
                                                 <div class="d-flex align-items-center gap-2 position-relative">
-                                                    <a href="{{ route('agent.detail_property',$property->id) }}" class="propert_name text-reset stretched-link">{{ $property->title }}</a>
+                                                    <a href="{{url('agent/property-detail',$property->id)}}" class="propert_name text-reset stretched-link">{{ $property->title }}</a>
                                                 </div>
                                             </td>
                                             <td class="address">{{ $property->city }}</td>
@@ -76,12 +84,12 @@
                                             <td>
                                                 <ul class="d-flex gap-2 list-unstyled mb-0">
                                                     <li>
-                                                        <a href="{{ route('agent.detail_property',$property->id) }}" class="btn btn-subtle-primary btn-icon btn-sm ">
+                                                        <a href="{{url('agent/property-detail',$property->id)}}" class="btn btn-subtle-primary btn-icon btn-sm ">
                                                             <i class="ph-eye"></i>
                                                         </a>
                                                     </li>
                                                     <li>
-                                                        <a href="#!" class="btn btn-subtle-secondary btn-icon btn-sm edit-item-btn">
+                                                        <a href="{{url('agent/property-edit',$property->id)}}" class="btn btn-subtle-secondary btn-icon btn-sm edit-item-btn">
                                                             <i class="ph-pencil"></i>
                                                         </a>
                                                     </li>

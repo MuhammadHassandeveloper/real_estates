@@ -38,9 +38,9 @@ class AgentPropertyController extends Controller
                 foreach ($request->file('property_images') as $file) {
                     if ($file->isValid()) {
                         $extension = $file->getClientOriginalExtension();
-                        $filename = time().'.'.$extension;
-                        $filePath = $file->move(public_path('property_images'), $filename);
-                        $relativePath = 'property_images/' . $filename; // Relative path for the saved file
+                        $filename = rand(0, 9999) . time() . '.' . $extension;
+                        $file->move(public_path('property_images'), $filename);
+                        $relativePath = 'property_images/' . $filename;
                         $fileDetails[] = [
                             'file_path' => $relativePath,
                             'file_name' => $filename
@@ -83,7 +83,7 @@ class AgentPropertyController extends Controller
         ]);
 
         $property = new Property();
-        $property->agent_id =  Sentinel::getUser()->id;
+        $property->agent_id = Sentinel::getUser()->id;
         $property->title = $request->title;
         $property->property_type_id = $request->property_type_id;
         $property->property_category = $request->property_category;
@@ -129,8 +129,103 @@ class AgentPropertyController extends Controller
         return redirect()->route('agent.properties')->with('success', 'Property added successfully.');
     }
 
+    public function propertyEdit($id)
+    {
+        $data = array();
+        $data['ptypes'] = PropertyType::get();
+        $data['property'] = Property::find($id);
+        $data['ftypes'] = PropertyFeature::get();
+        $data['pimages'] = PropertyImage::where('property_id', $id)->get();
+        $data['title'] = 'Create Property';
+        return view('agent.properties.edit', $data);
+    }
 
-    public function propertyDelete(Request $request) {
+    public function propertyUpdate(Request $request)
+    {
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'property_type_id' => 'required|integer',
+            'property_category' => 'required|string',
+            'bedrooms' => 'required|integer',
+            'bathrooms' => 'required|integer',
+            'rooms' => 'required|integer',
+            'garages' => 'required|integer',
+            'size_sqft' => 'required|integer',
+            'price' => 'required|integer',
+            'address' => 'required|string|max:255',
+            'city' => 'required|string|max:255',
+            'state' => 'required|string|max:255',
+            'zip_code' => 'required|string|max:10',
+            'building_age' => 'required|integer',
+            'is_featured' => 'required|boolean',
+            'short_description' => 'required|string',
+            'long_description' => 'required|string',
+        ]);
+
+        $id = $request->id;
+        $property = Property::findOrFail($id);
+        $property->title = $request->title;
+        $property->property_type_id = $request->property_type_id;
+        $property->property_category = $request->property_category;
+        $property->bedrooms = $request->bedrooms;
+        $property->bathrooms = $request->bathrooms;
+        $property->rooms = $request->rooms;
+        $property->garages = $request->garages;
+        $property->size_sqft = $request->size_sqft;
+        $property->price = $request->price;
+        $property->address = $request->address;
+        $property->city = $request->city;
+        $property->state = $request->state;
+        $property->zip_code = $request->zip_code;
+        $property->building_age = $request->building_age;
+        $property->is_featured = $request->is_featured;
+        $property->property_features = json_encode($request->property_features, true);
+        $property->short_description = $request->short_description;
+        $property->long_description = $request->long_description;
+        $property->owner_name = Sentinel::getUser()->first_name . ' ' . Sentinel::getUser()->last_name;
+        $property->owner_email = Sentinel::getUser()->email;
+        $property->owner_phone = Sentinel::getUser()->phone;
+        $property->save();
+
+
+        if ($request->hasFile('property_images')) {
+            foreach ($request->file('property_images') as $image) {
+                dd($image);
+                $imageName = $image->getClientOriginalName();
+                $image->storeAs('public/property_images', $imageName); // Store the image
+
+                // Create or update PropertyImage model
+                PropertyImage::updateOrCreate(
+                    ['property_id' => $property->id, 'image' => $imageName],
+                    ['image_path' => 'storage/property_images/' . $imageName]
+                );
+            }
+        }
+
+         PropertyImage::where('property_id', $property->id)->delete();
+        foreach ($request->property_images as $imageData) {
+            $fileDetails = json_decode($imageData, true);
+            if (isset($fileDetails['file_details'])) {
+                foreach ($fileDetails['file_details'] as $detail) {
+                    $existingImage = PropertyImage::where('image_path', $detail['file_path'])
+                        ->where('property_id', $property->id)->first();
+                    if (!$existingImage) {
+                        $image = new PropertyImage();
+                        $image->image_path = $detail['file_path'];
+                        $image->image = $detail['file_name'];
+                        $image->property_id = $property->id;
+                        $image->save();
+                    }
+                }
+            }
+        }
+
+        return redirect()->route('agent.properties')->with('success', 'Property updated successfully.');
+    }
+
+
+    public function propertyDelete(Request $request)
+    {
         Property::destroy($request->id);
         PropertyImage::where('property_id', $request->id)->delete();
         return redirect()->route('agent.properties')->with('success', 'Property deleted successfully.');

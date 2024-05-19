@@ -69,16 +69,8 @@
     }
 
     .text-danger {
-        display: flex;
-        margin-top: 8px;
         font-size: 12px !important
     }
-    .row>* {
-        width: 100%;
-        max-width: 100%;
-        padding-left: 0px !important;
-    }
-
 </style>
     @yield('style')
 
