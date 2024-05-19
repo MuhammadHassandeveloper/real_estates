@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class FrontEndController extends Controller
 {
@@ -11,5 +12,11 @@ class FrontEndController extends Controller
         $data['title'] = 'Home';
         return view('frontend.index',$data);
     }
+
+
+
+
+
+
 
 }

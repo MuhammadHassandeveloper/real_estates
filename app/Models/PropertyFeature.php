@@ -12,4 +12,9 @@ class PropertyFeature extends Model
     protected $fillable = [
         'name',
     ];
+
+    public function properties()
+    {
+        return $this->belongsToMany(Property::class, 'property_features');
+    }
 }

@@ -14,7 +14,6 @@
     <link id="fontsLink" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="{{ asset('admin/assets/js/layout.js') }}"></script>
     <link href="{{ asset('admin/assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
-    <link href="{{ asset('admin/assets/libs/dropzone/dropzone.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('admin/assets/css/icons.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('admin/assets/css/app.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('admin/assets/css/custom.min.css') }}" rel="stylesheet" type="text/css">
@@ -69,6 +68,17 @@
         font-size: 13px !important;
     }
 
+    .text-danger {
+        display: flex;
+        margin-top: 8px;
+        font-size: 12px !important
+    }
+    .row>* {
+        width: 100%;
+        max-width: 100%;
+        padding-left: 0px !important;
+    }
+
 </style>
     @yield('style')
 
@@ -117,10 +127,7 @@
 <script src="{{ asset('admin/assets/libs/toastify-js/src/toastify.js') }}"></script>
 <script src="{{ asset('admin/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
 <script src="{{ asset('admin/assets/libs/choices.js/public/assets/scripts/choices.min.js') }}"></script>
-
 <script src="{{ asset('admin/assets/js/app.js') }}"></script>
-<script src="{{ asset('admin/assets/libs/dropzone/dropzone-min.js') }}"></script>
-
 @yield('script')
 
 
@@ -183,6 +190,11 @@
         });
     });
 
+    //error message hide
+    setTimeout(function() {
+        $('.error').hide();
+    }, 5000);
 </script>
+
 </body>
 </html>

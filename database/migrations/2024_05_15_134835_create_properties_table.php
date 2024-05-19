@@ -16,7 +16,8 @@ return new class extends Migration
             $table->string('title');
             $table->integer('property_type_id')->nullable();
             $table->integer('agent_id')->nullable();
-            $table->text('property_features')->nullable();
+            $table->text('property_category')->nullable();
+            $table->string('property_features')->nullable();
             $table->integer('size_sqft')->nullable();
             $table->double('price', 10, 2);
             $table->integer('bedrooms')->nullable();

@@ -41,53 +41,59 @@
                                         <thead class="text-muted table-light">
                                         <tr>
                                             <th scope="col" class="sort cursor-pointer" data-sort="propert_id">#</th>
-                                            <th scope="col" class="sort cursor-pointer" data-sort="propert_type">Property Type</th>
-                                            <th scope="col" class="sort cursor-pointer" data-sort="propert_name">Property Name</th>
-                                            <th scope="col" class="sort cursor-pointer" data-sort="address">Address</th>
-                                            <th scope="col" class="sort cursor-pointer desc" data-sort="agent_name">Agent Name</th>
+                                            <th scope="col" class="sort cursor-pointer" data-sort="propert_type">Type</th>
+                                            <th scope="col" class="sort cursor-pointer" data-sort="propert_name">Title</th>
+                                            <th scope="col" class="sort cursor-pointer" data-sort="address">City</th>
+                                            <th scope="col" class="sort cursor-pointer desc" data-sort="agent_name">State</th>
                                             <th scope="col" class="sort cursor-pointer" data-sort="price">Price</th>
                                             <th scope="col" class="sort cursor-pointer" data-sort="status">Status</th>
                                             <th scope="col" class="sort cursor-pointer">Action</th>
                                         </tr>
                                         </thead>
                                         <tbody class="list form-check-all">
-                                        <tr>
+                                        @php $i = 1; @endphp
+                                        @foreach($properties as $property)
+                                            <tr data-id="{{ $property->id }}">
                                             <td class="propert_id">
-                                                <a href="apps-ecommerce-order-details.html" class="fw-medium link-primary">#TBS03</a>
+                                                <a href="{{ route('agent.detail_property',$property->id) }}" class="fw-medium link-primary">#{{ $i++  }}</a>
                                             </td>
                                             <td class="propert_type">
-                                                Apartment
+                                                {{ $property->propertyType->name }}
                                             </td>
                                             <td>
                                                 <div class="d-flex align-items-center gap-2 position-relative">
-                                                    <img src="assets/images/real-estate/img-03.jpg" alt="" height="35" class="rounded">
-                                                    <a href="apps-real-estate-property-overview.html" class="propert_name text-reset stretched-link">Vintage Apartment</a>
+                                                    <a href="{{ route('agent.detail_property',$property->id) }}" class="propert_name text-reset stretched-link">{{ $property->title }}</a>
                                                 </div>
                                             </td>
-                                            <td class="address">
-                                                Brazil
-                                            </td>
-                                            <td class="agent_name">Domenic Dach</td>
+                                            <td class="address">{{ $property->city }}</td>
+                                            <td class="agent_name">{{ $property->state }}</td>
                                             <td class="price">
-                                                <span class="fw-medium">$1249.99</span>
+                                                <span class="fw-medium">{{ App\Helpers\AppHelper::appCurrencySign() }}{{ $property->price }}</span>
                                             </td>
                                             <td>
-                                                <span class="badge bg-info-subtle text-info status">Rent</span>
+                                                <span class="badge bg-info-subtle text-info status">{{ $property->property_category }}</span>
                                             </td>
                                             <td>
                                                 <ul class="d-flex gap-2 list-unstyled mb-0">
                                                     <li>
-                                                        <a href="apps-real-estate-property-overview.html" class="btn btn-subtle-primary btn-icon btn-sm "><i class="ph-eye"></i></a>
+                                                        <a href="{{ route('agent.detail_property',$property->id) }}" class="btn btn-subtle-primary btn-icon btn-sm ">
+                                                            <i class="ph-eye"></i>
+                                                        </a>
                                                     </li>
                                                     <li>
-                                                        <a href="#!" class="btn btn-subtle-secondary btn-icon btn-sm edit-item-btn"><i class="ph-pencil"></i></a>
+                                                        <a href="#!" class="btn btn-subtle-secondary btn-icon btn-sm edit-item-btn">
+                                                            <i class="ph-pencil"></i>
+                                                        </a>
                                                     </li>
                                                     <li>
-                                                        <a href="#!" class="btn btn-subtle-danger btn-icon btn-sm remove-item-btn"><i class="ph-trash"></i></a>
+                                                        <a href="javascript:void(0);" data-bs-toggle="modal" class="btn btn-subtle-danger btn-icon btn-sm remove-item-btn btn-delete">
+                                                            <i class="ph-trash"></i>
+                                                        </a>
                                                     </li>
                                                 </ul>
                                             </td>
                                         </tr>
+                                        @endforeach
                                         </tbody>
                                     </table>
                                 </div>
@@ -110,10 +116,10 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-addAgencyModal"></button>
                 </div>
 
-                <form action="" method="post">
+                <form action="{{ route('agent.property.delete_property') }}" method="post">
                     @csrf
                     <div class="modal-body">
-                        <input type="hidden" name="id" id="pTypeId">
+                        <input type="hidden" name="id" id="Pid">
                         <p>Deleting this row will be permanently remove it from the system. This action cannot be undone. Are you certain you want to proceed?</p>
                     </div>
                     <div class="modal-footer">
@@ -130,25 +136,13 @@
 
 @stop
 @section('script')
-    <script>
-        $(document).ready(function() {
-            $('.btn-edit').on('click', function() {
-                var $row = $(this).closest('tr');
-                var id = $row.data('id');
-                var name = $row.find('.name-cell').text();
-                $('#typeId').val(id);
-                $('#typeName').val(name);
-                $('#editModal').modal('show');
-            });
-        });
-    </script>
 
     <script>
         $(document).ready(function() {
             $('.btn-delete').on('click', function() {
                 var $row = $(this).closest('tr');
                 var id = $row.data('id');
-                $('#pTypeId').val(id);
+                $('#Pid').val(id);
                 $('#deleteModal').modal('show');
             });
         });

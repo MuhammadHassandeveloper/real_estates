@@ -104,26 +104,12 @@ class AppHelper
 
     public static function appCurrencySign(): string
     {
-        return '€';
+        return '$';
     }
 
     public static function appCurrencyCode(): string
     {
       return 'eur';
-    }
-
-    public static function stored_prices() {
-        $keysWithDescriptions = AppHelper::booking_keys_array();
-        $keys = array_keys($keysWithDescriptions);
-        $basePrice = 10.00; // Starting price
-        foreach ($keys as $key) {
-            CleaningPrice::create([
-                'key' => $key,
-                'price' => $basePrice,
-            ]);
-
-            $basePrice += 10.00;
-        }
     }
 
 }

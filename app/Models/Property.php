@@ -13,6 +13,7 @@ class Property extends Model
         'title',
         'property_type_id',
         'agent_id',
+        'property_category',
         'property_features',
         'size_sqft',
         'price',
@@ -33,4 +34,24 @@ class Property extends Model
         'is_featured',
         'status',
     ];
+
+    public function agent()
+    {
+        return $this->belongsTo(User::class, 'agent_id');
+    }
+
+    public function propertyType()
+    {
+        return $this->belongsTo(PropertyType::class, 'property_type_id');
+    }
+
+    public function images()
+    {
+        return $this->hasMany(PropertyImage::class, 'property_id');
+    }
+
+    public function features()
+    {
+        return $this->belongsToMany(PropertyFeature::class, 'property_property_feature');
+    }
 }

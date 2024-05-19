@@ -10,6 +10,7 @@ use App\Http\Controllers\AdminPropertyController;
 
 //agent
 use App\Http\Controllers\AgentDashboardController;
+use App\Http\Controllers\AgentPropertyController;
 
 
 // clear all
@@ -17,6 +18,7 @@ Route::get('/all-clear', function () {
     Artisan::call('optimize:clear');
     return 'All cleared!';
 });
+
 
 
 //forntend routes
@@ -45,9 +47,14 @@ Route::group(['middleware' => 'admin', 'prefix' => '/'], function () {
     // admin dashboard routes
     Route::group(array('prefix' => 'agent'), function () {
         Route::get('/dashboard', [AgentDashboardController::class, 'index'])->name('agent.index');
-        Route::get('/properties', [AgentDashboardController::class, 'properties'])->name('agent.properties');
-        Route::get('/property-create', [AgentDashboardController::class, 'propertyCreate'])->name('agent.create_property');
-        Route::post('/property-store', [AgentDashboardController::class, 'propertyStore'])->name('agent.store_property');
+
+        //properties routes
+        Route::get('/properties', [AgentPropertyController::class, 'properties'])->name('agent.properties');
+        Route::get('/property-create', [AgentPropertyController::class, 'propertyCreate'])->name('agent.create_property');
+        Route::post('/upload', [AgentPropertyController::class, 'uploadImages'])->name('agent.property.upload_images');
+        Route::post('/property-store', [AgentPropertyController::class, 'propertyStore'])->name('agent.store_property');
+        Route::get('/property-detail', [AgentPropertyController::class, 'propertyDetail'])->name('agent.detail_property');
+        Route::post('/delete', [AgentPropertyController::class, 'propertyDelete'])->name('agent.property.delete_property');
     });
 
 
