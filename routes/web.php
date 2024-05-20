@@ -48,6 +48,7 @@ Route::group(['middleware' => 'admin', 'prefix' => '/'], function () {
     Route::group(array('prefix' => 'agent'), function () {
         Route::get('/dashboard', [AgentDashboardController::class, 'index'])->name('agent.index');
         Route::get('/profile', [AgentDashboardController::class, 'profile'])->name('agent.profile');
+        Route::post('/profile-update', [AgentDashboardController::class, 'profileUpdate'])->name('agent.profile_update');
 
         //properties routes
         Route::get('/properties', [AgentPropertyController::class, 'properties'])->name('agent.properties');
