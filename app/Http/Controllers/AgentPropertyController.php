@@ -187,42 +187,53 @@ class AgentPropertyController extends Controller
         $property->owner_phone = Sentinel::getUser()->phone;
         $property->save();
 
-
-        if ($request->hasFile('property_images')) {
-            foreach ($request->file('property_images') as $image) {
-                dd($image);
-                $imageName = $image->getClientOriginalName();
-                $image->storeAs('public/property_images', $imageName); // Store the image
-
-                // Create or update PropertyImage model
-                PropertyImage::updateOrCreate(
-                    ['property_id' => $property->id, 'image' => $imageName],
-                    ['image_path' => 'storage/property_images/' . $imageName]
-                );
-            }
-        }
-
-         PropertyImage::where('property_id', $property->id)->delete();
-        foreach ($request->property_images as $imageData) {
-            $fileDetails = json_decode($imageData, true);
-            if (isset($fileDetails['file_details'])) {
-                foreach ($fileDetails['file_details'] as $detail) {
-                    $existingImage = PropertyImage::where('image_path', $detail['file_path'])
-                        ->where('property_id', $property->id)->first();
-                    if (!$existingImage) {
-                        $image = new PropertyImage();
-                        $image->image_path = $detail['file_path'];
-                        $image->image = $detail['file_name'];
-                        $image->property_id = $property->id;
-                        $image->save();
+        $imageDetails = json_decode($request->image_details, true);
+        $newImages = [];
+        $existingImages = [];
+        if ($request->has('property_images')) {
+            foreach ($request->property_images as $imageData) {
+                $fileDetails = json_decode($imageData, true);
+                if (isset($fileDetails['file_details'])) {
+                    foreach ($fileDetails['file_details'] as $detail) {
+                        $newImages[] = $detail['file_path'];
                     }
                 }
             }
         }
 
+        if ($imageDetails) {
+            foreach ($imageDetails as $detail) {
+                $existingImages[] = $detail['file_details']['file_name'];
+            }
+        }
+        $dbImages = PropertyImage::where('property_id', $property->id)->pluck('image')->toArray();
+        $imagesToRemove = array_diff($dbImages, $existingImages);
+        foreach ($imagesToRemove as $imageName) {
+            PropertyImage::where('image', $imageName)->where('property_id', $property->id)->delete();
+        }
+        foreach ($newImages as $filePath) {
+            $imageName = basename($filePath);
+            PropertyImage::updateOrCreate(
+                ['property_id' => $property->id, 'image' => $imageName],
+                ['image_path' => 'property_images/' . $imageName]
+            );
+        }
+
         return redirect()->route('agent.properties')->with('success', 'Property updated successfully.');
     }
 
+
+
+    public function propertyDetail($id)
+    {
+        $data = array();
+        $data['ptype'] = PropertyType::find($id);
+        $data['ftypes'] = PropertyFeature::get();
+        $data['property'] = Property::find($id);
+        $data['pimages'] = PropertyImage::where('property_id', $id)->get();
+        $data['title'] = 'Property Details';
+        return view('agent.properties.detail', $data);
+    }
 
     public function propertyDelete(Request $request)
     {

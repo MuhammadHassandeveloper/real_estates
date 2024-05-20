@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -132,6 +133,14 @@ class AuthController extends Controller
         Auth::logout();
 
         return redirect('login')->with('success', 'Logout successfully');
+    }
+
+    public function adminLogout()
+    {
+        Sentinel::logout();
+        Auth::logout();
+
+        return redirect('admin/login')->with('success', 'Logout successfully');
     }
 
 

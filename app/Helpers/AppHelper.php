@@ -5,6 +5,7 @@ use App\Models\AgentBooking;
 use App\Models\Booking;
 use App\Models\CleaningPrice;
 use App\Models\PaypalAccount;
+use App\Models\PropertyFeature;
 use App\Models\SiteSetting;
 use App\Models\Subscriptions;
 use App\Models\User;
@@ -110,6 +111,31 @@ class AppHelper
     public static function appCurrencyCode(): string
     {
       return 'eur';
+    }
+    public static function featureDetail($id)
+    {
+      return PropertyFeature::find($id);
+    }
+
+    public static function property_category($status) {
+        if($status == 'Rent') {
+            $text = 'For Rent';
+            $color = 'text-info';
+            $bgColor = 'bg-info-subtle';
+
+        } else {
+            $text = 'For Sale';
+            $color = 'text-danger';
+            $bgColor = 'bg-danger-subtle';
+        }
+        return array($bgColor,$color,$text);
+    }
+
+    public static function roleName($userid) {
+          $userrole =  DB::table('role_users')->select('role_id')->where('user_id',$userid)->first();
+          $roleName = DB::table('roles')->where('id',$userrole->role_id)->first();
+          return $roleName->name;
+
     }
 
 }

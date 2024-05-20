@@ -28,7 +28,7 @@ Route::get('/login', [AuthController::class, 'loginForm'])->name('frontend.login
 Route::get('/signup', [AuthController::class, 'signupForm'])->name('frontend.signup_form');
 Route::post('/user-store', [AuthController::class, 'userStore'])->name('frontend.user_store');
 
-
+Route::get('logout', [AuthController::class, 'destroy'])->name('logout');
 Route::get('/', [FrontEndController::class, 'index'])->name('frontend.index');
 
 
@@ -47,6 +47,7 @@ Route::group(['middleware' => 'admin', 'prefix' => '/'], function () {
     // admin dashboard routes
     Route::group(array('prefix' => 'agent'), function () {
         Route::get('/dashboard', [AgentDashboardController::class, 'index'])->name('agent.index');
+        Route::get('/profile', [AgentDashboardController::class, 'profile'])->name('agent.profile');
 
         //properties routes
         Route::get('/properties', [AgentPropertyController::class, 'properties'])->name('agent.properties');

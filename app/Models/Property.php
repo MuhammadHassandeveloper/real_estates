@@ -54,4 +54,5 @@ class Property extends Model
     {
         return $this->belongsToMany(PropertyFeature::class, 'property_features');
     }
+
 }
