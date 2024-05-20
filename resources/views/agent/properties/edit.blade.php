@@ -30,11 +30,15 @@
                             <form action="{{ url('agent/property-update') }}" method="POST" enctype="multipart/form-data" id="propertyForm">
                                 @csrf
                                 <input type="hidden" name="id" value="{{ $property->id }}">
+                                <input type="hidden" id="imageDetails" name="image_details" value="[]">
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="mb-3">
                                             <label class="form-label">Property Images<span class="text-danger">*</span></label>
                                             <input type="file" id="propertyImages" name="property_images[]" multiple accept="image/*">
+                                            @foreach($pimages as $pimage)
+                                                <input type="hidden" name="existing_images[]" value="{{ $pimage->id }}">
+                                            @endforeach
                                         </div>
                                     </div>
 
@@ -283,47 +287,72 @@
     </div>
 @stop
 @section('script')
-        <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet" />
-        <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet" />
-        <script src="https://unpkg.com/filepond/dist/filepond.js"></script>
-        <script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
-        <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
-        <script>
-            FilePond.registerPlugin(
-                FilePondPluginFileValidateType,
-                FilePondPluginImagePreview
-            );
+    <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet" />
+    <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet" />
+    <script src="https://unpkg.com/filepond/dist/filepond.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
+    <script>
+        FilePond.registerPlugin(
+            FilePondPluginFileValidateType,
+            FilePondPluginImagePreview
+        );
 
-            const inputElement = document.getElementById('propertyImages');
-            const pond = FilePond.create(inputElement, {
-                allowMultiple: true,
-                acceptedFileTypes: ['image/*'],
-                server: {
-                    process: {
-                        url: '{{ route("agent.property.upload_images") }}',
-                        headers: {
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                        }
-                    },
-                    load: (source, load) => {
-                        fetch(source)
-                            .then(res => res.blob())
-                            .then(load);
+        const inputElement = document.getElementById('propertyImages');
+        const imageDetailsInput = document.getElementById('imageDetails');
+        const pond = FilePond.create(inputElement, {
+            allowMultiple: true,
+            acceptedFileTypes: ['image/*'],
+            server: {
+                process: {
+                    url: '{{ route("agent.property.upload_images") }}',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
                     }
                 },
-                files: [
-                        @foreach($pimages as $pimage)
-                    {
-                        source: '{{ asset($pimage->image_path) }}',
-                        options: {
-                            type: 'local',
-                            metadata: {
-                                id: '{{ $pimage->id }}'
-                            }
+                load: (source, load) => {
+                    fetch(source)
+                        .then(res => res.blob())
+                        .then(load);
+                }
+            },
+            files: [
+                    @foreach($pimages as $pimage)
+                {
+                    source: '{{ asset($pimage->image_path) }}',
+                    options: {
+                        type: 'local',
+                        metadata: {
+                            id: '{{ $pimage->id }}',
+                            file_path: '{{ asset($pimage->image_path) }}',
+                            file_name: '{{ $pimage->image }}'
                         }
-                    },
-                    @endforeach
-                ]
-            });
-        </script>
+                    }
+                },
+                @endforeach
+            ],
+            onprocessfile: (error, file) => {
+                if (!error) {
+                    updateImageDetails();
+                }
+            },
+            onremovefile: (error, file) => {
+                if (!error) {
+                    updateImageDetails();
+                }
+            }
+        });
+
+        function updateImageDetails() {
+            const files = pond.getFiles();
+            const imageDetails = files.map(file => ({
+                file_details: {
+                    file_name: file.filename,
+                    file_path: file.getMetadata('file_path')
+                }
+            }));
+            imageDetailsInput.value = JSON.stringify(imageDetails);
+        }
+        updateImageDetails();
+    </script>
 @endsection
