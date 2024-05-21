@@ -19,6 +19,7 @@ return new class extends Migration
             $table->text('content');
             $table->text('color');
             $table->text('type');
+            $table->text('role');
             $table->timestamps();
         });
     }

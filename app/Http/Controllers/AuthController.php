@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\AppHelper;
 use App\Models\User;
 use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
 use Illuminate\Http\Request;
@@ -116,6 +117,15 @@ class AuthController extends Controller
             if ($user->inRole('admin')) {
                 return redirect('/admin/dashboard')->with('success', 'Successfully logged in');
             } elseif ($user->inRole('agent')) {
+                AppHelper::storeActivity(
+                    'User Login',
+                    'Agent ' . Sentinel::getUser()->first_name . ' ' . Sentinel::getUser()->last_name . ' logged in successfully.', // Content
+                    'success',
+                    Sentinel::getUser()->id,
+                    1, // Type
+                    Sentinel::getUser()->id,
+                    'Agent' // Role
+                );
                 return redirect('/agent/dashboard')->with('success', 'Successfully logged in');
             } elseif ($user->inRole('customer')) {
                 return redirect('/customer/dashboard')->with('success', 'Successfully logged in');
@@ -129,9 +139,18 @@ class AuthController extends Controller
 
     public function destroy()
     {
+        AppHelper::storeActivity(
+            'User Logout',
+            'Agent ' . Sentinel::getUser()->first_name . ' ' . Sentinel::getUser()->last_name . ' Logout in successfully.', // Content
+            'success',
+            Sentinel::getUser()->id,
+            1, // Type
+            Sentinel::getUser()->id,
+            'Agent' // Role
+        );
+
         Sentinel::logout();
         Auth::logout();
-
         return redirect('login')->with('success', 'Logout successfully');
     }
 

@@ -1,11 +1,14 @@
 <?php
 namespace App\Helpers;
 
+use App\Models\ActivityReport;
 use App\Models\AgentBooking;
 use App\Models\Booking;
 use App\Models\CleaningPrice;
 use App\Models\PaypalAccount;
+use App\Models\Property;
 use App\Models\PropertyFeature;
+use App\Models\PropertyType;
 use App\Models\SiteSetting;
 use App\Models\Subscriptions;
 use App\Models\User;
@@ -35,7 +38,7 @@ class AppHelper
         return $siteSettings;
     }
 
-    public static function booking_status($status) {
+    public static function property_status($status) {
         $color = '';
         $text = '';
         if($status == 1) {
@@ -66,7 +69,7 @@ class AppHelper
         return array($bgColor,$color,$text);
     }
 
-    public static function booking_payment_status($status) {
+    public static function property_payment_status($status) {
         $color = '';
         $text = '';
         $bgColor= '';
@@ -91,17 +94,17 @@ class AppHelper
         return User::find($id);
     }
 
-    public static function bookingDetail($id) {
-        return Booking::find($id);
+    public static function propertyDetail($id) {
+        return Property::find($id);
     }
 
-   public static function agentBookingDetail($id) {
-        return AgentBooking::find($id);
+   public static function agentProperties($id) {
+        return Property::where('agent_id',$id);
+    }
+    public static function customerProperties($id) {
+        return Property::where('user_id',$id);
     }
 
-    public static function subscriptionDetail($id) {
-        return Subscriptions::find($id);
-    }
 
     public static function appCurrencySign(): string
     {
@@ -112,9 +115,15 @@ class AppHelper
     {
       return 'eur';
     }
+
     public static function featureDetail($id)
     {
       return PropertyFeature::find($id);
+    }
+
+    public static function propertyType($id)
+    {
+        return PropertyType::find($id);
     }
 
     public static function property_category($status) {
@@ -131,11 +140,27 @@ class AppHelper
         return array($bgColor,$color,$text);
     }
 
-    public static function roleName($userid) {
-          $userrole =  DB::table('role_users')->select('role_id')->where('user_id',$userid)->first();
-          $roleName = DB::table('roles')->where('id',$userrole->role_id)->first();
-          return $roleName->name;
+    public static function roleName($userId) {
+        $roleName = DB::table('role_users')
+            ->join('roles', 'role_users.role_id', '=', 'roles.id')
+            ->where('role_users.user_id', $userId)
+            ->select('roles.name')
+            ->first();
+        return $roleName ? $roleName->name : null;
+    }
 
+    public static function storeActivity($heading, $detail, $color, $uid, $type, $system_id,$role)
+    {
+        $store = ActivityReport::create([
+            'user_id' => $uid,
+            'system_id' => $system_id,
+            'heading' => $heading,
+            'content' => $detail,
+            'color' => $color,
+            'type' => $type,
+            'role' => $role,
+        ]);
+        return $store;
     }
 
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\AppHelper;
 use App\Models\Property;
 use App\Models\PropertyFeature;
 use App\Models\PropertyImage;
@@ -126,6 +127,16 @@ class AgentPropertyController extends Controller
                 }
             }
         }
+
+        AppHelper::storeActivity(
+            'New Property Created', // Heading
+            'Property created by Agent ' . Sentinel::getUser()->first_name . ' ' . Sentinel::getUser()->last_name . '.', // Content
+            'success', // Color
+            Sentinel::getUser()->id, // User ID
+            1, // Type
+            Sentinel::getUser()->id, // System ID
+            'Agent' // Role
+        );
         return redirect()->route('agent.properties')->with('success', 'Property added successfully.');
     }
 
@@ -218,6 +229,15 @@ class AgentPropertyController extends Controller
                 ['image_path' => 'property_images/' . $imageName]
             );
         }
+        AppHelper::storeActivity(
+            'Property Updated', // Heading
+            'Property updated by Agent ' . Sentinel::getUser()->first_name . ' ' . Sentinel::getUser()->last_name . '.', // Content
+            'success', // Color
+            Sentinel::getUser()->id, // User ID
+            1, // Type
+            Sentinel::getUser()->id, // System ID
+            'Agent' // Role
+        );
 
         return redirect()->route('agent.properties')->with('success', 'Property updated successfully.');
     }
@@ -239,6 +259,15 @@ class AgentPropertyController extends Controller
     {
         Property::destroy($request->id);
         PropertyImage::where('property_id', $request->id)->delete();
+        AppHelper::storeActivity(
+            'Property Deleted', // Heading
+            'Property deleted by Agent ' . Sentinel::getUser()->first_name . ' ' . Sentinel::getUser()->last_name . '.', // Content
+            'success', // Color
+            Sentinel::getUser()->id, // User ID
+            1, // Type
+            Sentinel::getUser()->id, // System ID
+            'Agent' // Role
+        );
         return redirect()->route('agent.properties')->with('success', 'Property deleted successfully.');
     }
 }

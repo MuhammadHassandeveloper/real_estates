@@ -223,6 +223,10 @@
                             <i class="mdi mdi-cog-outline text-muted fs-lg align-middle me-1"></i>
                             <span class="align-middle">Settings</span>
                         </a>
+                        <a class="dropdown-item" href="{{ route('agent.activities') }}">
+                            <i class="mdi mdi-cog-outline text-muted fs-lg align-middle me-1"></i>
+                            <span class="align-middle">Activities</span>
+                        </a>
                         <a class="dropdown-item" href="{{ url('logout') }}">
                             <i class="mdi mdi-logout text-muted fs-lg align-middle me-1"></i>
                             <span class="align-middle" data-key="t-logout">Logout</span>

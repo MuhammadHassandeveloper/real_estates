@@ -55,7 +55,7 @@
                             <!--end slider-->
 
                             <div class="pt-1">
-                                <h6 class="card-title">{{ $property->title }}</h6>
+                                <h6 class="card-title">{{ $property->title }} (<span class="badge text-bg-info align-middle ms-1"> {{ $property->propertyType->name }}  </span>)</h6>
                                 <div class="text-muted hstack gap-2 flex-wrap list-unstyled mb-3">
                                     <div>
                                         <i class="bi bi-geo-alt align-baseline me-1"></i> {{ $property->address }}
