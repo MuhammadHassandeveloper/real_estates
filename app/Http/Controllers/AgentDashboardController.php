@@ -37,6 +37,14 @@ class AgentDashboardController extends Controller
         $user->state = $request->input('state');
         $user->zip_code = $request->input('zip_code');
         $user->bio = $request->input('bio');
+
+        if(isset($request->photo)) {
+            $file = $request->photo;
+            $extension = $file->getClientOriginalExtension();
+            $filename = rand(0, 9999) . time() . '.' . $extension;
+            $file->move(public_path('property_images'), $filename);
+            $user->photo = $filename;
+        }
         $user->save();
         AppHelper::storeActivity('Profile Update','Update by','success',Sentinel::getUser()->id,1,Sentinel::getUser()->id,'Agent');
         return redirect()->back()->with('success', 'Profile updated successfully.');

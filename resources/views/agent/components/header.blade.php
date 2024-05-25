@@ -1,3 +1,6 @@
+@php
+use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
+@endphp
 <div class="vertical-overlay"></div>
 <header id="page-topbar">
     <div class="layout-width">
@@ -204,9 +207,13 @@
                 <div class="dropdown ms-sm-3 header-item topbar-user">
                     <button type="button" class="btn shadow-none" id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="d-flex align-items-center">
-                                    <img class="rounded-circle header-profile-user" src="{{ asset('admin/assets/images/users/32/avatar-1.jpg') }}" alt="Header Avatar">
+                                    @if(Sentinel::getUser()->photo)
+                                    <img class="rounded-circle header-profile-user" src="{{ asset('property_images/'.Sentinel::getUser()->photo) }}" alt="Header Avatar">
+                                    @else
+                                        <img class="rounded-circle header-profile-user" src="{{ asset('admin/assets/images/users/32/avatar-1.jpg') }}" alt="Header Avatar">
+                                    @endif
                                     <span class="text-start ms-xl-2">
-                                        <span class="d-none d-xl-inline-block ms-1 fw-medium user-name-text">{{ Cartalyst\Sentinel\Laravel\Facades\Sentinel::getUser()->first_name .' '. Cartalyst\Sentinel\Laravel\Facades\Sentinel::getUser()->last_name }}</span>
+                                        <span class="d-none d-xl-inline-block ms-1 fw-medium user-name-text">{{ Sentinel::getUser()->first_name .' '.Sentinel::getUser()->last_name }}</span>
                                         <span class="d-none d-xl-block ms-1 fs-sm user-name-sub-text">Welcome</span>
                                     </span>
                                 </span>
@@ -224,9 +231,10 @@
                             <span class="align-middle">Settings</span>
                         </a>
                         <a class="dropdown-item" href="{{ route('agent.activities') }}">
-                            <i class="mdi mdi-cog-outline text-muted fs-lg align-middle me-1"></i>
-                            <span class="align-middle">Activities</span>
+                                <i class="mdi mdi-walk text-muted fs-lg align-middle me-1"></i>
+                                <span class="align-middle">Activities</span>
                         </a>
+
                         <a class="dropdown-item" href="{{ url('logout') }}">
                             <i class="mdi mdi-logout text-muted fs-lg align-middle me-1"></i>
                             <span class="align-middle" data-key="t-logout">Logout</span>

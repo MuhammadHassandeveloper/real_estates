@@ -71,7 +71,7 @@
                                                     <h6 class="card-title mb-0">Personal Details</h6>
                                                 </div>
                                                 <div class="card-body">
-                                                    <form action="{{ route('agent.profile_update') }}" method="POST">
+                                                    <form action="{{ route('agent.profile_update') }}" method="POST" enctype="multipart/form-data">
                                                         @csrf
                                                         <div class="row">
                                                             <div class="col-lg-6">
@@ -128,6 +128,30 @@
                                                                     <textarea type="text" class="form-control" minlength="5" maxlength="1000" id="bio" name="bio" placeholder="Enter bio">{{ old('bio', $user->bio) }}</textarea>
                                                                 </div>
                                                             </div>
+
+                                                            <div class="col-lg-12">
+                                                                <label class="form-label mb-3">Profile Photo</label>
+                                                                <div class="text-center mb-3">
+                                                                    <div class="position-relative d-inline-block">
+                                                                        <div class="position-absolute top-100 start-100 translate-middle">
+                                                                            <label for="companyLogo-image-input" class="mb-0" data-bs-toggle="tooltip" data-bs-placement="right" aria-label="Select company logo" data-bs-original-title="Select company logo">
+                                                                                <span class="avatar-xs d-inline-block">
+                                                                                    <span class="avatar-title bg-light border rounded-circle text-muted cursor-pointer">
+                                                                                        <i class="ri-image-fill"></i>
+                                                                                    </span>
+                                                                                </span>
+                                                                            </label>
+                                                                            <input class="form-control d-none" id="companyLogo-image-input" name="photo" type="file" accept="image/png, image/gif, image/jpeg">
+                                                                        </div>
+                                                                        <div class="avatar-lg">
+                                                                            <div class="avatar-title bg-light rounded-3">
+                                                                                <img src="{{ asset('property_images/'.Sentinel::getUser()->photo) }}" alt="" id="companyLogo-img" class="avatar-md h-auto rounded-3 object-fit-cover">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
                                                             <div class="col-lg-12 d-flex justify-content-end text-end">
                                                                 <button type="submit" class="btn btn-success">Save Changes</button>
                                                             </div>
