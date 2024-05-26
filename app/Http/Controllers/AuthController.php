@@ -39,6 +39,7 @@ class AuthController extends Controller
 
     public function userStore(Request $request)
     {
+
         $validator = Validator::make($request->all(), [
             'first_name' => 'required|string',
             'last_name' => 'required|string',
@@ -82,7 +83,7 @@ class AuthController extends Controller
             $role = Sentinel::findRoleByName('customer');
          }elseif($request->has('role_type') && $request->input('role_type') == 'agent' ) {
           $role = Sentinel::findRoleByName('agent');
-        }elseif($request->has('agency') && $request->input('role_type') == 'agency' ) {
+        }elseif($request->has('role_type') && $request->input('role_type') == 'agency' ) {
             $role = Sentinel::findRoleByName('agency');
         }
         if ($role) {

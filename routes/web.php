@@ -4,13 +4,18 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FrontEndController;
 use App\Http\Controllers\AuthController;
 
-//admin
-use App\Http\Controllers\AdminDashboardController;
-use App\Http\Controllers\AdminPropertyController;
-
-//agent
+//agent Controllers
 use App\Http\Controllers\AgentDashboardController;
 use App\Http\Controllers\AgentPropertyController;
+
+//agency Controllers
+use App\Http\Controllers\AgencyDashboardController;
+use App\Http\Controllers\AgencyPropertyController;
+use App\Http\Controllers\AgencyAgentController;
+
+//admin Controllers
+use App\Http\Controllers\AdminDashboardController;
+use App\Http\Controllers\AdminPropertyController;
 
 
 // clear all
@@ -44,7 +49,7 @@ Route::get('agent/logout', [AuthController::class, 'agentLogout'])->name('agent.
 
 //Define the routes within prefix
 Route::group(['middleware' => 'admin', 'prefix' => '/'], function () {
-    // admin dashboard routes
+    // agent dashboard routes
     Route::group(array('prefix' => 'agent'), function () {
         Route::get('/dashboard', [AgentDashboardController::class, 'index'])->name('agent.index');
         Route::get('/profile', [AgentDashboardController::class, 'profile'])->name('agent.profile');
@@ -59,8 +64,36 @@ Route::group(['middleware' => 'admin', 'prefix' => '/'], function () {
         Route::post('/property-store', [AgentPropertyController::class, 'propertyStore'])->name('agent.store_property');
         Route::get('/property-detail/{id}', [AgentPropertyController::class, 'propertyDetail'])->name('agent.detail_property');
         Route::get('/property-edit/{id}', [AgentPropertyController::class, 'propertyEdit'])->name('agent.update_property');
-        Route::post('/property-update', [AgentPropertyController::class, 'propertyUpdate'])->name(' [agent.update_property');
+        Route::post('/property-update', [AgentPropertyController::class, 'propertyUpdate'])->name(' agent.update_property');
         Route::post('/delete', [AgentPropertyController::class, 'propertyDelete'])->name('agent.property.delete_property');
+    });
+
+
+    // agency dashboard routes
+    Route::group(array('prefix' => 'agency'), function () {
+        Route::get('/dashboard', [AgencyDashboardController::class, 'index'])->name('agency.index');
+        Route::get('/profile', [AgencyDashboardController::class, 'profile'])->name('agency.profile');
+        Route::post('/profile-update', [AgencyDashboardController::class, 'profileUpdate'])->name('agency.profile_update');
+        Route::post('/password-update', [AgencyDashboardController::class, 'passwordUpdate'])->name('agency.password_update');
+        Route::get('/activities', [AgencyDashboardController::class, 'activities'])->name('agency.activities');
+
+        //properties routes
+        Route::get('/properties', [AgencyPropertyController::class, 'properties'])->name('agency.properties');
+        Route::get('/property-create', [AgencyPropertyController::class, 'propertyCreate'])->name('agency.create_property');
+        Route::post('/upload', [AgencyPropertyController::class, 'uploadImages'])->name('agency.property.upload_images');
+        Route::post('/property-store', [AgencyPropertyController::class, 'propertyStore'])->name('agency.store_property');
+        Route::get('/property-detail/{id}', [AgencyPropertyController::class, 'propertyDetail'])->name('agency.detail_property');
+        Route::get('/property-edit/{id}', [AgencyPropertyController::class, 'propertyEdit'])->name('agency.update_property');
+        Route::post('/property-update', [AgencyPropertyController::class, 'propertyUpdate'])->name(' agency.update_property');
+        Route::post('/delete', [AgencyPropertyController::class, 'propertyDelete'])->name('agency.property.delete_property');
+
+        //agents routes
+        Route::get('/agents', [AgencyAgentController::class, 'agents'])->name('agency.agents');
+        Route::get('/agent-create', [AgencyAgentController::class, 'agentCreate'])->name('agency.create_agent');
+        Route::post('/agent-store', [AgencyAgentController::class, 'agentStore'])->name('agency.store_agent');
+        Route::get('/agent-edit/{id}', [AgencyAgentController::class, 'agentEdit'])->name('agency.update_agent');
+        Route::post('/agent-update', [AgencyAgentController::class, 'agentUpdate'])->name(' agency.update_agent');
+        Route::post('/agent-delete', [AgencyAgentController::class, 'agentDelete'])->name('agency.property.delete_agent');
     });
 
 
