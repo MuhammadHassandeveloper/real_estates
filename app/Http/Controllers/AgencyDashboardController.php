@@ -16,7 +16,7 @@ class AgencyDashboardController extends Controller
     {
         $data = array();
         $data['title'] = 'Agent Dashboard';
-        $data['properties'] = Property::where('agent_id', Sentinel::getUser()->id)->latest()->limit(8)->get();
+        $data['properties'] = Property::where('agency_id', Sentinel::getUser()->id)->latest()->limit(8)->get();
         return view('agency.dashboard.index', $data);
     }
 

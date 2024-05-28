@@ -42,10 +42,6 @@
                                 </div>
                                 <div class="col-xl-8 col-md-7">
                                     <div>
-                                        <div class="mb-3">
-                                            <h6 class="card-title">{{ $agent->agency ? $agent->agency->name : 'Real Estate Agency' }}</h6>
-                                            <p class="text-muted mb-0">{{ $agent->name }}</p>
-                                        </div>
                                         <div>
                                             <div class="table-responsive">
                                                 <table class="table table-sm table-nowrap table-borderless mb-0">
@@ -88,6 +84,14 @@
                     {{--agent properties--}}
                     <div class="card">
                         <div class="card-body">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                                        <h4 class="mb-sm-0">Agent Properties</h4>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
                                 <div class="d-flex justify-content-between align-items-center mx-0 row">
                                     <table class="datatables-basic table" id="DataTables_Table_0" role="grid"

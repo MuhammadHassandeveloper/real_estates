@@ -66,7 +66,6 @@
                                         </div>
                                     </div>
 
-
                                     <div class="col-lg-6 col-md-6 col-12">
                                         <div class="mb-3">
                                             <label for="Property-type-input" class="form-label">Property Type<span class="text-danger">*</span></label>
@@ -86,7 +85,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-lg-4 col-md-4 col-12">
+                                    <div class="col-lg-6 col-md-6 col-12">
                                         <div class="mb-3">
                                             <label for="bedroom-input" class="form-label">Bedroom<span class="text-danger">*</span></label>
                                             <input type="number" id="bedroom-input" name="bedrooms" class="form-control" placeholder="Enter Bedroom" value="{{ old('bedrooms') }}" required>

@@ -91,11 +91,11 @@ class AppHelper
     }
 
     public static function userDetail($id) {
-        return User::find($id)->first();
+        return User::find($id);
     }
 
     public static function propertyDetail($id) {
-        return Property::find($id)->first();
+        return Property::find($id);
     }
 
    public static function agentProperties($id) {
@@ -122,12 +122,12 @@ class AppHelper
 
     public static function featureDetail($id)
     {
-      return PropertyFeature::find($id)->first();
+      return PropertyFeature::find($id);
     }
 
     public static function propertyType($id)
     {
-        return PropertyType::find($id)->first();
+        return PropertyType::find($id);
     }
 
     public static function agency($id)

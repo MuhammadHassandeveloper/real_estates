@@ -54,10 +54,7 @@
                                             </th>
                                             <th scope="col" class="sort cursor-pointer" data-sort="propert_name">Title
                                             </th>
-                                            <th scope="col" class="sort cursor-pointer" data-sort="address">City</th>
-                                            <th scope="col" class="sort cursor-pointer desc" data-sort="agent_name">
-                                                State
-                                            </th>
+                                            <th scope="col" class="sort cursor-pointer" data-sort="address">Agent</th>
                                             <th scope="col" class="sort cursor-pointer" data-sort="price">Price</th>
                                             <th scope="col" class="sort cursor-pointer" data-sort="status">Status</th>
                                             <th scope="col" class="sort cursor-pointer">Action</th>
@@ -86,11 +83,12 @@
                                                            class="propert_name text-reset stretched-link">{{ $property->title }}</a>
                                                     </div>
                                                 </td>
-                                                <td class="address">{{ $property->city }}</td>
-                                                <td class="agent_name">{{ $property->state }}</td>
+                                                <td class="agent_name">
+                                                    @php $agent = App\Helpers\AppHelper::userDetail($property->agent_id); @endphp
+                                                    {{ $agent->first_name .' '.$agent->last_name }}
+                                                </td>
                                                 <td class="price">
-                                                    <span
-                                                        class="fw-medium">{{ App\Helpers\AppHelper::appCurrencySign() }}{{ $property->price }}</span>
+                                                    <span class="fw-medium">{{ App\Helpers\AppHelper::appCurrencySign() }}{{ $property->price }}</span>
                                                 </td>
                                                 <td>
                                                     <span
@@ -99,13 +97,13 @@
                                                 <td>
                                                     <ul class="d-flex gap-2 list-unstyled mb-0">
                                                         <li>
-                                                            <a href="{{url('agent/property-detail',$property->id)}}"
+                                                            <a href="{{route('agency.detail_property',$property->id)}}"
                                                                class="btn btn-subtle-primary btn-icon btn-sm ">
                                                                 <i class="ph-eye"></i>
                                                             </a>
                                                         </li>
                                                         <li>
-                                                            <a href="{{url('agent/property-edit',$property->id)}}"
+                                                            <a href="{{route('agency.edit_property',$property->id)}}"
                                                                class="btn btn-subtle-secondary btn-icon btn-sm edit-item-btn">
                                                                 <i class="ph-pencil"></i>
                                                             </a>

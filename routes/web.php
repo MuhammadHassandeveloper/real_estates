@@ -64,7 +64,7 @@ Route::group(['middleware' => 'admin', 'prefix' => '/'], function () {
         Route::post('/property-store', [AgentPropertyController::class, 'propertyStore'])->name('agent.store_property');
         Route::get('/property-detail/{id}', [AgentPropertyController::class, 'propertyDetail'])->name('agent.detail_property');
         Route::get('/property-edit/{id}', [AgentPropertyController::class, 'propertyEdit'])->name('agent.update_property');
-        Route::post('/property-update', [AgentPropertyController::class, 'propertyUpdate'])->name(' agent.update_property');
+        Route::post('/property-update', [AgentPropertyController::class, 'propertyUpdate'])->name('agent.update_property');
         Route::post('/delete', [AgentPropertyController::class, 'propertyDelete'])->name('agent.property.delete_property');
     });
 
@@ -83,8 +83,8 @@ Route::group(['middleware' => 'admin', 'prefix' => '/'], function () {
         Route::post('/upload', [AgencyPropertyController::class, 'uploadImages'])->name('agency.property.upload_images');
         Route::post('/property-store', [AgencyPropertyController::class, 'propertyStore'])->name('agency.store_property');
         Route::get('/property-detail/{id}', [AgencyPropertyController::class, 'propertyDetail'])->name('agency.detail_property');
-        Route::get('/property-edit/{id}', [AgencyPropertyController::class, 'propertyEdit'])->name('agency.update_property');
-        Route::post('/property-update', [AgencyPropertyController::class, 'propertyUpdate'])->name(' agency.update_property');
+        Route::get('/property-edit/{id}', [AgencyPropertyController::class, 'propertyEdit'])->name('agency.edit_property');
+        Route::post('/property-update', [AgencyPropertyController::class, 'propertyUpdate'])->name('agency.update_property');
         Route::post('/delete', [AgencyPropertyController::class, 'propertyDelete'])->name('agency.property.delete_property');
 
         //agents routes
