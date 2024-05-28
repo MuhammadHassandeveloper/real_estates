@@ -36,6 +36,23 @@
                     </a>
                 </li>
 
+                <li class="nav-item">
+                    <a href="#sidebarRealeEstateAgents" class="nav-link menu-link collapsed" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarRealeEstate">
+                        <i class="ph-buildings"></i>
+                        <span data-key="t-real-estate">Manage Agents</span>
+                    </a>
+                    <div class="collapse menu-dropdown @yield('agency-agents-drops')" id="sidebarRealeEstateAgents">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="{{ route('agency.agents') }}" class="nav-link @yield('agency_agents_list')">Agents</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a href="{{ route('agency.create_agent') }}" class="nav-link @yield('agency_agent_create')">Add Agent</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
 
                 <li class="nav-item">
                     <a href="#sidebarRealeEstate" class="nav-link menu-link collapsed" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarRealeEstate">
@@ -54,6 +71,8 @@
                         </ul>
                     </div>
                 </li>
+
+
 
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="widgets.html">

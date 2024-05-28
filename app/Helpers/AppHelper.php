@@ -91,18 +91,22 @@ class AppHelper
     }
 
     public static function userDetail($id) {
-        return User::find($id);
+        return User::find($id)->first();
     }
 
     public static function propertyDetail($id) {
-        return Property::find($id);
+        return Property::find($id)->first();
     }
 
    public static function agentProperties($id) {
-        return Property::where('agent_id',$id);
+        return Property::where('agent_id',$id)->get();
     }
+    public static function agentPropertiescount($id) {
+        return Property::where('agent_id',$id)->count();
+    }
+
     public static function customerProperties($id) {
-        return Property::where('user_id',$id);
+        return Property::where('user_id',$id)->get();
     }
 
 
@@ -118,12 +122,17 @@ class AppHelper
 
     public static function featureDetail($id)
     {
-      return PropertyFeature::find($id);
+      return PropertyFeature::find($id)->first();
     }
 
     public static function propertyType($id)
     {
-        return PropertyType::find($id);
+        return PropertyType::find($id)->first();
+    }
+
+    public static function agency($id)
+    {
+        return User::where('id',$id)->first();
     }
 
     public static function property_category($status) {

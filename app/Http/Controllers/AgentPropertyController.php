@@ -12,14 +12,14 @@ use Illuminate\Http\Request;
 use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
 
 
-class AgencyPropertyController extends Controller
+class AgentPropertyController extends Controller
 {
     public function properties()
     {
         $data = array();
         $data['title'] = 'Agent Properties';
         $data['properties'] = Property::where('agency_id', Sentinel::getUser()->id)->get();
-        return view('agency.properties.index', $data);
+        return view('agent.properties.index', $data);
     }
 
     public function propertyCreate()
@@ -27,9 +27,8 @@ class AgencyPropertyController extends Controller
         $data = array();
         $data['ptypes'] = PropertyType::get();
         $data['ftypes'] = PropertyFeature::get();
-        $data['agents'] = User::where('agency_id', Sentinel::getUser()->id)->get();
         $data['title'] = 'Create Property';
-        return view('agency.properties.create', $data);
+        return view('agent.properties.create', $data);
     }
 
 
@@ -86,8 +85,7 @@ class AgencyPropertyController extends Controller
         ]);
 
         $property = new Property();
-        $property->agent_id = $request->agent_id;
-        $property->agency_id = Sentinel::getUser()->id;
+        $property->agent_id = Sentinel::getUser()->id;
         $property->title = $request->title;
         $property->property_type_id = $request->property_type_id;
         $property->property_category = $request->property_category;
@@ -138,7 +136,7 @@ class AgencyPropertyController extends Controller
             Sentinel::getUser()->id, // User ID
             1, // Type
             Sentinel::getUser()->id, // System ID
-            'Agency' // Role
+            'Agent' // Role
         );
         return redirect()->route('agency.properties')->with('success', 'Property added successfully.');
     }
@@ -149,10 +147,9 @@ class AgencyPropertyController extends Controller
         $data['ptypes'] = PropertyType::get();
         $data['property'] = Property::find($id);
         $data['ftypes'] = PropertyFeature::get();
-        $data['agents'] = User::where('agency_id', Sentinel::getUser()->id)->get();
         $data['pimages'] = PropertyImage::where('property_id', $id)->get();
         $data['title'] = 'Create Property';
-        return view('agency.properties.edit', $data);
+        return view('agent.properties.edit', $data);
     }
 
     public function propertyUpdate(Request $request)
@@ -179,8 +176,7 @@ class AgencyPropertyController extends Controller
 
         $id = $request->id;
         $property = Property::findOrFail($id);
-        $property->agent_id = $request->agent_id;
-        $property->agency_id = Sentinel::getUser()->id;
+        $property->agent_id = Sentinel::getUser()->id;
         $property->title = $request->title;
         $property->property_type_id = $request->property_type_id;
         $property->property_category = $request->property_category;
@@ -242,10 +238,10 @@ class AgencyPropertyController extends Controller
             Sentinel::getUser()->id, // User ID
             1, // Type
             Sentinel::getUser()->id, // System ID
-            'Agency' // Role
+            'Agent' // Role
         );
 
-        return redirect()->route('agency.properties')->with('success', 'Property updated successfully.');
+        return redirect()->route('agent.properties')->with('success', 'Property updated successfully.');
     }
 
 
@@ -258,7 +254,7 @@ class AgencyPropertyController extends Controller
         $data['property'] = Property::find($id);
         $data['pimages'] = PropertyImage::where('property_id', $id)->get();
         $data['title'] = 'Property Details';
-        return view('agency.properties.detail', $data);
+        return view('agent.properties.detail', $data);
     }
 
     public function propertyDelete(Request $request)
@@ -272,7 +268,7 @@ class AgencyPropertyController extends Controller
             Sentinel::getUser()->id, // User ID
             1, // Type
             Sentinel::getUser()->id, // System ID
-            'Agency' // Role
+            'Agent' // Role
         );
         return redirect()->route('agency.properties')->with('success', 'Property deleted successfully.');
     }

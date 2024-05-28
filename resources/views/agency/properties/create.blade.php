@@ -49,6 +49,26 @@
 
                                     <div class="col-lg-6 col-md-6 col-12">
                                         <div class="mb-3">
+                                            <label for="agent_id-input" class="form-label">Agent<span class="text-danger">*</span></label>
+                                            <select class="form-select" name="agent_id" id="agent_id-input" data-choices="" data-choices-search-false="">
+                                                <option value="" selected>Select Agent</option>
+                                                @if($agents)
+                                                    @foreach($agents as $agent)
+                                                        <option value="{{ $agent->id }}" {{ old('agent_id') == $agent->id ? 'selected' : '' }}>{{ $agent->first_name .''.$agent->last_name }}</option>
+                                                    @endforeach
+                                                @endif
+                                            </select>
+                                            @error('agent_id')
+                                            <span class="text-danger error" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-lg-6 col-md-6 col-12">
+                                        <div class="mb-3">
                                             <label for="Property-type-input" class="form-label">Property Type<span class="text-danger">*</span></label>
                                             <select class="form-select" name="property_type_id" id="Property-type-input" data-choices="" data-choices-search-false="">
                                                 <option value="" selected>Select Property Type</option>
@@ -114,7 +134,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-lg-4 col-md-4 col-12">
+                                    <div class="col-lg-6 col-md-6 col-12">
                                         <div class="mb-3">
                                             <label for="sqft-input" class="form-label">SQFT<span class="text-danger">*</span></label>
                                             <input type="number" class="form-control" name="size_sqft" id="sqft-input" placeholder="Enter sqft" value="{{ old('size_sqft') }}" required>
@@ -126,7 +146,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-lg-4 col-md-4 col-12">
+                                    <div class="col-lg-6 col-md-6 col-12">
                                         <div class="mb-3">
                                             <label for="Property-price-input" class="form-label">Price<span class="text-danger">*</span></label>
                                             <div class="input-group">

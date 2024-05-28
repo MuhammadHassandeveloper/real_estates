@@ -13,6 +13,7 @@ class Property extends Model
         'title',
         'property_type_id',
         'agent_id',
+        'agency_id',
         'property_category',
         'property_features',
         'size_sqft',

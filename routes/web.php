@@ -91,8 +91,9 @@ Route::group(['middleware' => 'admin', 'prefix' => '/'], function () {
         Route::get('/agents', [AgencyAgentController::class, 'agents'])->name('agency.agents');
         Route::get('/agent-create', [AgencyAgentController::class, 'agentCreate'])->name('agency.create_agent');
         Route::post('/agent-store', [AgencyAgentController::class, 'agentStore'])->name('agency.store_agent');
-        Route::get('/agent-edit/{id}', [AgencyAgentController::class, 'agentEdit'])->name('agency.update_agent');
-        Route::post('/agent-update', [AgencyAgentController::class, 'agentUpdate'])->name(' agency.update_agent');
+        Route::get('/agent-detail/{id}', [AgencyAgentController::class, 'agentDetail'])->name('agency.detail_agent');
+        Route::get('/agent-edit/{id}', [AgencyAgentController::class, 'agentEdit'])->name('agency.edit_agent');
+        Route::post('/agent-update', [AgencyAgentController::class, 'agentUpdate'])->name('agency.update_agent');
         Route::post('/agent-delete', [AgencyAgentController::class, 'agentDelete'])->name('agency.property.delete_agent');
     });
 
