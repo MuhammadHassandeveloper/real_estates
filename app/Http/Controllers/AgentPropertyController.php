@@ -18,7 +18,7 @@ class AgentPropertyController extends Controller
     {
         $data = array();
         $data['title'] = 'Agent Properties';
-        $data['properties'] = Property::where('agency_id', Sentinel::getUser()->id)->get();
+        $data['properties'] = Property::where('agent_id', Sentinel::getUser()->id)->get();
         return view('agent.properties.index', $data);
     }
 
@@ -86,6 +86,9 @@ class AgentPropertyController extends Controller
 
         $property = new Property();
         $property->agent_id = Sentinel::getUser()->id;
+        if(Sentinel::getUser()->agency_id) {
+            $property->agency_id = Sentinel::getUser()->agency_id;
+        }
         $property->title = $request->title;
         $property->property_type_id = $request->property_type_id;
         $property->property_category = $request->property_category;
@@ -131,14 +134,14 @@ class AgentPropertyController extends Controller
 
         AppHelper::storeActivity(
             'New Property Created', // Heading
-            'Property created by Agency ' . Sentinel::getUser()->first_name . ' ' . Sentinel::getUser()->last_name . '.', // Content
+            'Property created by Agent ' . Sentinel::getUser()->first_name . ' ' . Sentinel::getUser()->last_name . '.', // Content
             'success', // Color
             Sentinel::getUser()->id, // User ID
             1, // Type
             Sentinel::getUser()->id, // System ID
             'Agent' // Role
         );
-        return redirect()->route('agency.properties')->with('success', 'Property added successfully.');
+        return redirect()->route('agent.properties')->with('success', 'Property added successfully.');
     }
 
     public function propertyEdit($id)
@@ -233,7 +236,7 @@ class AgentPropertyController extends Controller
         }
         AppHelper::storeActivity(
             'Property Updated', // Heading
-            'Property updated by Agency ' . Sentinel::getUser()->first_name . ' ' . Sentinel::getUser()->last_name . '.', // Content
+            'Property updated by Agent ' . Sentinel::getUser()->first_name . ' ' . Sentinel::getUser()->last_name . '.', // Content
             'success', // Color
             Sentinel::getUser()->id, // User ID
             1, // Type
@@ -263,14 +266,14 @@ class AgentPropertyController extends Controller
         PropertyImage::where('property_id', $request->id)->delete();
         AppHelper::storeActivity(
             'Property Deleted', // Heading
-            'Property deleted by Agency ' . Sentinel::getUser()->first_name . ' ' . Sentinel::getUser()->last_name . '.', // Content
+            'Property deleted by Agent ' . Sentinel::getUser()->first_name . ' ' . Sentinel::getUser()->last_name . '.', // Content
             'success', // Color
             Sentinel::getUser()->id, // User ID
             1, // Type
             Sentinel::getUser()->id, // System ID
             'Agent' // Role
         );
-        return redirect()->route('agency.properties')->with('success', 'Property deleted successfully.');
+        return redirect()->route('agent.properties')->with('success', 'Property deleted successfully.');
     }
 
 }
