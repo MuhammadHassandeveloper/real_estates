@@ -8,6 +8,7 @@ use App\Models\CleaningPrice;
 use App\Models\PaypalAccount;
 use App\Models\Property;
 use App\Models\PropertyFeature;
+use App\Models\PropertyImage;
 use App\Models\PropertyType;
 use App\Models\SiteSetting;
 use App\Models\Subscriptions;
@@ -157,6 +158,12 @@ class AppHelper
             ->first();
         return $roleName ? $roleName->name : null;
     }
+
+    public static function propertImages($id) {
+        return $pimages = PropertyImage::where('property_id', $id)->get();
+
+    }
+
 
     public static function storeActivity($heading, $detail, $color, $uid, $type, $system_id,$role)
     {

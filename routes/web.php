@@ -28,11 +28,20 @@ Route::get('/all-clear', function () {
 
 //forntend routes
 Route::get('/', [FrontEndController::class, 'index'])->name('frontend.index');
+Route::get('/properties', [FrontEndController::class, 'properties'])->name('frontend.properties');
+Route::get('/properties/filter', [FrontEndController::class, 'filterProperties'])->name('frontend.properties.filter');
+
+Route::get('/property-detail/{id}/{title}', [FrontEndController::class, 'propertyDetail'])->name('frontend.property-detail');
+Route::get('/agencies', [FrontEndController::class, 'agencies'])->name('frontend.agencies');
+Route::get('/agents', [FrontEndController::class, 'agents'])->name('frontend.agents');
+Route::get('/about-us', [FrontEndController::class, 'aboutUs'])->name('frontend.about-us');
+Route::get('/contact-us', [FrontEndController::class, 'contactUs'])->name('frontend.contact-us');
+
+
 
 Route::get('/login', [AuthController::class, 'loginForm'])->name('frontend.login_form');
 Route::get('/signup', [AuthController::class, 'signupForm'])->name('frontend.signup_form');
 Route::post('/user-store', [AuthController::class, 'userStore'])->name('frontend.user_store');
-
 Route::get('logout', [AuthController::class, 'destroy'])->name('logout');
 Route::get('/', [FrontEndController::class, 'index'])->name('frontend.index');
 

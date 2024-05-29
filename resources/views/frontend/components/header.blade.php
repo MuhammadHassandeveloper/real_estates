@@ -40,21 +40,63 @@
                         <a href="{{ url('/') }}">Home<span class="submenu-indicator"></span></a>
                     </li>
 
+                    <li class="@yield('properties-page')">
+                        <a href="{{ url('/properties') }}">Properties<span class="submenu-indicator"></span></a>
+                    </li>
+
+                    <li class="@yield('agencies-page')">
+                        <a href="{{ url('/agencies') }}">Agencies<span class="submenu-indicator"></span></a>
+                    </li>
+
+                    <li class="@yield('agents-page')">
+                        <a href="{{ url('/agents') }}">Agents<span class="submenu-indicator"></span></a>
+                    </li>
+
+                    <li class="@yield('about-us-page')">
+                        <a href="{{ url('/agents') }}">About Us<span class="submenu-indicator"></span></a>
+                    </li>
+
+                    <li class="@yield('contact-us-page')">
+                        <a href="{{ url('/contact-us') }}">Agents<span class="submenu-indicator"></span></a>
+                    </li>
 
                     @if (!Sentinel::check())
-                    <li class="@yield('login-page')">
+                    <li class="active">
                         <a href="{{ url('login') }}">
                             <i class="fas fa-user-circle mr-1"></i>Login
                         </a>
                     </li>
-                    @endif
+                    @else
+                        @php $user = Sentinel::getUser();@endphp
+                        @if ($user->inRole('admin'))
+                            <li class="@yield('login-page')">
+                                <a href="{{ url('/admin/dashboard') }}">
+                                    <i class="fas fa-user-circle mr-1"></i>Dashboard
+                                </a>
+                            </li>
 
-                </ul>
+                            @elseif ($user->inRole('agent')) {
+                             <li class="active">
+                                <a href="{{ url('/agent/dashboard') }}">
+                                    <i class="fas fa-user-circle mr-1"></i>Dashboard
+                                </a>
+                            </li>
 
-                <ul class="nav-menu nav-menu-social align-to-right">
-                    <li class="add-listing theme-bg">
-                        <a href="submit-property.html">Add Property</a>
-                    </li>
+                            @elseif ($user->inRole('agency')) {
+                            <li class="active">
+                                <a href="{{ url('/agency/dashboard') }}">
+                                    <i class="fas fa-user-circle mr-1"></i>Dashboard
+                                </a>
+                            </li>
+
+                            @elseif ($user->inRole('user')) {
+                            <li class="active">
+                                <a href="{{ url('/user/dashboard') }}">
+                                    <i class="fas fa-user-circle mr-1"></i>Dashboard
+                                </a>
+                            </li>
+                        @endif
+                        @endif
                 </ul>
             </div>
         </nav>
