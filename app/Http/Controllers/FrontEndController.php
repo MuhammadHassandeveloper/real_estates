@@ -17,25 +17,32 @@ class FrontEndController extends Controller
 
     public function properties(Request $request) {
         $properties = Property::query();
-        if ($request->filled('min_price')) {
+        if ($request->input('property_category')) {
+            $properties->where('property_category', $request->property_category);
+        }
+        if ($request->input('min_price')) {
             $properties->where('price', '>=', $request->min_price);
         }
-        if ($request->filled('max_price')) {
+        if ($request->input('max_price')) {
             $properties->where('price', '<=', $request->max_price);
         }
-        if ($request->filled('bedrooms')) {
-            $properties->where('bedrooms', $request->bedrooms);
-        }
-        if ($request->filled('bathrooms')) {
+
+        if ($request->input('bathrooms')) {
             $properties->where('bathrooms', $request->bathrooms);
         }
-        if ($request->filled('property_category')) {
-            $properties->where('property_category', $request->property_category);
+
+        if ($request->input('bedrooms')) {
+            $properties->where('bedrooms', $request->bedrooms);
+        }
+
+        if ($request->filled('city')) {
+            $properties->where('city',$request->city);
         }
 
         $data = [];
         $data['title'] = 'Properties';
-        $data['properties'] = $properties->paginate(10);
+        $data['properties'] = $properties->paginate(12);
+        $data['fproperties'] = Property::get();
         return view('frontend.properties',$data);
     }
 
