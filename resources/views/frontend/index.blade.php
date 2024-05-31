@@ -4,6 +4,9 @@
 @section('style')
 @stop
 @section('content')
+    @php
+        use Carbon\Carbon;
+    @endphp
 
     <!-- ============================ Hero Banner  Start================================== -->
     <div class="image-cover hero-banner" style="background:url('{{ asset('assets/img/a.jpg') }}') no-repeat;">
@@ -118,7 +121,7 @@
                             <p>Find new & featured property for you.</p>
                         </div>
                         <div class="sec-right">
-                            <a href="half-map.html">View All<i class="ti-angle-double-right ml-2"></i></a>
+                            <a href="{{ route('frontend.properties') }}">View All<i class="ti-angle-double-right ml-2"></i></a>
                         </div>
                     </div>
                 </div>
@@ -127,259 +130,63 @@
             <div class="row">
                 <div class="col-lg-12 col-md-12">
                     <div class="property-slide">
-
-                        <!-- Single Property -->
-                        <div class="single-items">
+                        @if($properties && $properties->count() > 0)
+                            @foreach($properties as $property)
+                                @php
+                                    $pimages = App\Helpers\AppHelper::propertImages($property->id);
+                                    $ptype = App\Helpers\AppHelper::propertyType($property->id);
+                                    $created_at = Carbon::parse($property->created_at);
+                                    $humanDiff = $created_at->diffForHumans();
+                                @endphp
+                                <!-- Single Property -->
+                                <div class="single-items">
                             <div class="property_item classical-list">
                                 <div class="image">
-                                    <a href="single-property-3.html">
-                                        <img src="assets/img/p-1.jpg" alt="latest property" class="img-fluid">
+                                    <a href="{{ route('frontend.property-detail', ['id' => $property->id, 'title' => $property->title]) }}">
+                                        <img src="{{ asset($pimages->first()->image_path) }}" alt="latest property" class="img-fluid">
                                     </a>
+
                                     <div class="sb-date">
-                                        <span class="tag"><i class="ti-calendar"></i>4 days ago</span>
+                                        <span class="tag"><i class="ti-calendar"></i>{{ $humanDiff }}</span>
                                     </div>
-                                    <span class="tag_t">For Rent</span>
+                                    <span class="tag_t">{{ $property->property_category }}</span>
                                 </div>
                                 <div class="proerty_content">
                                     <div class="proerty_text">
-                                        <h3 class="captlize"><a href="single-property-3.html">Avenue apartment</a></h3>
-                                        <p class="proerty_price">$7540</p>
+                                        <h3 class="captlize">
+                                            <a href="{{ route('frontend.property-detail', ['id' => $property->id, 'title' => $property->title]) }}">
+                                                {{ $property->title }}
+                                            </a>
+                                        </h3>
+                                        <p class="proerty_price">{{ App\Helpers\AppHelper::appCurrencySign() }}{{ number_format($property->price) }}</p>
                                     </div>
-                                    <p class="property_add">302, Seek Velly Canada</p>
+                                    <p class="property_add">{{ $property->address }}, {{ $property->city }}</p>
                                     <div class="property_meta">
                                         <div class="list-fx-features">
                                             <div class="listing-card-info-icon">
-                                                <span class="inc-fleat inc-bed">2 Beds</span>
+                                                <span class="inc-fleat inc-bed">{{ $property->bedrooms }}</span>
                                             </div>
                                             <div class="listing-card-info-icon">
-                                                <span class="inc-fleat inc-type">Corporate</span>
+                                                <span class="inc-fleat inc-type">{{ $ptype->name }}</span>
                                             </div>
                                             <div class="listing-card-info-icon">
-                                                <span class="inc-fleat inc-area">1,580 sqft</span>
+                                                <span class="inc-fleat inc-area">{{ $property->size_sqft }}</span>
                                             </div>
                                             <div class="listing-card-info-icon">
-                                                <span class="inc-fleat inc-bath">2 Bath</span>
+                                                <span class="inc-fleat inc-bath">{{ $property->bathrooms }}</span>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="property_links">
-                                        <a href="single-property-3.html" class="btn btn-theme">Request Info</a>
-                                        <a href="single-property-3.html" class="btn btn-theme-light">Property Detail</a>
+                                        <a href="{{ route('frontend.property-detail', ['id' => $property->id, 'title' => $property->title]) }}" class="btn btn-theme-light">Property Detail</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-                        <!-- Single Property -->
-                        <div class="single-items">
-                            <div class="property_item classical-list">
-                                <div class="image">
-                                    <a href="single-property-3.html">
-                                        <img src="assets/img/p-2.jpg" alt="latest property" class="img-fluid">
-                                    </a>
-                                    <div class="sb-date">
-                                        <span class="tag"><i class="ti-calendar"></i>4 days ago</span>
-                                    </div>
-                                    <span class="tag_t">For Rent</span>
-                                </div>
-                                <div class="proerty_content">
-                                    <div class="proerty_text">
-                                        <h3 class="captlize"><a href="single-property-3.html">Preet apartment</a></h3>
-                                        <p class="proerty_price">$17540</p>
-                                    </div>
-                                    <p class="property_add">302, Seek Velly Canada</p>
-                                    <div class="property_meta">
-                                        <div class="list-fx-features">
-                                            <div class="listing-card-info-icon">
-                                                <span class="inc-fleat inc-bed">2 Beds</span>
-                                            </div>
-                                            <div class="listing-card-info-icon">
-                                                <span class="inc-fleat inc-type">Offices</span>
-                                            </div>
-                                            <div class="listing-card-info-icon">
-                                                <span class="inc-fleat inc-area">1,580 sqft</span>
-                                            </div>
-                                            <div class="listing-card-info-icon">
-                                                <span class="inc-fleat inc-bath">2 Bath</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="property_links">
-                                        <a href="single-property-3.html" class="btn btn-theme">Request Info</a>
-                                        <a href="single-property-3.html" class="btn btn-theme-light">Property Detail</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Single Property -->
-                        <div class="single-items">
-                            <div class="property_item classical-list">
-                                <div class="image">
-                                    <a href="single-property-3.html">
-                                        <img src="assets/img/p-3.jpg" alt="latest property" class="img-fluid">
-                                    </a>
-                                    <div class="sb-date">
-                                        <span class="tag"><i class="ti-calendar"></i>5 hours ago</span>
-                                    </div>
-                                    <span class="tag_t">For Sale</span>
-                                </div>
-                                <div class="proerty_content">
-                                    <div class="proerty_text">
-                                        <h3 class="captlize"><a href="single-property-3.html">Owl Lio Apartment</a></h3>
-                                        <p class="proerty_price">$240,540</p>
-                                    </div>
-                                    <p class="property_add">302, Seek Velly Canada</p>
-                                    <div class="property_meta">
-                                        <div class="list-fx-features">
-                                            <div class="listing-card-info-icon">
-                                                <span class="inc-fleat inc-bed">2 Beds</span>
-                                            </div>
-                                            <div class="listing-card-info-icon">
-                                                <span class="inc-fleat inc-type">Offices</span>
-                                            </div>
-                                            <div class="listing-card-info-icon">
-                                                <span class="inc-fleat inc-area">1,580 sqft</span>
-                                            </div>
-                                            <div class="listing-card-info-icon">
-                                                <span class="inc-fleat inc-bath">2 Bath</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="property_links">
-                                        <a href="single-property-3.html" class="btn btn-theme">Request Info</a>
-                                        <a href="single-property-3.html" class="btn btn-theme-light">Property Detail</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Single Property -->
-                        <div class="single-items">
-                            <div class="property_item classical-list">
-                                <div class="image">
-                                    <a href="single-property-3.html">
-                                        <img src="assets/img/p-4.jpg" alt="latest property" class="img-fluid">
-                                    </a>
-                                    <div class="sb-date">
-                                        <span class="tag"><i class="ti-calendar"></i>30 min ago</span>
-                                    </div>
-                                    <span class="tag_t">For Rent</span>
-                                </div>
-                                <div class="proerty_content">
-                                    <div class="proerty_text">
-                                        <h3 class="captlize"><a href="single-property-3.html">Avenue apartment</a></h3>
-                                        <p class="proerty_price">$8540</p>
-                                    </div>
-                                    <p class="property_add">302, Seek Velly Canada</p>
-                                    <div class="property_meta">
-                                        <div class="list-fx-features">
-                                            <div class="listing-card-info-icon">
-                                                <span class="inc-fleat inc-bed">2 Beds</span>
-                                            </div>
-                                            <div class="listing-card-info-icon">
-                                                <span class="inc-fleat inc-type">Corporate</span>
-                                            </div>
-                                            <div class="listing-card-info-icon">
-                                                <span class="inc-fleat inc-area">1,580 sqft</span>
-                                            </div>
-                                            <div class="listing-card-info-icon">
-                                                <span class="inc-fleat inc-bath">2 Bath</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="property_links">
-                                        <a href="single-property-3.html" class="btn btn-theme">Request Info</a>
-                                        <a href="single-property-3.html" class="btn btn-theme-light">Property Detail</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Single Property -->
-                        <div class="single-items">
-                            <div class="property_item classical-list">
-                                <div class="image">
-                                    <a href="single-property-3.html">
-                                        <img src="assets/img/p-5.jpg" alt="latest property" class="img-fluid">
-                                    </a>
-                                    <div class="sb-date">
-                                        <span class="tag"><i class="ti-calendar"></i>2 days ago</span>
-                                    </div>
-                                    <span class="tag_t">For Rent</span>
-                                </div>
-                                <div class="proerty_content">
-                                    <div class="proerty_text">
-                                        <h3 class="captlize"><a href="single-property-3.html">Energy Certificate For EU</a></h3>
-                                        <p class="proerty_price">$17840</p>
-                                    </div>
-                                    <p class="property_add">302, Seek Velly Canada</p>
-                                    <div class="property_meta">
-                                        <div class="list-fx-features">
-                                            <div class="listing-card-info-icon">
-                                                <span class="inc-fleat inc-bed">2 Beds</span>
-                                            </div>
-                                            <div class="listing-card-info-icon">
-                                                <span class="inc-fleat inc-type">Garage</span>
-                                            </div>
-                                            <div class="listing-card-info-icon">
-                                                <span class="inc-fleat inc-area">1,580 sqft</span>
-                                            </div>
-                                            <div class="listing-card-info-icon">
-                                                <span class="inc-fleat inc-bath">2 Bath</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="property_links">
-                                        <a href="single-property-3.html" class="btn btn-theme">Request Info</a>
-                                        <a href="single-property-3.html" class="btn btn-theme-light">Property Detail</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Single Property -->
-                        <div class="single-items">
-                            <div class="property_item classical-list">
-                                <div class="image">
-                                    <a href="single-property-3.html">
-                                        <img src="assets/img/p-6.jpg" alt="latest property" class="img-fluid">
-                                    </a>
-                                    <div class="sb-date">
-                                        <span class="tag"><i class="ti-calendar"></i>4 days ago</span>
-                                    </div>
-                                    <span class="tag_t">For Rent</span>
-                                </div>
-                                <div class="proerty_content">
-                                    <div class="proerty_text">
-                                        <h3 class="captlize"><a href="single-property-3.html">Luxury Home In Manhattan</a></h3>
-                                        <p class="proerty_price">$6870</p>
-                                    </div>
-                                    <p class="property_add">302, Seek Velly Canada</p>
-                                    <div class="property_meta">
-                                        <div class="list-fx-features">
-                                            <div class="listing-card-info-icon">
-                                                <span class="inc-fleat inc-bed">2 Beds</span>
-                                            </div>
-                                            <div class="listing-card-info-icon">
-                                                <span class="inc-fleat inc-type">Offices</span>
-                                            </div>
-                                            <div class="listing-card-info-icon">
-                                                <span class="inc-fleat inc-area">1,580 sqft</span>
-                                            </div>
-                                            <div class="listing-card-info-icon">
-                                                <span class="inc-fleat inc-bath">2 Bath</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="property_links">
-                                        <a href="single-property-3.html" class="btn btn-theme">Request Info</a>
-                                        <a href="single-property-3.html" class="btn btn-theme-light">Property Detail</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
+                            @endforeach
+                        @else
+                            <p>No properties available.</p>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -551,237 +358,63 @@
             <div class="row">
                 <div class="col-lg-12 col-md-12">
                     <div class="property-slide">
+                        @if($fproperties && $properties->count() > 0)
+                            @foreach($fproperties as $property)
+                                @php
+                                    $pimages = App\Helpers\AppHelper::propertImages($property->id);
+                                    $ptype = App\Helpers\AppHelper::propertyType($property->id);
+                                    $created_at = Carbon::parse($property->created_at);
+                                    $humanDiff = $created_at->diffForHumans();
+                                @endphp
+                                    <!-- Single Property -->
+                                <div class="single-items">
+                                    <div class="property_item classical-list">
+                                        <div class="image">
+                                            <a href="{{ route('frontend.property-detail', ['id' => $property->id, 'title' => $property->title]) }}">
+                                                <img src="{{ asset($pimages->first()->image_path) }}" alt="latest property" class="img-fluid">
+                                            </a>
 
-                        <!-- Single Property -->
-                        <div class="single-items">
-                            <div class="property-listing property-2">
-
-                                <div class="listing-img-wrapper">
-                                    <div class="list-img-slide">
-                                        <div class="click">
-                                            <div><a href="single-property-1.html"><img src="assets/img/p-1.jpg" class="img-fluid mx-auto" alt="" /></a></div>
-                                            <div><a href="single-property-1.html"><img src="assets/img/p-2.jpg" class="img-fluid mx-auto" alt="" /></a></div>
-                                            <div><a href="single-property-1.html"><img src="assets/img/p-3.jpg" class="img-fluid mx-auto" alt="" /></a></div>
+                                            <div class="sb-date">
+                                                <span class="tag"><i class="ti-calendar"></i>{{ $humanDiff }}</span>
+                                            </div>
+                                            <span class="tag_t">{{ $property->property_category }}</span>
                                         </div>
-                                    </div>
-                                    <span class="property-type">For Rent</span>
-                                </div>
-
-                                <div class="listing-detail-wrapper pb-0">
-                                    <div class="listing-short-detail">
-                                        <h4 class="listing-name"><a href="single-property-1.html">New Clue Apartment</a><i class="list-status ti-check"></i></h4>
-                                    </div>
-                                </div>
-
-                                <div class="price-features-wrapper">
-                                    <div class="listing-price-fx">
-                                        <h6 class="listing-card-info-price price-prefix">10,547<span class="price-suffix">/mo</span></h6>
-                                    </div>
-                                    <div class="list-fx-features">
-                                        <div class="listing-card-info-icon">
-                                            <span class="inc-fleat inc-bed">3 Beds</span>
-                                        </div>
-                                        <div class="listing-card-info-icon">
-                                            <span class="inc-fleat inc-bath">1 Bath</span>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-
-                        <!-- Single Property -->
-                        <div class="single-items">
-                            <div class="property-listing property-2">
-
-                                <div class="listing-img-wrapper">
-                                    <div class="list-img-slide">
-                                        <div class="click">
-                                            <div><a href="single-property-1.html"><img src="assets/img/p-4.jpg" class="img-fluid mx-auto" alt="" /></a></div>
-                                            <div><a href="single-property-1.html"><img src="assets/img/p-5.jpg" class="img-fluid mx-auto" alt="" /></a></div>
-                                            <div><a href="single-property-1.html"><img src="assets/img/p-6.jpg" class="img-fluid mx-auto" alt="" /></a></div>
-                                        </div>
-                                    </div>
-                                    <div class="listing-price">
-                                        <h4 class="list-pr">$2,580</h4>
-                                    </div>
-                                    <span class="property-type">For Sale</span>
-                                </div>
-
-                                <div class="listing-detail-wrapper pb-0">
-                                    <div class="listing-short-detail">
-                                        <h4 class="listing-name"><a href="single-property-1.html">Resort Valley Ocs</a><i class="list-status ti-check"></i></h4>
-                                    </div>
-                                </div>
-
-                                <div class="price-features-wrapper">
-                                    <div class="listing-price-fx">
-                                        <h6 class="listing-card-info-price price-prefix">85,470</h6>
-                                    </div>
-                                    <div class="list-fx-features">
-                                        <div class="listing-card-info-icon">
-                                            <span class="inc-fleat inc-bed">2 Beds</span>
-                                        </div>
-                                        <div class="listing-card-info-icon">
-                                            <span class="inc-fleat inc-bath">2 Bath</span>
+                                        <div class="proerty_content">
+                                            <div class="proerty_text">
+                                                <h3 class="captlize">
+                                                    <a href="{{ route('frontend.property-detail', ['id' => $property->id, 'title' => $property->title]) }}">
+                                                        {{ $property->title }}
+                                                    </a>
+                                                </h3>
+                                                <p class="proerty_price">{{ App\Helpers\AppHelper::appCurrencySign() }}{{ number_format($property->price) }}</p>
+                                            </div>
+                                            <p class="property_add">{{ $property->address }}, {{ $property->city }}</p>
+                                            <div class="property_meta">
+                                                <div class="list-fx-features">
+                                                    <div class="listing-card-info-icon">
+                                                        <span class="inc-fleat inc-bed">{{ $property->bedrooms }}</span>
+                                                    </div>
+                                                    <div class="listing-card-info-icon">
+                                                        <span class="inc-fleat inc-type">{{ $ptype->name }}</span>
+                                                    </div>
+                                                    <div class="listing-card-info-icon">
+                                                        <span class="inc-fleat inc-area">{{ $property->size_sqft }}</span>
+                                                    </div>
+                                                    <div class="listing-card-info-icon">
+                                                        <span class="inc-fleat inc-bath">{{ $property->bathrooms }}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="property_links">
+                                                <a href="{{ route('frontend.property-detail', ['id' => $property->id, 'title' => $property->title]) }}" class="btn btn-theme-light">Property Detail</a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-
-                            </div>
-                        </div>
-
-                        <!-- Single Property -->
-                        <div class="single-items">
-                            <div class="property-listing property-2">
-
-                                <div class="listing-img-wrapper">
-                                    <div class="list-img-slide">
-                                        <div class="click">
-                                            <div><a href="single-property-1.html"><img src="assets/img/p-7.jpg" class="img-fluid mx-auto" alt="" /></a></div>
-                                            <div><a href="single-property-1.html"><img src="assets/img/p-9.jpg" class="img-fluid mx-auto" alt="" /></a></div>
-                                            <div><a href="single-property-1.html"><img src="assets/img/p-8.jpg" class="img-fluid mx-auto" alt="" /></a></div>
-                                        </div>
-                                    </div>
-                                    <span class="property-type">For Rent</span>
-                                </div>
-
-                                <div class="listing-detail-wrapper pb-0">
-                                    <div class="listing-short-detail">
-                                        <h4 class="listing-name"><a href="single-property-1.html">Luxury Home in Manhattan</a><i class="list-status ti-check"></i></h4>
-                                    </div>
-                                </div>
-
-                                <div class="price-features-wrapper">
-                                    <div class="listing-price-fx">
-                                        <h6 class="listing-card-info-price price-prefix">11,584<span class="price-suffix">/mo</span></h6>
-                                    </div>
-                                    <div class="list-fx-features">
-                                        <div class="listing-card-info-icon">
-                                            <span class="inc-fleat inc-bed">3 Beds</span>
-                                        </div>
-                                        <div class="listing-card-info-icon">
-                                            <span class="inc-fleat inc-bath">2 Bath</span>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-
-                        <!-- Single Property -->
-                        <div class="single-items">
-                            <div class="property-listing property-2">
-
-                                <div class="listing-img-wrapper">
-                                    <div class="list-img-slide">
-                                        <div class="click">
-                                            <div><a href="single-property-1.html"><img src="assets/img/p-10.jpg" class="img-fluid mx-auto" alt="" /></a></div>
-                                            <div><a href="single-property-1.html"><img src="assets/img/p-11.jpg" class="img-fluid mx-auto" alt="" /></a></div>
-                                            <div><a href="single-property-1.html"><img src="assets/img/p-12.jpg" class="img-fluid mx-auto" alt="" /></a></div>
-                                        </div>
-                                    </div>
-                                    <span class="property-type">For Rent</span>
-                                </div>
-
-                                <div class="listing-detail-wrapper pb-0">
-                                    <div class="listing-short-detail">
-                                        <h4 class="listing-name"><a href="single-property-1.html">Energy Certificate for EU</a><i class="list-status ti-check"></i></h4>
-                                    </div>
-                                </div>
-
-                                <div class="price-features-wrapper">
-                                    <div class="listing-price-fx">
-                                        <h6 class="listing-card-info-price price-prefix">5,750<span class="price-suffix">/mo</span></h6>
-                                    </div>
-                                    <div class="list-fx-features">
-                                        <div class="listing-card-info-icon">
-                                            <span class="inc-fleat inc-bed">2 Beds</span>
-                                        </div>
-                                        <div class="listing-card-info-icon">
-                                            <span class="inc-fleat inc-bath">1 Bath</span>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                        <!-- Single Property -->
-                        <div class="single-items">
-                            <div class="property-listing property-2">
-
-                                <div class="listing-img-wrapper">
-                                    <div class="list-img-slide">
-                                        <div class="click">
-                                            <div><a href="single-property-1.html"><img src="assets/img/p-13.jpg" class="img-fluid mx-auto" alt="" /></a></div>
-                                            <div><a href="single-property-1.html"><img src="assets/img/p-14.jpg" class="img-fluid mx-auto" alt="" /></a></div>
-                                            <div><a href="single-property-1.html"><img src="assets/img/p-15.jpg" class="img-fluid mx-auto" alt="" /></a></div>
-                                        </div>
-                                    </div>
-                                    <span class="property-type">For Sale</span>
-                                </div>
-
-                                <div class="listing-detail-wrapper pb-0">
-                                    <div class="listing-short-detail">
-                                        <h4 class="listing-name"><a href="single-property-1.html">Office Space New York</a><i class="list-status ti-check"></i></h4>
-                                    </div>
-                                </div>
-
-                                <div class="price-features-wrapper">
-                                    <div class="listing-price-fx">
-                                        <h6 class="listing-card-info-price price-prefix">187,895</h6>
-                                    </div>
-                                    <div class="list-fx-features">
-                                        <div class="listing-card-info-icon">
-                                            <span class="inc-fleat inc-bed">3 Beds</span>
-                                        </div>
-                                        <div class="listing-card-info-icon">
-                                            <span class="inc-fleat inc-bath">2 Bath</span>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-
-                        <!-- Single Property -->
-                        <div class="single-items">
-                            <div class="property-listing property-2">
-
-                                <div class="listing-img-wrapper">
-                                    <div class="list-img-slide">
-                                        <div class="click">
-                                            <div><a href="single-property-1.html"><img src="assets/img/p-16.jpg" class="img-fluid mx-auto" alt="" /></a></div>
-                                            <div><a href="single-property-1.html"><img src="assets/img/p-17.jpg" class="img-fluid mx-auto" alt="" /></a></div>
-                                            <div><a href="single-property-1.html"><img src="assets/img/p-18.jpg" class="img-fluid mx-auto" alt="" /></a></div>
-                                        </div>
-                                    </div>
-                                    <span class="property-type">For Rent</span>
-                                </div>
-
-                                <div class="listing-detail-wrapper pb-0">
-                                    <div class="listing-short-detail">
-                                        <h4 class="listing-name"><a href="single-property-1.html">Apartment to rent in Queens</a><i class="list-status ti-check"></i></h4>
-                                    </div>
-                                </div>
-
-                                <div class="price-features-wrapper">
-                                    <div class="listing-price-fx">
-                                        <h6 class="listing-card-info-price price-prefix">9,587<span class="price-suffix">/mo</span></h6>
-                                    </div>
-                                    <div class="list-fx-features">
-                                        <div class="listing-card-info-icon">
-                                            <span class="inc-fleat inc-bed">3 Beds</span>
-                                        </div>
-                                        <div class="listing-card-info-icon">
-                                            <span class="inc-fleat inc-bath">2 Bath</span>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-
+                            @endforeach
+                        @else
+                            <p>No properties available.</p>
+                        @endif
                     </div>
                 </div>
             </div>

@@ -164,7 +164,7 @@
 
                                             <div class="listing-footer-wrapper">
                                                 <div class="listing-price">
-                                                    <h4 class="list-pr">${{ number_format($property->price) }}</h4>
+                                                    <h4 class="list-pr">{{ App\Helpers\AppHelper::appCurrencySign() }}{{ number_format($property->price) }}</h4>
                                                 </div>
                                                 <div class="listing-detail-btn">
                                                     <a href="{{ route('frontend.property-detail',['id' => $property->id,'title' => $property->title]) }}"

@@ -12,6 +12,8 @@ class FrontEndController extends Controller
     public function index() {
         $data = [];
         $data['title'] = 'Home';
+        $data['properties'] = Property::where('is_featured',0)->latest()->limit(15)->get();
+        $data['fproperties'] = Property::where('is_featured',1)->latest()->limit(15)->get();
         return view('frontend.index',$data);
     }
 
