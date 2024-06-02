@@ -3,6 +3,11 @@
 @section('style')
 @stop
 @section('content')
+    @php
+        use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
+        use App\Helpers\AppHelper;
+        $missingFields = AppHelper::checkAgentProfileCompletion(Sentinel::getUser()->id);
+    @endphp
     <!-- Start Page-content -->
     <div class="page-content">
             <div class="container-fluid">
@@ -22,6 +27,24 @@
 
                         </div>
                     </div>
+
+
+                    @if(!empty($missingFields))
+                        <div class="col-xl-12 mb-3 mt-3 p-4">
+                            <h6>Profile Warning Alert</h6>
+                            <div class="alert alert-warning alert-dismissible alert-label-icon label-arrow fade show" role="alert">
+                                <i class="ri-alert-line label-icon"></i>
+                                <strong>Warning</strong> - Your profile is incomplete. Please update the following information to ensure public visibility and the ability to list properties for sale. Incomplete profiles may affect your visibility to potential clients and limit your property listing capabilities.
+                                <ul>
+                                    @foreach ($missingFields as $field)
+                                        <li>{{ ucfirst(str_replace('_', ' ', $field)) }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        </div>
+                    @endif
+
+
                 </div>
                 <!-- end page title -->
 

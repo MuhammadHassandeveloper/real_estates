@@ -30,7 +30,9 @@
     <div class="container">
         <nav id="navigation" class="navigation navigation-landscape">
             <div class="nav-header">
-                <a class="nav-brand" href="#"><img src="assets/img/logo.png" class="logo" alt="" /></a>
+                <a class="nav-brand" href="{{ url('/') }}">
+                    <img src="{{ asset('assets/img/logo.png') }}" class="logo" alt="" />
+                </a>
                 <div class="nav-toggle"></div>
             </div>
             <div class="nav-menus-wrapper" style="transition-property: none;">
@@ -75,21 +77,21 @@
                                 </a>
                             </li>
 
-                            @elseif ($user->inRole('agent')) {
+                            @elseif ($user->inRole('agent'))
                              <li class="active">
                                 <a href="{{ url('/agent/dashboard') }}">
                                     <i class="fas fa-user-circle mr-1"></i>Dashboard
                                 </a>
                             </li>
 
-                            @elseif ($user->inRole('agency')) {
+                            @elseif ($user->inRole('agency'))
                             <li class="active">
                                 <a href="{{ url('/agency/dashboard') }}">
                                     <i class="fas fa-user-circle mr-1"></i>Dashboard
                                 </a>
                             </li>
 
-                            @elseif ($user->inRole('user')) {
+                            @elseif ($user->inRole('user'))
                             <li class="active">
                                 <a href="{{ url('/user/dashboard') }}">
                                     <i class="fas fa-user-circle mr-1"></i>Dashboard

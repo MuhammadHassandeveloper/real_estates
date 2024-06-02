@@ -29,21 +29,57 @@ class AgencyDashboardController extends Controller
 
     public function profileUpdate(Request $request)
     {
+
+        $validator = Validator::make($request->all(), [
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'phone' => [
+                'required',
+                'regex:/^(\+?\d{1,4}|\d{1,4})?\s?\d{7,10}$/',
+                'min:10'
+            ],
+            'whatsapp_phone' => [
+                'required',
+                'regex:/^(\+?\d{1,4}|\d{1,4})?\s?\d{7,10}$/',
+                'min:10'
+            ],
+            'city' => 'required|string|max:255',
+            'state' => 'required|string|max:255',
+            'zip_code' => 'required|string|min:5|max:6',
+            'bio' => 'nullable|string|min:5|max:1000',
+            'agency_logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+        ], [
+            'phone.required' => 'The phone number is required.',
+            'phone.regex' => 'The phone number format is invalid.',
+            'phone.min' => 'The phone number must be at least 10 digits.',
+            'whatsapp_phone.required' => 'The WhatsApp phone number is required.',
+            'whatsapp_phone.regex' => 'The WhatsApp phone number format is invalid.',
+            'whatsapp_phone.min' => 'The WhatsApp phone number must be at least 10 digits.',
+            'agency_logo.image' => 'The agency logo must be an image.',
+            'agency_logo.mimes' => 'The agency logo must be a file of type: jpeg, png, jpg, gif.',
+            'agency_logo.max' => 'The agency logo may not be greater than 2048 kilobytes.',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
         $user = Sentinel::getUser();
         $user->first_name = $request->input('first_name');
         $user->last_name = $request->input('last_name');
         $user->phone = $request->input('phone');
+        $user->whatsapp_phone = $request->input('whatsapp_phone');
         $user->city = $request->input('city');
         $user->state = $request->input('state');
         $user->zip_code = $request->input('zip_code');
         $user->bio = $request->input('bio');
 
-        if(isset($request->photo)) {
-            $file = $request->photo;
+        if(isset($request->agency_logo)) {
+            $file = $request->agency_logo;
             $extension = $file->getClientOriginalExtension();
             $filename = rand(0, 9999) . time() . '.' . $extension;
-            $file->move(public_path('property_images'), $filename);
-            $user->photo = $filename;
+            $file->move(public_path('uploads'), $filename);
+            $user->agency_logo = $filename;
         }
         $user->save();
         AppHelper::storeActivity('Profile Update','Update by','success',Sentinel::getUser()->id,1,Sentinel::getUser()->id,'Agent');

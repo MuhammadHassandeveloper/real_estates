@@ -4,7 +4,7 @@
 @section('style')
 @stop
 @section('content')
-    <div class="page-title bb-title" style="background:url(assets/img/bg.jpg) no-repeat;" data-overlay="6">
+    <div class="page-title bb-title" style="background:url({{ asset('assets/img/bg.jpg') }}) no-repeat;" data-overlay="6">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 col-md-12">

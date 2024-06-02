@@ -16,7 +16,7 @@
                         <h4 class="mb-sm-0">Profile View</h4>
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
-                                <li class="breadcrumb-item"><a href="{{ url('agent/dashboard') }}">Real Estate</a></li>
+                                <li class="breadcrumb-item"><a href="{{ url('agency/dashboard') }}">Real Estate</a></li>
                                 <li class="breadcrumb-item active">Profile View</li>
                             </ol>
                         </div>
@@ -70,30 +70,51 @@
                                                 <div class="card-header">
                                                     <h6 class="card-title mb-0">Personal Details</h6>
                                                 </div>
+
                                                 <div class="card-body">
-                                                    <form action="{{ route('agent.profile_update') }}" method="POST" enctype="multipart/form-data">
+                                                    <form action="{{ route('agency.profile_update') }}" method="POST" enctype="multipart/form-data">
                                                         @csrf
                                                         <div class="row">
                                                             <div class="col-lg-6">
                                                                 <div class="mb-3">
                                                                     <label for="firstnameInput" class="form-label">First Name</label>
-                                                                    <input type="text" class="form-control" name="first_name" id="firstnameInput" placeholder="Enter your firstname" value="{{ old('first_name', $user->first_name) }}">
+                                                                    <input type="text" class="form-control @error('first_name') is-invalid @enderror" name="first_name" id="firstnameInput" placeholder="Enter your firstname" value="{{ old('first_name', $user->first_name) }}">
+                                                                    @error('first_name')
+                                                                    <div class="text-danger error">{{ $message }}</div>
+                                                                    @enderror
                                                                 </div>
                                                             </div>
                                                             <!--end col-->
                                                             <div class="col-lg-6">
                                                                 <div class="mb-3">
                                                                     <label for="lastnameInput" class="form-label">Last Name</label>
-                                                                    <input type="text" class="form-control" id="lastnameInput" name="last_name" placeholder="Enter your last name" value="{{ old('last_name', $user->last_name) }}">
+                                                                    <input type="text" class="form-control @error('last_name') is-invalid @enderror" id="lastnameInput" name="last_name" placeholder="Enter your last name" value="{{ old('last_name', $user->last_name) }}">
+                                                                    @error('last_name')
+                                                                    <div class="text-danger error">{{ $message }}</div>
+                                                                    @enderror
                                                                 </div>
                                                             </div>
                                                             <!--end col-->
                                                             <div class="col-lg-6">
                                                                 <div class="mb-3">
                                                                     <label for="phonenumberInput" class="form-label">Phone Number</label>
-                                                                    <input type="text" class="form-control" id="phonenumberInput" name="phone" placeholder="Enter your phone number" value="{{ old('phone', $user->phone) }}">
+                                                                    <input type="text" class="form-control @error('phone') is-invalid @enderror" required id="phonenumberInput" name="phone" placeholder="Enter your phone number" value="{{ old('phone', $user->phone) }}">
+                                                                    @error('phone')
+                                                                    <div class="text-danger error">{{ $message }}</div>
+                                                                    @enderror
                                                                 </div>
                                                             </div>
+
+                                                            <div class="col-lg-6">
+                                                                <div class="mb-3">
+                                                                    <label for="whatsapp_phoneInput" class="form-label">Whatsapp Business Phone</label>
+                                                                    <input type="text" class="form-control @error('whatsapp_phone') is-invalid @enderror" required id="whatsapp_phoneInput" name="whatsapp_phone" placeholder="Enter your business whatsapp phone number" value="{{ old('whatsapp_phone', $user->whatsapp_phone) }}">
+                                                                    @error('whatsapp_phone')
+                                                                    <div class="text-danger error">{{ $message }}</div>
+                                                                    @enderror
+                                                                </div>
+                                                            </div>
+
                                                             <!--end col-->
                                                             <div class="col-lg-6">
                                                                 <div class="mb-3">
@@ -102,50 +123,65 @@
                                                                 </div>
                                                             </div>
                                                             <!--end col-->
-                                                            <div class="col-lg-4">
+                                                            <div class="col-lg-6">
                                                                 <div class="mb-3">
                                                                     <label for="cityInput" class="form-label">City</label>
-                                                                    <input type="text" class="form-control" id="cityInput" name="city" placeholder="City" value="{{ old('city', $user->city) }}">
+                                                                    <input type="text" class="form-control @error('city') is-invalid @enderror" id="cityInput" name="city" placeholder="City" value="{{ old('city', $user->city) }}">
+                                                                    @error('city')
+                                                                    <div class="text-danger error">{{ $message }}</div>
+                                                                    @enderror
                                                                 </div>
                                                             </div>
                                                             <!--end col-->
-                                                            <div class="col-lg-4">
+                                                            <div class="col-lg-6">
                                                                 <div class="mb-3">
                                                                     <label for="stateInput" class="form-label">State</label>
-                                                                    <input type="text" class="form-control" id="stateInput" name="state" placeholder="State" value="{{ old('state', $user->state) }}">
+                                                                    <input type="text" class="form-control @error('state') is-invalid @enderror" id="stateInput" name="state" placeholder="State" value="{{ old('state', $user->state) }}">
+                                                                    @error('state')
+                                                                    <div class="text-danger error">{{ $message }}</div>
+                                                                    @enderror
                                                                 </div>
                                                             </div>
                                                             <!--end col-->
-                                                            <div class="col-lg-4">
+                                                            <div class="col-lg-6">
                                                                 <div class="mb-3">
                                                                     <label for="zipcodeInput" class="form-label">Zip Code</label>
-                                                                    <input type="text" class="form-control" minlength="5" maxlength="6" name="zip_code" id="zipcodeInput" placeholder="Enter zipcode" value="{{ old('zip_code', $user->zip_code) }}">
+                                                                    <input type="text" class="form-control @error('zip_code') is-invalid @enderror" minlength="5" maxlength="6" name="zip_code" id="zipcodeInput" placeholder="Enter zipcode" value="{{ old('zip_code', $user->zip_code) }}">
+                                                                    @error('zip_code')
+                                                                    <div class="text-danger error">{{ $message }}</div>
+                                                                    @enderror
                                                                 </div>
                                                             </div>
                                                             <div class="col-lg-12">
                                                                 <div class="mb-3">
                                                                     <label for="bio" class="form-label">Bio</label>
-                                                                    <textarea type="text" class="form-control" minlength="5" maxlength="1000" id="bio" name="bio" placeholder="Enter bio">{{ old('bio', $user->bio) }}</textarea>
+                                                                    <textarea type="text" class="form-control @error('bio') is-invalid @enderror" minlength="5" maxlength="1000" id="bio" name="bio" placeholder="Enter bio">{{ old('bio', $user->bio) }}</textarea>
+                                                                    @error('bio')
+                                                                    <div class="text-danger error">{{ $message }}</div>
+                                                                    @enderror
                                                                 </div>
                                                             </div>
 
                                                             <div class="col-lg-12">
-                                                                <label class="form-label mb-3">Profile Photo</label>
+                                                                <label class="form-label mb-3">Profile Agency Logo</label>
                                                                 <div class="text-center mb-3">
                                                                     <div class="position-relative d-inline-block">
                                                                         <div class="position-absolute top-100 start-100 translate-middle">
                                                                             <label for="companyLogo-image-input" class="mb-0" data-bs-toggle="tooltip" data-bs-placement="right" aria-label="Select company logo" data-bs-original-title="Select company logo">
-                                                                                <span class="avatar-xs d-inline-block">
-                                                                                    <span class="avatar-title bg-light border rounded-circle text-muted cursor-pointer">
-                                                                                        <i class="ri-image-fill"></i>
-                                                                                    </span>
+                                                                            <span class="avatar-xs d-inline-block">
+                                                                                <span class="avatar-title bg-light border rounded-circle text-muted cursor-pointer">
+                                                                                    <i class="ri-image-fill"></i>
                                                                                 </span>
+                                                                            </span>
                                                                             </label>
-                                                                            <input class="form-control d-none" id="companyLogo-image-input" name="photo" type="file" accept="image/png, image/gif, image/jpeg">
+                                                                            <input class="form-control d-none @error('agency_logo') is-invalid @enderror" id="companyLogo-image-input" name="agency_logo" type="file" accept="image/png, image/gif, image/jpeg">
+                                                                            @error('agency_logo')
+                                                                            <div class="text-danger error">{{ $message }}</div>
+                                                                            @enderror
                                                                         </div>
                                                                         <div class="avatar-lg">
                                                                             <div class="avatar-title bg-light rounded-3">
-                                                                                <img src="{{ asset('property_images/'.Sentinel::getUser()->photo) }}" alt="" id="companyLogo-img" class="avatar-md h-auto rounded-3 object-fit-cover">
+                                                                                <img src="{{ asset('property_images/'.Sentinel::getUser()->agency_logo) }}" alt="" id="companyLogo-img" class="avatar-md h-auto rounded-3 object-fit-cover">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -158,6 +194,7 @@
                                                         </div>
                                                     </form>
                                                 </div>
+
                                             </div>
 
                                             <div class="tab-pane" id="changePassword" role="tabpanel">
@@ -165,7 +202,7 @@
                                                     <h6 class="card-title mb-0">Changes Password</h6>
                                                 </div>
                                                 <div class="card-body">
-                                                    <form action="{{ route('agent.password_update') }}" method="POST">
+                                                    <form action="{{ route('agency.password_update') }}" method="POST">
                                                         @csrf
                                                         <div class="row g-2 justify-content-lg-between align-items-center">
                                                             <div class="col-lg-4">

@@ -102,6 +102,8 @@ class AppHelper
    public static function agentProperties($id) {
         return Property::where('agent_id',$id)->get();
     }
+
+
     public static function agentPropertiescount($id) {
         return Property::where('agent_id',$id)->count();
     }
@@ -159,11 +161,118 @@ class AppHelper
         return $roleName ? $roleName->name : null;
     }
 
-    public static function propertImages($id) {
-        return $pimages = PropertyImage::where('property_id', $id)->get();
 
+    public static function agents() {
+        return DB::table('role_users')
+            ->join('roles', 'role_users.role_id', '=', 'roles.id')
+            ->join('users', 'role_users.user_id', '=', 'users.id')
+            ->select('users.*')
+            ->whereNotNull('users.photo')
+            ->whereNotNull('users.city')
+            ->whereNotNull('users.state')
+            ->whereNotNull('users.whatsapp_phone')
+            ->where('roles.slug', 'agent')
+            ->latest()->paginate(12);
     }
 
+
+    public static function latestAgents() {
+        return DB::table('role_users')
+            ->join('roles', 'role_users.role_id', '=', 'roles.id')
+            ->join('users', 'role_users.user_id', '=', 'users.id')
+            ->select('users.*')
+            ->where('roles.slug', 'agent')
+            ->whereNotNull('users.photo')
+            ->whereNotNull('users.city')
+            ->whereNotNull('users.state')
+            ->whereNotNull('users.whatsapp_phone')
+            ->orderBy('users.created_at', 'desc')
+            ->limit(4)
+            ->get();
+    }
+
+    public static function agencies() {
+        return DB::table('role_users')
+            ->join('roles', 'role_users.role_id', '=', 'roles.id')
+            ->join('users', 'role_users.user_id', '=', 'users.id')
+            ->select('users.*')
+            ->whereNotNull('users.agency_logo')
+            ->whereNotNull('users.city')
+            ->whereNotNull('users.state')
+            ->whereNotNull('users.whatsapp_phone')
+            ->where('roles.slug', 'agency')
+            ->latest()->paginate(12);
+    }
+
+
+    public static function latestAgencies() {
+         return DB::table('role_users')
+            ->join('roles', 'role_users.role_id', '=', 'roles.id')
+            ->join('users', 'role_users.user_id', '=', 'users.id')
+            ->select('users.*')
+            ->where('roles.slug', 'agency')
+            ->whereNotNull('users.agency_logo')
+            ->whereNotNull('users.city')
+            ->whereNotNull('users.state')
+            ->whereNotNull('users.whatsapp_phone')
+            ->orderBy('users.created_at', 'desc')
+            ->limit(4)
+            ->get();
+    }
+
+
+    public  static function SingleFeaturedProperty() {
+        return Property::where('is_featured',1)->latest()->first();
+    }
+    public static function propertImages($id) {
+        return $pimages = PropertyImage::where('property_id', $id)->get();
+    }
+
+    public static function checkAgentProfileCompletion($id)
+    {
+        $user = User::find($id);
+        $missingFields = [];
+
+        if (empty($user->city)) {
+            $missingFields[] = 'city';
+        }
+        if (empty($user->state)) {
+            $missingFields[] = 'state';
+        }
+        if (empty($user->photo)) {
+            $missingFields[] = 'photo';
+        }
+        if (empty($user->bio)) {
+            $missingFields[] = 'bio';
+        }
+        if (empty($user->whatsapp_phone)) {
+            $missingFields[] = 'whatsapp_phone';
+        }
+        return $missingFields;
+    }
+
+    public static function checkAgencyProfileCompletion($id)
+    {
+        $user = User::find($id);
+        $missingFields = [];
+
+        if (empty($user->city)) {
+            $missingFields[] = 'city';
+        }
+        if (empty($user->state)) {
+            $missingFields[] = 'state';
+        }
+        if (empty($user->agency_logo)) {
+            $missingFields[] = 'agency_logo';
+        }
+        if (empty($user->bio)) {
+            $missingFields[] = 'bio';
+        }
+        if (empty($user->whatsapp_phone)) {
+            $missingFields[] = 'whatsapp_phone';
+        }
+        return $missingFields;
+    }
 
     public static function storeActivity($heading, $detail, $color, $uid, $type, $system_id,$role)
     {

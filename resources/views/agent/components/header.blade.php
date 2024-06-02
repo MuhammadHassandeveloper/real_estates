@@ -208,7 +208,7 @@ use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
                     <button type="button" class="btn shadow-none" id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="d-flex align-items-center">
                                     @if(Sentinel::getUser()->photo)
-                                    <img class="rounded-circle header-profile-user" src="{{ asset('property_images/'.Sentinel::getUser()->photo) }}" alt="Header Avatar">
+                                    <img class="rounded-circle header-profile-user" src="{{ asset('uploads/'.Sentinel::getUser()->photo) }}" alt="Header Avatar">
                                     @else
                                         <img class="rounded-circle header-profile-user" src="{{ asset('admin/assets/images/users/32/avatar-1.jpg') }}" alt="Header Avatar">
                                     @endif

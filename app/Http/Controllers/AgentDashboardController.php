@@ -33,6 +33,7 @@ class AgentDashboardController extends Controller
         $user->first_name = $request->input('first_name');
         $user->last_name = $request->input('last_name');
         $user->phone = $request->input('phone');
+        $user->whatsapp_phone = $request->input('whatsapp_phone');
         $user->city = $request->input('city');
         $user->state = $request->input('state');
         $user->zip_code = $request->input('zip_code');
@@ -42,7 +43,7 @@ class AgentDashboardController extends Controller
             $file = $request->photo;
             $extension = $file->getClientOriginalExtension();
             $filename = rand(0, 9999) . time() . '.' . $extension;
-            $file->move(public_path('property_images'), $filename);
+            $file->move(public_path('uploads'), $filename);
             $user->photo = $filename;
         }
         $user->save();

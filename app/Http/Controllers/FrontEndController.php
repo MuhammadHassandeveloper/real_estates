@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\AppHelper;
 use App\Models\Property;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -14,6 +15,9 @@ class FrontEndController extends Controller
         $data['title'] = 'Home';
         $data['properties'] = Property::where('is_featured',0)->latest()->limit(15)->get();
         $data['fproperties'] = Property::where('is_featured',1)->latest()->limit(15)->get();
+        $data['agencies'] = AppHelper::latestAgencies();
+        $data['agents'] = AppHelper::latestAgents();
+        $data['fproperty'] = AppHelper::SingleFeaturedProperty();
         return view('frontend.index',$data);
     }
 
@@ -51,20 +55,14 @@ class FrontEndController extends Controller
     public function agencies() {
         $data = [];
         $data['title'] = 'Agencies';
-        $data['agencies'] = User::join('role_users as r', 'users.id', '=', 'r.user_id')
-            ->join('roles as ro', 'r.role_id', '=', 'ro.id')
-            ->where('ro.slug', 'agency')
-            ->latest()->paginate(12);
+        $data['agencies'] = AppHelper::agencies();
         return view('frontend.agencies',$data);
     }
 
     public function agents() {
         $data = [];
         $data['title'] = 'Agents';
-        $data['agents'] = User::join('role_users as r', 'users.id', '=', 'r.user_id')
-            ->join('roles as ro', 'r.role_id', '=', 'ro.id')
-            ->where('ro.slug', 'agent')
-            ->latest()->paginate(12);
+        $data['agents'] = AppHelper::agents();
         return view('frontend.agents',$data);
     }
 

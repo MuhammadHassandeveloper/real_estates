@@ -90,7 +90,7 @@
                                                             <!--end col-->
                                                             <div class="col-lg-6">
                                                                 <div class="mb-3">
-                                                                    <label for="phonenumberInput" class="form-label">Phone Number</label>
+                                                                    <label for="phonenumberInput" class="form-label">Whatsapp Phone</label>
                                                                     <input type="text" class="form-control" id="phonenumberInput" name="phone" placeholder="Enter your phone number" value="{{ old('phone', $user->phone) }}">
                                                                 </div>
                                                             </div>
