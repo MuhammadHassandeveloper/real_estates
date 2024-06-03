@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\AppHelper;
+use App\Helpers\Helpers;
 use App\Models\Property;
-use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
+
 
 class FrontEndController extends Controller
 {
@@ -15,11 +14,12 @@ class FrontEndController extends Controller
         $data['title'] = 'Home';
         $data['properties'] = Property::where('is_featured',0)->latest()->limit(15)->get();
         $data['fproperties'] = Property::where('is_featured',1)->latest()->limit(15)->get();
-        $data['agencies'] = AppHelper::latestAgencies();
-        $data['agents'] = AppHelper::latestAgents();
-        $data['fproperty'] = AppHelper::SingleFeaturedProperty();
+        $data['agencies'] = Helpers::latestAgencies();
+        $data['agents'] = Helpers::latestAgents();
+        $data['fproperty'] = Helpers::SingleFeaturedProperty();
         return view('frontend.index',$data);
     }
+
 
     public function properties(Request $request) {
         $properties = Property::query();
@@ -55,31 +55,31 @@ class FrontEndController extends Controller
     public function agencies() {
         $data = [];
         $data['title'] = 'Agencies';
-        $data['agencies'] = AppHelper::agencies();
+        $data['agencies'] = Helpers::agencies();
         return view('frontend.agencies',$data);
     }
 
     public function agents() {
         $data = [];
         $data['title'] = 'Agents';
-        $data['agents'] = AppHelper::agents();
+        $data['agents'] = Helpers::agents();
         return view('frontend.agents',$data);
     }
 
     public function agent($id) {
         $data = [];
         $data['title'] = 'Agent';
-        $data['agent'] = AppHelper::userDetail($id);
-        $data['properties'] = AppHelper::agentProperties($id);
+        $data['agent'] = Helpers::userDetail($id);
+        $data['properties'] = Helpers::agentProperties($id);
         return view('frontend.agent',$data);
     }
 
     public function agency($id) {
         $data = [];
         $data['title'] = 'Agency';
-        $data['agency'] = AppHelper::userDetail($id);
-        $data['properties'] = AppHelper::agencyProperties($id);
-        $data['agents'] = AppHelper::agencyAgents($id);
+        $data['agency'] = Helpers::userDetail($id);
+        $data['properties'] = Helpers::agencyProperties($id);
+        $data['agents'] = Helpers::agencyAgents($id);
         return view('frontend.agency',$data);
     }
 
@@ -87,7 +87,7 @@ class FrontEndController extends Controller
     public function propertyDetail($id) {
         $data = [];
         $data['title'] = 'Property';
-        $data['property'] = AppHelper::propertyDetail($id);
+        $data['property'] = Helpers::propertyDetail($id);
         return view('frontend.property',$data);
     }
 

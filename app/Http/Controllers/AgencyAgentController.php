@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\AppHelper;
+use App\Helpers\Helpers;
 use App\Models\Property;
 use App\Models\PropertyFeature;
 use App\Models\PropertyImage;
@@ -39,9 +39,9 @@ class AgencyAgentController extends Controller
         $data = array();
         $data['title'] = 'Agent Detail';
         $data['agent'] = User::find($id);
-        $data['agency'] = AppHelper::agency($data['agent']->agency_id);
-        $data['properties'] = AppHelper::agentProperties($id);
-        $data['properties_count'] = AppHelper::agentPropertiesCount($id);
+        $data['agency'] = Helpers::agency($data['agent']->agency_id);
+        $data['properties'] = Helpers::agentProperties($id);
+        $data['properties_count'] = Helpers::agentPropertiesCount($id);
         return view('agency.agents.detail', $data);
     }
 
@@ -120,7 +120,7 @@ class AgencyAgentController extends Controller
             return back()->with('error', 'Registration not successful');
         }
 
-        AppHelper::storeActivity(
+        Helpers::storeActivity(
             'New Agent Created', // Heading
             'Agency created by ' . Sentinel::getUser()->first_name . ' ' . Sentinel::getUser()->last_name . '.', // Content
             'success', // Color
@@ -183,7 +183,7 @@ class AgencyAgentController extends Controller
             $role->users()->attach($agent);
         }
 
-        AppHelper::storeActivity(
+        Helpers::storeActivity(
             'Agent Updated', // Heading
             'Agent updated by ' . Sentinel::getUser()->first_name . ' ' . Sentinel::getUser()->last_name . '.', // Content
             'success', // Color
@@ -204,7 +204,7 @@ class AgencyAgentController extends Controller
             $agent = User::findOrFail($id);
             Property::where('agent_id', $id)->delete();
             $agent->delete();
-            AppHelper::storeActivity(
+            Helpers::storeActivity(
                 'Agent Deleted', // Heading
                 'Agent deleted by Agent ' . Sentinel::getUser()->first_name . ' ' . Sentinel::getUser()->last_name . '.', // Content
                 'success', // Color

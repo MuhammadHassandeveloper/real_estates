@@ -5,7 +5,9 @@
 @stop
 @section('content')
     <?php
+
     use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
+
     $user = Sentinel::getUser();
     ?>
     <div class="page-content">
@@ -38,7 +40,7 @@
                                                     <h5>{{ Sentinel::getUser()->first_name .' '. Sentinel::getUser()->last_name }}
                                                         <i class="bi bi-patch-check-fill align-baseline text-info ms-1"></i>
                                                     </h5>
-                                                    <p class="text-muted">{{ App\Helpers\AppHelper::roleName(Sentinel::getUser()->id) }}</p>
+                                                    <p class="text-muted">{{ App\Helpers\helpers::roleName(Sentinel::getUser()->id) }}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -72,13 +74,19 @@
                                                 </div>
 
                                                 <div class="card-body">
-                                                    <form action="{{ route('agency.profile_update') }}" method="POST" enctype="multipart/form-data">
+                                                    <form action="{{ route('agency.profile_update') }}" method="POST"
+                                                          enctype="multipart/form-data">
                                                         @csrf
                                                         <div class="row">
                                                             <div class="col-lg-6">
                                                                 <div class="mb-3">
-                                                                    <label for="firstnameInput" class="form-label">First Name</label>
-                                                                    <input type="text" class="form-control @error('first_name') is-invalid @enderror" name="first_name" id="firstnameInput" placeholder="Enter your firstname" value="{{ old('first_name', $user->first_name) }}">
+                                                                    <label for="firstnameInput" class="form-label">First
+                                                                        Name</label>
+                                                                    <input type="text"
+                                                                           class="form-control @error('first_name') is-invalid @enderror"
+                                                                           name="first_name" id="firstnameInput"
+                                                                           placeholder="Enter your firstname"
+                                                                           value="{{ old('first_name', $user->first_name) }}">
                                                                     @error('first_name')
                                                                     <div class="text-danger error">{{ $message }}</div>
                                                                     @enderror
@@ -87,8 +95,13 @@
                                                             <!--end col-->
                                                             <div class="col-lg-6">
                                                                 <div class="mb-3">
-                                                                    <label for="lastnameInput" class="form-label">Last Name</label>
-                                                                    <input type="text" class="form-control @error('last_name') is-invalid @enderror" id="lastnameInput" name="last_name" placeholder="Enter your last name" value="{{ old('last_name', $user->last_name) }}">
+                                                                    <label for="lastnameInput" class="form-label">Last
+                                                                        Name</label>
+                                                                    <input type="text"
+                                                                           class="form-control @error('last_name') is-invalid @enderror"
+                                                                           id="lastnameInput" name="last_name"
+                                                                           placeholder="Enter your last name"
+                                                                           value="{{ old('last_name', $user->last_name) }}">
                                                                     @error('last_name')
                                                                     <div class="text-danger error">{{ $message }}</div>
                                                                     @enderror
@@ -97,8 +110,13 @@
                                                             <!--end col-->
                                                             <div class="col-lg-6">
                                                                 <div class="mb-3">
-                                                                    <label for="phonenumberInput" class="form-label">Phone Number</label>
-                                                                    <input type="text" class="form-control @error('phone') is-invalid @enderror" required id="phonenumberInput" name="phone" placeholder="Enter your phone number" value="{{ old('phone', $user->phone) }}">
+                                                                    <label for="phonenumberInput" class="form-label">Phone
+                                                                        Number</label>
+                                                                    <input type="text"
+                                                                           class="form-control @error('phone') is-invalid @enderror"
+                                                                           required id="phonenumberInput" name="phone"
+                                                                           placeholder="Enter your phone number"
+                                                                           value="{{ old('phone', $user->phone) }}">
                                                                     @error('phone')
                                                                     <div class="text-danger error">{{ $message }}</div>
                                                                     @enderror
@@ -107,8 +125,14 @@
 
                                                             <div class="col-lg-6">
                                                                 <div class="mb-3">
-                                                                    <label for="whatsapp_phoneInput" class="form-label">Whatsapp Business Phone</label>
-                                                                    <input type="text" class="form-control @error('whatsapp_phone') is-invalid @enderror" required id="whatsapp_phoneInput" name="whatsapp_phone" placeholder="Enter your business whatsapp phone number" value="{{ old('whatsapp_phone', $user->whatsapp_phone) }}">
+                                                                    <label for="whatsapp_phoneInput" class="form-label">Whatsapp
+                                                                        Business Phone</label>
+                                                                    <input type="text"
+                                                                           class="form-control @error('whatsapp_phone') is-invalid @enderror"
+                                                                           required id="whatsapp_phoneInput"
+                                                                           name="whatsapp_phone"
+                                                                           placeholder="Enter your business whatsapp phone number"
+                                                                           value="{{ old('whatsapp_phone', $user->whatsapp_phone) }}">
                                                                     @error('whatsapp_phone')
                                                                     <div class="text-danger error">{{ $message }}</div>
                                                                     @enderror
@@ -118,15 +142,22 @@
                                                             <!--end col-->
                                                             <div class="col-lg-6">
                                                                 <div class="mb-3">
-                                                                    <label for="emailInput" class="form-label">Email Address</label>
-                                                                    <input type="email" class="form-control" id="emailInput" readonly disabled value="{{ $user->email }}">
+                                                                    <label for="emailInput" class="form-label">Email
+                                                                        Address</label>
+                                                                    <input type="email" class="form-control"
+                                                                           id="emailInput" readonly disabled
+                                                                           value="{{ $user->email }}">
                                                                 </div>
                                                             </div>
                                                             <!--end col-->
                                                             <div class="col-lg-6">
                                                                 <div class="mb-3">
-                                                                    <label for="cityInput" class="form-label">City</label>
-                                                                    <input type="text" class="form-control @error('city') is-invalid @enderror" id="cityInput" name="city" placeholder="City" value="{{ old('city', $user->city) }}">
+                                                                    <label for="cityInput"
+                                                                           class="form-label">City</label>
+                                                                    <input type="text"
+                                                                           class="form-control @error('city') is-invalid @enderror"
+                                                                           id="cityInput" name="city" placeholder="City"
+                                                                           value="{{ old('city', $user->city) }}">
                                                                     @error('city')
                                                                     <div class="text-danger error">{{ $message }}</div>
                                                                     @enderror
@@ -135,8 +166,13 @@
                                                             <!--end col-->
                                                             <div class="col-lg-6">
                                                                 <div class="mb-3">
-                                                                    <label for="stateInput" class="form-label">State</label>
-                                                                    <input type="text" class="form-control @error('state') is-invalid @enderror" id="stateInput" name="state" placeholder="State" value="{{ old('state', $user->state) }}">
+                                                                    <label for="stateInput"
+                                                                           class="form-label">State</label>
+                                                                    <input type="text"
+                                                                           class="form-control @error('state') is-invalid @enderror"
+                                                                           id="stateInput" name="state"
+                                                                           placeholder="State"
+                                                                           value="{{ old('state', $user->state) }}">
                                                                     @error('state')
                                                                     <div class="text-danger error">{{ $message }}</div>
                                                                     @enderror
@@ -145,8 +181,13 @@
                                                             <!--end col-->
                                                             <div class="col-lg-6">
                                                                 <div class="mb-3">
-                                                                    <label for="zipcodeInput" class="form-label">Zip Code</label>
-                                                                    <input type="text" class="form-control @error('zip_code') is-invalid @enderror" minlength="5" maxlength="6" name="zip_code" id="zipcodeInput" placeholder="Enter zipcode" value="{{ old('zip_code', $user->zip_code) }}">
+                                                                    <label for="zipcodeInput" class="form-label">Zip
+                                                                        Code</label>
+                                                                    <input type="text"
+                                                                           class="form-control @error('zip_code') is-invalid @enderror"
+                                                                           minlength="5" maxlength="6" name="zip_code"
+                                                                           id="zipcodeInput" placeholder="Enter zipcode"
+                                                                           value="{{ old('zip_code', $user->zip_code) }}">
                                                                     @error('zip_code')
                                                                     <div class="text-danger error">{{ $message }}</div>
                                                                     @enderror
@@ -155,7 +196,11 @@
                                                             <div class="col-lg-12">
                                                                 <div class="mb-3">
                                                                     <label for="bio" class="form-label">Bio</label>
-                                                                    <textarea type="text" class="form-control @error('bio') is-invalid @enderror" minlength="5" maxlength="1000" id="bio" name="bio" placeholder="Enter bio">{{ old('bio', $user->bio) }}</textarea>
+                                                                    <textarea type="text"
+                                                                              class="form-control @error('bio') is-invalid @enderror"
+                                                                              minlength="5" maxlength="1000" id="bio"
+                                                                              name="bio"
+                                                                              placeholder="Enter bio">{{ old('bio', $user->bio) }}</textarea>
                                                                     @error('bio')
                                                                     <div class="text-danger error">{{ $message }}</div>
                                                                     @enderror
@@ -163,25 +208,35 @@
                                                             </div>
 
                                                             <div class="col-lg-12">
-                                                                <label class="form-label mb-3">Profile Agency Logo</label>
+                                                                <label class="form-label mb-3">Profile Agency
+                                                                    Logo</label>
                                                                 <div class="text-center mb-3">
                                                                     <div class="position-relative d-inline-block">
                                                                         <div class="position-absolute top-100 start-100 translate-middle">
-                                                                            <label for="companyLogo-image-input" class="mb-0" data-bs-toggle="tooltip" data-bs-placement="right" aria-label="Select company logo" data-bs-original-title="Select company logo">
+                                                                            <label for="companyLogo-image-input"
+                                                                                   class="mb-0" data-bs-toggle="tooltip"
+                                                                                   data-bs-placement="right"
+                                                                                   aria-label="Select company logo"
+                                                                                   data-bs-original-title="Select company logo">
                                                                             <span class="avatar-xs d-inline-block">
                                                                                 <span class="avatar-title bg-light border rounded-circle text-muted cursor-pointer">
                                                                                     <i class="ri-image-fill"></i>
                                                                                 </span>
                                                                             </span>
                                                                             </label>
-                                                                            <input class="form-control d-none @error('agency_logo') is-invalid @enderror" id="companyLogo-image-input" name="agency_logo" type="file" accept="image/png, image/gif, image/jpeg">
+                                                                            <input class="form-control d-none @error('agency_logo') is-invalid @enderror"
+                                                                                   id="companyLogo-image-input"
+                                                                                   name="agency_logo" type="file"
+                                                                                   accept="image/png, image/gif, image/jpeg">
                                                                             @error('agency_logo')
                                                                             <div class="text-danger error">{{ $message }}</div>
                                                                             @enderror
                                                                         </div>
                                                                         <div class="avatar-lg">
                                                                             <div class="avatar-title bg-light rounded-3">
-                                                                                <img src="{{ asset('property_images/'.Sentinel::getUser()->agency_logo) }}" alt="" id="companyLogo-img" class="avatar-md h-auto rounded-3 object-fit-cover">
+                                                                                <img src="{{ asset('property_images/'.Sentinel::getUser()->agency_logo) }}"
+                                                                                     alt="" id="companyLogo-img"
+                                                                                     class="avatar-md h-auto rounded-3 object-fit-cover">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -189,7 +244,9 @@
                                                             </div>
 
                                                             <div class="col-lg-12 d-flex justify-content-end text-end">
-                                                                <button type="submit" class="btn btn-success">Save Changes</button>
+                                                                <button type="submit" class="btn btn-success">Save
+                                                                    Changes
+                                                                </button>
                                                             </div>
                                                         </div>
                                                     </form>
@@ -207,10 +264,16 @@
                                                         <div class="row g-2 justify-content-lg-between align-items-center">
                                                             <div class="col-lg-4">
                                                                 <div class="auth-pass-inputgroup">
-                                                                    <label for="oldpasswordInput" class="form-label">Old Password*</label>
+                                                                    <label for="oldpasswordInput" class="form-label">Old
+                                                                        Password*</label>
                                                                     <div class="position-relative">
-                                                                        <input type="password" class="form-control password-input" name="old_password" id="oldpasswordInput" placeholder="Enter current password" required>
-                                                                        <button class="btn btn-link position-absolute top-0 end-0 text-decoration-none text-muted password-addon" type="button">
+                                                                        <input type="password"
+                                                                               class="form-control password-input"
+                                                                               name="old_password" id="oldpasswordInput"
+                                                                               placeholder="Enter current password"
+                                                                               required>
+                                                                        <button class="btn btn-link position-absolute top-0 end-0 text-decoration-none text-muted password-addon"
+                                                                                type="button">
                                                                             <i class="ri-eye-fill align-middle"></i>
                                                                         </button>
                                                                         @if ($errors->has('old_password'))
@@ -222,10 +285,17 @@
 
                                                             <div class="col-lg-4">
                                                                 <div class="auth-pass-inputgroup">
-                                                                    <label for="password-input" class="form-label">New Password*</label>
+                                                                    <label for="password-input" class="form-label">New
+                                                                        Password*</label>
                                                                     <div class="position-relative">
-                                                                        <input type="password" class="form-control password-input" name="new_password" id="password-input" onpaste="return false" placeholder="Enter new password" required>
-                                                                        <button class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted password-addon" type="button">
+                                                                        <input type="password"
+                                                                               class="form-control password-input"
+                                                                               name="new_password" id="password-input"
+                                                                               onpaste="return false"
+                                                                               placeholder="Enter new password"
+                                                                               required>
+                                                                        <button class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted password-addon"
+                                                                                type="button">
                                                                             <i class="ri-eye-fill align-middle"></i>
                                                                         </button>
                                                                         @if ($errors->has('new_password'))
@@ -237,10 +307,17 @@
 
                                                             <div class="col-lg-4">
                                                                 <div class="auth-pass-inputgroup">
-                                                                    <label for="confirm-password" class="form-label">Confirm Password*</label>
+                                                                    <label for="confirm-password" class="form-label">Confirm
+                                                                        Password*</label>
                                                                     <div class="position-relative">
-                                                                        <input type="password" class="form-control password-input" name="new_password_confirmation" onpaste="return false" id="confirm-password" placeholder="Confirm password" required>
-                                                                        <button class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted password-addon" type="button">
+                                                                        <input type="password"
+                                                                               class="form-control password-input"
+                                                                               name="new_password_confirmation"
+                                                                               onpaste="return false"
+                                                                               id="confirm-password"
+                                                                               placeholder="Confirm password" required>
+                                                                        <button class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted password-addon"
+                                                                                type="button">
                                                                             <i class="ri-eye-fill align-middle"></i>
                                                                         </button>
                                                                         @if ($errors->has('new_password_confirmation'))
@@ -251,16 +328,26 @@
                                                             </div>
 
                                                             <div class="col-lg-12">
-                                                                <div class="card bg-light shadow-none passwd-bg" id="password-contain">
+                                                                <div class="card bg-light shadow-none passwd-bg"
+                                                                     id="password-contain">
                                                                     <div class="card-body">
                                                                         <div class="mb-4">
-                                                                            <h5 class="fs-sm">Password must contain:</h5>
+                                                                            <h5 class="fs-sm">Password must
+                                                                                contain:</h5>
                                                                         </div>
                                                                         <div class="">
-                                                                            <p id="pass-length" class="invalid fs-xs mb-2">Minimum <b>8 characters</b></p>
-                                                                            <p id="pass-lower" class="invalid fs-xs mb-2">At <b>lowercase</b> letter (a-z)</p>
-                                                                            <p id="pass-upper" class="invalid fs-xs mb-2">At least <b>uppercase</b> letter (A-Z)</p>
-                                                                            <p id="pass-number" class="invalid fs-xs mb-0">A least <b>number</b> (0-9)</p>
+                                                                            <p id="pass-length"
+                                                                               class="invalid fs-xs mb-2">Minimum <b>8
+                                                                                    characters</b></p>
+                                                                            <p id="pass-lower"
+                                                                               class="invalid fs-xs mb-2">At <b>lowercase</b>
+                                                                                letter (a-z)</p>
+                                                                            <p id="pass-upper"
+                                                                               class="invalid fs-xs mb-2">At least <b>uppercase</b>
+                                                                                letter (A-Z)</p>
+                                                                            <p id="pass-number"
+                                                                               class="invalid fs-xs mb-0">A least <b>number</b>
+                                                                                (0-9)</p>
 
                                                                         </div>
                                                                     </div>
@@ -269,7 +356,9 @@
                                                             </div>
                                                             <div class="col-12">
                                                                 <div class="d-flex justify-content-end text-end">
-                                                                    <button type="submit" class="btn btn-success">Change Password</button>
+                                                                    <button type="submit" class="btn btn-success">Change
+                                                                        Password
+                                                                    </button>
                                                                 </div>
                                                             </div>
                                                         </div>

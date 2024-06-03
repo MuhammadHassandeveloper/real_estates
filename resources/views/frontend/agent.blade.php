@@ -73,67 +73,68 @@
                                         @if($properties && $properties->count() > 0)
                                             @foreach($properties as $property)
                                                 @if($property->property_category == 'Rent')
-                                                <div class="col-lg-4 col-md-6 col-sm-12 list-layout">
-                                                    @php
-                                                        $pimages = App\Helpers\AppHelper::propertImages($property->id);
-                                                        $ptype = App\Helpers\AppHelper::propertyType($property->id);
-                                                        $created_at = Carbon::parse($property->created_at);
-                                                        $humanDiff = $created_at->diffForHumans();
-                                                    @endphp
-                                                    <div class="single-items">
-                                                        <div class="property_item classical-list">
-                                                            <div class="image">
-                                                                <a href="{{ route('frontend.property-detail', ['id' => $property->id, 'title' => $property->title]) }}">
-                                                                    <img
-                                                                        src="{{ asset($pimages->first()->image_path) }}"
-                                                                        alt="latest property" class="img-fluid">
-                                                                </a>
+                                                    <div class="col-lg-4 col-md-6 col-sm-12 list-layout">
+                                                        @php
+                                                            $pimages = App\Helpers\helpers::propertImages($property->id);
+                                                            $ptype = App\Helpers\helpers::propertyType($property->id);
+                                                            $created_at = Carbon::parse($property->created_at);
+                                                            $humanDiff = $created_at->diffForHumans();
+                                                        @endphp
+                                                        <div class="single-items">
+                                                            <div class="property_item classical-list">
+                                                                <div class="image">
+                                                                    <a href="{{ route('frontend.property-detail', ['id' => $property->id, 'title' => $property->title]) }}">
+                                                                        <img
+                                                                                src="{{ asset($pimages->first()->image_path) }}"
+                                                                                alt="latest property" class="img-fluid">
+                                                                    </a>
 
-                                                                <div class="sb-date">
-                                                                    <span class="tag"><i class="ti-calendar"></i>{{ $humanDiff }}</span>
+                                                                    <div class="sb-date">
+                                                                        <span class="tag"><i class="ti-calendar"></i>{{ $humanDiff }}</span>
+                                                                    </div>
+                                                                    <span
+                                                                            class="tag_t">{{ $property->property_category }}</span>
                                                                 </div>
-                                                                <span
-                                                                    class="tag_t">{{ $property->property_category }}</span>
-                                                            </div>
-                                                            <div class="proerty_content">
-                                                                <div class="proerty_text">
-                                                                    <h3 class="captlize">
-                                                                        <a href="{{ route('frontend.property-detail', ['id' => $property->id, 'title' => $property->title]) }}">
-                                                                            {{ $property->title }}
-                                                                        </a>
-                                                                    </h3>
-                                                                    <p class="proerty_price">{{ App\Helpers\AppHelper::appCurrencySign() }}{{ number_format($property->price) }}</p>
-                                                                </div>
-                                                                <p class="property_add">{{ $property->address }}
-                                                                    , {{ $property->city }}</p>
-                                                                <div class="property_meta">
-                                                                    <div class="list-fx-features">
-                                                                        <div class="listing-card-info-icon">
+                                                                <div class="proerty_content">
+                                                                    <div class="proerty_text">
+                                                                        <h3 class="captlize">
+                                                                            <a href="{{ route('frontend.property-detail', ['id' => $property->id, 'title' => $property->title]) }}">
+                                                                                {{ $property->title }}
+                                                                            </a>
+                                                                        </h3>
+                                                                        <p class="proerty_price">{{ App\Helpers\helpers::appCurrencySign() }}{{ number_format($property->price) }}</p>
+                                                                    </div>
+                                                                    <p class="property_add">{{ $property->address }}
+                                                                        , {{ $property->city }}</p>
+                                                                    <div class="property_meta">
+                                                                        <div class="list-fx-features">
+                                                                            <div class="listing-card-info-icon">
                                                                             <span
-                                                                                class="inc-fleat inc-bed">{{ $property->bedrooms }}</span>
-                                                                        </div>
-                                                                        <div class="listing-card-info-icon">
+                                                                                    class="inc-fleat inc-bed">{{ $property->bedrooms }}</span>
+                                                                            </div>
+                                                                            <div class="listing-card-info-icon">
                                                                             <span
-                                                                                class="inc-fleat inc-type">{{ $ptype->name }}</span>
-                                                                        </div>
-                                                                        <div class="listing-card-info-icon">
+                                                                                    class="inc-fleat inc-type">{{ $ptype->name }}</span>
+                                                                            </div>
+                                                                            <div class="listing-card-info-icon">
                                                         <span
-                                                            class="inc-fleat inc-area">{{ $property->size_sqft }}</span>
-                                                                        </div>
-                                                                        <div class="listing-card-info-icon">
+                                                                class="inc-fleat inc-area">{{ $property->size_sqft }}</span>
+                                                                            </div>
+                                                                            <div class="listing-card-info-icon">
                                                         <span
-                                                            class="inc-fleat inc-bath">{{ $property->bathrooms }}</span>
+                                                                class="inc-fleat inc-bath">{{ $property->bathrooms }}</span>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
-                                                                </div>
-                                                                <div class="property_links">
-                                                                    <a href="{{ route('frontend.property-detail', ['id' => $property->id, 'title' => $property->title]) }}"
-                                                                       class="btn btn-theme-light">Property Detail</a>
+                                                                    <div class="property_links">
+                                                                        <a href="{{ route('frontend.property-detail', ['id' => $property->id, 'title' => $property->title]) }}"
+                                                                           class="btn btn-theme-light">Property
+                                                                            Detail</a>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
                                                 @endif
                                             @endforeach
                                         @else
@@ -149,8 +150,8 @@
                                                 @if($property->property_category == 'Sale')
                                                     <div class="col-lg-4 col-md-6 col-sm-12 list-layout">
                                                         @php
-                                                            $pimages = App\Helpers\AppHelper::propertImages($property->id);
-                                                            $ptype = App\Helpers\AppHelper::propertyType($property->id);
+                                                            $pimages = App\Helpers\helpers::propertImages($property->id);
+                                                            $ptype = App\Helpers\helpers::propertyType($property->id);
                                                             $created_at = Carbon::parse($property->created_at);
                                                             $humanDiff = $created_at->diffForHumans();
                                                         @endphp
@@ -159,15 +160,15 @@
                                                                 <div class="image">
                                                                     <a href="{{ route('frontend.property-detail', ['id' => $property->id, 'title' => $property->title]) }}">
                                                                         <img
-                                                                            src="{{ asset($pimages->first()->image_path) }}"
-                                                                            alt="latest property" class="img-fluid">
+                                                                                src="{{ asset($pimages->first()->image_path) }}"
+                                                                                alt="latest property" class="img-fluid">
                                                                     </a>
 
                                                                     <div class="sb-date">
                                                                         <span class="tag"><i class="ti-calendar"></i>{{ $humanDiff }}</span>
                                                                     </div>
                                                                     <span
-                                                                        class="tag_t">{{ $property->property_category }}</span>
+                                                                            class="tag_t">{{ $property->property_category }}</span>
                                                                 </div>
                                                                 <div class="proerty_content">
                                                                     <div class="proerty_text">
@@ -176,7 +177,7 @@
                                                                                 {{ $property->title }}
                                                                             </a>
                                                                         </h3>
-                                                                        <p class="proerty_price">{{ App\Helpers\AppHelper::appCurrencySign() }}{{ number_format($property->price) }}</p>
+                                                                        <p class="proerty_price">{{ App\Helpers\helpers::appCurrencySign() }}{{ number_format($property->price) }}</p>
                                                                     </div>
                                                                     <p class="property_add">{{ $property->address }}
                                                                         , {{ $property->city }}</p>
@@ -184,25 +185,26 @@
                                                                         <div class="list-fx-features">
                                                                             <div class="listing-card-info-icon">
                                                                             <span
-                                                                                class="inc-fleat inc-bed">{{ $property->bedrooms }}</span>
+                                                                                    class="inc-fleat inc-bed">{{ $property->bedrooms }}</span>
                                                                             </div>
                                                                             <div class="listing-card-info-icon">
                                                                             <span
-                                                                                class="inc-fleat inc-type">{{ $ptype->name }}</span>
+                                                                                    class="inc-fleat inc-type">{{ $ptype->name }}</span>
                                                                             </div>
                                                                             <div class="listing-card-info-icon">
                                                         <span
-                                                            class="inc-fleat inc-area">{{ $property->size_sqft }}</span>
+                                                                class="inc-fleat inc-area">{{ $property->size_sqft }}</span>
                                                                             </div>
                                                                             <div class="listing-card-info-icon">
                                                         <span
-                                                            class="inc-fleat inc-bath">{{ $property->bathrooms }}</span>
+                                                                class="inc-fleat inc-bath">{{ $property->bathrooms }}</span>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                     <div class="property_links">
                                                                         <a href="{{ route('frontend.property-detail', ['id' => $property->id, 'title' => $property->title]) }}"
-                                                                           class="btn btn-theme-light">Property Detail</a>
+                                                                           class="btn btn-theme-light">Property
+                                                                            Detail</a>
                                                                     </div>
                                                                 </div>
                                                             </div>

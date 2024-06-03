@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\AppHelper;
+use App\Helpers\Helpers;
 use App\Models\User;
 use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
 use Illuminate\Http\Request;
@@ -118,7 +118,7 @@ class AuthController extends Controller
             if ($user->inRole('admin')) {
                 return redirect('/admin/dashboard')->with('success', 'Successfully logged in');
             } elseif ($user->inRole('agent')) {
-                AppHelper::storeActivity(
+                Helpers::storeActivity(
                     'User Login',
                     'Agent ' . Sentinel::getUser()->first_name . ' ' . Sentinel::getUser()->last_name . ' logged in successfully.', // Content
                     'success',
@@ -140,7 +140,7 @@ class AuthController extends Controller
 
     public function destroy()
     {
-        AppHelper::storeActivity(
+        Helpers::storeActivity(
             'User Logout',
             'Agent ' . Sentinel::getUser()->first_name . ' ' . Sentinel::getUser()->last_name . ' Logout in successfully.', // Content
             'success',

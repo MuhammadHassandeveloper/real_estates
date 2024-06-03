@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\AppHelper;
+use App\Helpers\Helpers;
 use App\Models\Property;
 use App\Models\PropertyFeature;
 use App\Models\PropertyImage;
@@ -131,7 +131,7 @@ class AgencyPropertyController extends Controller
             }
         }
 
-        AppHelper::storeActivity(
+        Helpers::storeActivity(
             'New Property Created', // Heading
             'Property created by Agency ' . Sentinel::getUser()->first_name . ' ' . Sentinel::getUser()->last_name . '.', // Content
             'success', // Color
@@ -235,7 +235,7 @@ class AgencyPropertyController extends Controller
                 ['image_path' => 'property_images/' . $imageName]
             );
         }
-        AppHelper::storeActivity(
+        Helpers::storeActivity(
             'Property Updated', // Heading
             'Property updated by Agency ' . Sentinel::getUser()->first_name . ' ' . Sentinel::getUser()->last_name . '.', // Content
             'success', // Color
@@ -265,7 +265,7 @@ class AgencyPropertyController extends Controller
     {
         Property::destroy($request->id);
         PropertyImage::where('property_id', $request->id)->delete();
-        AppHelper::storeActivity(
+        Helpers::storeActivity(
             'Property Deleted', // Heading
             'Property deleted by Agency ' . Sentinel::getUser()->first_name . ' ' . Sentinel::getUser()->last_name . '.', // Content
             'success', // Color

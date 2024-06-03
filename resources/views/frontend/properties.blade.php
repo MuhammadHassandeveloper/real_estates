@@ -4,7 +4,8 @@
 @section('style')
 @stop
 @section('content')
-    <div class="page-title bb-title" style="background:url({{ asset('assets/img/bg.jpg') }}) no-repeat;" data-overlay="6">
+    <div class="page-title bb-title" style="background:url({{ asset('assets/img/bg.jpg') }}) no-repeat;"
+         data-overlay="6">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 col-md-12">
@@ -73,8 +74,14 @@
                                             <div class="input-with-icon">
                                                 <select name="property_category" class="form-control">
                                                     <option value="">Type</option>
-                                                    <option value="Rent" {{ request('property_category') == 'Rent' ? 'selected' : '' }}>For Rent</option>
-                                                    <option value="Sale" {{ request('property_category') == 'Sale' ? 'selected' : '' }}>For Sale</option>
+                                                    <option
+                                                        value="Rent" {{ request('property_category') == 'Rent' ? 'selected' : '' }}>
+                                                        For Rent
+                                                    </option>
+                                                    <option
+                                                        value="Sale" {{ request('property_category') == 'Sale' ? 'selected' : '' }}>
+                                                        For Sale
+                                                    </option>
                                                 </select>
                                             </div>
                                         </div>
@@ -85,7 +92,8 @@
                                                 <select name="city" class="form-control">
                                                     <option value="">--City--</option>
                                                     @foreach($fproperties->unique('city') as $property)
-                                                        <option value="{{$property->city}}" {{ request('city') == $property->city ? 'selected' : '' }}>
+                                                        <option
+                                                            value="{{$property->city}}" {{ request('city') == $property->city ? 'selected' : '' }}>
                                                             {{ $property->city }}
                                                         </option>
                                                     @endforeach
@@ -97,7 +105,8 @@
 
                                     <div class="col-lg-3 col-sm-6">
                                         <div class="form-group">
-                                            <a href="{{ route('frontend.properties') }}" class="btn reset-btn-outline p-3">Search Reset</a>
+                                            <a href="{{ route('frontend.properties') }}"
+                                               class="btn reset-btn-outline p-3">Search Reset</a>
                                         </div>
                                     </div>
 
@@ -131,7 +140,7 @@
                     <div class="row">
                         @if($properties && $properties->count() > 0)
                             @foreach($properties as $property)
-                                @php $pimages = App\Helpers\AppHelper::propertImages($property->id) @endphp
+                                @php $pimages = App\Helpers\helpers::propertImages($property->id) @endphp
                                 <div class="col-lg-4 col-md-6 col-12">
                                     <div class="property-listing property-1">
                                         <div class="listing-img-wrapper">
@@ -164,7 +173,7 @@
 
                                             <div class="listing-footer-wrapper">
                                                 <div class="listing-price">
-                                                    <h4 class="list-pr">{{ App\Helpers\AppHelper::appCurrencySign() }}{{ number_format($property->price) }}</h4>
+                                                    <h4 class="list-pr">{{ App\Helpers\helpers::appCurrencySign() }}{{ number_format($property->price) }}</h4>
                                                 </div>
                                                 <div class="listing-detail-btn">
                                                     <a href="{{ route('frontend.property-detail',['id' => $property->id,'title' => $property->title]) }}"
