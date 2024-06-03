@@ -33,12 +33,14 @@
                             <div class="agents-grid-wrap">
 
                                 <div class="fr-grid-thumb">
-                                    <a href="agent-page.html">
+                                    <a href="{{ route('frontend.agent',$agent->id) }}">
                                         <img src="{{ asset('uploads/'.$agent->photo) }}" class="img-fluid mx-auto" alt="">
                                     </a>
                                 </div>
                                 <div class="fr-grid-deatil">
-                                    <h5 class="fr-can-name"><a href="#">{{ $agent->first_name .' '. $agent->last_name }}</a></h5>
+                                    <h5 class="fr-can-name">
+                                        <a href="{{ route('frontend.agent',$agent->id) }}">{{ $agent->first_name .' '. $agent->last_name }}</a>
+                                    </h5>
                                     <span class="fr-position"><i class="lni-map-marker"></i>{{ $agent->city .' '. $agent->state }}</span>
                                 </div>
 
@@ -56,7 +58,7 @@
                             </div>
 
                             <div class="fr-grid-footer">
-                                <a href="#" class="btn btn-outline-theme full-width">View Profile<i class="ti-arrow-right ml-1"></i></a>
+                                <a href="{{ route('frontend.agent',$agent->id) }}" class="btn btn-outline-theme full-width">View Profile<i class="ti-arrow-right ml-1"></i></a>
                             </div>
 
                         </div>

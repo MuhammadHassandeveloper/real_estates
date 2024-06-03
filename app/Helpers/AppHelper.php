@@ -99,13 +99,28 @@ class AppHelper
         return Property::find($id);
     }
 
+
+    //agents
    public static function agentProperties($id) {
         return Property::where('agent_id',$id)->get();
     }
 
-
     public static function agentPropertiescount($id) {
         return Property::where('agent_id',$id)->count();
+    }
+
+
+    //agencies
+    public static function agencyProperties($id) {
+        return Property::where('agency_id',$id)->get();
+    }
+
+    public static function agencyPropertiescount($id) {
+        return Property::where('agency_id',$id)->count();
+    }
+
+    public static function agencyAgents($id) {
+        return User::where('agency_id',$id)->get();
     }
 
     public static function customerProperties($id) {

@@ -66,6 +66,31 @@ class FrontEndController extends Controller
         return view('frontend.agents',$data);
     }
 
+    public function agent($id) {
+        $data = [];
+        $data['title'] = 'Agent';
+        $data['agent'] = AppHelper::userDetail($id);
+        $data['properties'] = AppHelper::agentProperties($id);
+        return view('frontend.agent',$data);
+    }
+
+    public function agency($id) {
+        $data = [];
+        $data['title'] = 'Agency';
+        $data['agency'] = AppHelper::userDetail($id);
+        $data['properties'] = AppHelper::agencyProperties($id);
+        $data['agents'] = AppHelper::agencyAgents($id);
+        return view('frontend.agency',$data);
+    }
+
+
+    public function propertyDetail($id) {
+        $data = [];
+        $data['title'] = 'Property';
+        $data['property'] = AppHelper::propertyDetail($id);
+        return view('frontend.property',$data);
+    }
+
 
 
 
