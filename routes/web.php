@@ -34,8 +34,8 @@ Route::get('/properties/filter', [FrontEndController::class, 'filterProperties']
 Route::get('/property-detail/{id}/{title}', [FrontEndController::class, 'propertyDetail'])->name('frontend.property-detail');
 Route::get('/agencies', [FrontEndController::class, 'agencies'])->name('frontend.agencies');
 Route::get('/agents', [FrontEndController::class, 'agents'])->name('frontend.agents');
-Route::get('/agent/{id}', [FrontEndController::class, 'agent'])->name('frontend.agent');
-Route::get('/agency/{id}', [FrontEndController::class, 'agency'])->name('frontend.agency');
+Route::get('/agent/{id}', [FrontEndController::class, 'agentDetail'])->name('frontend.agent');
+Route::get('/agency/{id}', [FrontEndController::class, 'agencyDetail'])->name('frontend.agency');
 
 Route::get('/about-us', [FrontEndController::class, 'aboutUs'])->name('frontend.about-us');
 Route::get('/contact-us', [FrontEndController::class, 'contactUs'])->name('frontend.contact-us');
@@ -79,7 +79,6 @@ Route::group(['middleware' => 'admin', 'prefix' => '/'], function () {
         Route::post('/property-update', [AgentPropertyController::class, 'propertyUpdate'])->name('agent.update_property');
         Route::post('/delete', [AgentPropertyController::class, 'propertyDelete'])->name('agent.property.delete_property');
     });
-
 
     // agency dashboard routes
     Route::group(array('prefix' => 'agency'), function () {

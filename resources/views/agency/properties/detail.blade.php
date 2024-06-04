@@ -84,7 +84,7 @@
                                                         <i class="bi bi-tag"></i>
                                                     </div>
                                                 </div>
-                                                <p class="fs-md mb-0">{{ \App\Helpers\helpers::appCurrencySign() }}{{ $property->price }}</p>
+                                                <p class="fs-md mb-0">{{ \App\Helpers\Helpers::appCurrencySign() }}{{ $property->price }}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -184,7 +184,7 @@
                                     @endphp
                                     @foreach($selected_features as $ftype)
                                         @php
-                                            $feature = App\Helpers\helpers::featureDetail($ftype);
+                                            $feature = App\Helpers\Helpers::featureDetail($ftype);
                                         @endphp
                                         <li class="w-lg">
                                             {{ $feature->name }}

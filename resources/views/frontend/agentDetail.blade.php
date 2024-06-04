@@ -75,8 +75,8 @@
                                                 @if($property->property_category == 'Rent')
                                                     <div class="col-lg-4 col-md-6 col-sm-12 list-layout">
                                                         @php
-                                                            $pimages = App\Helpers\helpers::propertImages($property->id);
-                                                            $ptype = App\Helpers\helpers::propertyType($property->id);
+                                                            $pimages = App\Helpers\Helpers::propertImages($property->id);
+                                                            $ptype = App\Helpers\Helpers::propertyType($property->id);
                                                             $created_at = Carbon::parse($property->created_at);
                                                             $humanDiff = $created_at->diffForHumans();
                                                         @endphp
@@ -102,7 +102,7 @@
                                                                                 {{ $property->title }}
                                                                             </a>
                                                                         </h3>
-                                                                        <p class="proerty_price">{{ App\Helpers\helpers::appCurrencySign() }}{{ number_format($property->price) }}</p>
+                                                                        <p class="proerty_price">{{ App\Helpers\Helpers::appCurrencySign() }}{{ number_format($property->price) }}</p>
                                                                     </div>
                                                                     <p class="property_add">{{ $property->address }}
                                                                         , {{ $property->city }}</p>
@@ -150,8 +150,8 @@
                                                 @if($property->property_category == 'Sale')
                                                     <div class="col-lg-4 col-md-6 col-sm-12 list-layout">
                                                         @php
-                                                            $pimages = App\Helpers\helpers::propertImages($property->id);
-                                                            $ptype = App\Helpers\helpers::propertyType($property->id);
+                                                            $pimages = App\Helpers\Helpers::propertImages($property->id);
+                                                            $ptype = App\Helpers\Helpers::propertyType($property->id);
                                                             $created_at = Carbon::parse($property->created_at);
                                                             $humanDiff = $created_at->diffForHumans();
                                                         @endphp
@@ -177,7 +177,7 @@
                                                                                 {{ $property->title }}
                                                                             </a>
                                                                         </h3>
-                                                                        <p class="proerty_price">{{ App\Helpers\helpers::appCurrencySign() }}{{ number_format($property->price) }}</p>
+                                                                        <p class="proerty_price">{{ App\Helpers\Helpers::appCurrencySign() }}{{ number_format($property->price) }}</p>
                                                                     </div>
                                                                     <p class="property_add">{{ $property->address }}
                                                                         , {{ $property->city }}</p>

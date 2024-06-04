@@ -6,9 +6,9 @@
 <head>
 
     <meta charset="utf-8">
-    <title>{{ \App\Helpers\helpers::site_name() }} - @yield('title')</title>
+    <title>{{ \App\Helpers\Helpers::site_name() }} - @yield('title')</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta content=">{{ \App\Helpers\helpers::site_name() }}" name="{{ \App\Helpers\helpers::site_name() }}">
+    <meta content=">{{ \App\Helpers\Helpers::site_name() }}" name="{{ \App\Helpers\Helpers::site_name() }}">
     <link rel="shortcut icon" href="{{ asset('admin/assets/images/favicon.ico') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
@@ -37,7 +37,7 @@
                                     <div class="text-center">
                                         <h5 class="fs-3xl">Welcome Back</h5>
                                         <p class="text-muted">Sign in to continue
-                                            to {{ \App\Helpers\helpers::site_name() }}.</p>
+                                            to {{ \App\Helpers\Helpers::site_name() }}.</p>
                                     </div>
                                     <div class="p-2">
                                         <form action="{{ url('post-login') }}">

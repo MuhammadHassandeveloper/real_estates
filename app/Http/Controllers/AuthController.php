@@ -114,6 +114,7 @@ class AuthController extends Controller
             $message = $e->getMessage();
             return redirect()->back()->withErrors($message)->withInput();
         }
+
         if ($user) {
             if ($user->inRole('admin')) {
                 return redirect('/admin/dashboard')->with('success', 'Successfully logged in');

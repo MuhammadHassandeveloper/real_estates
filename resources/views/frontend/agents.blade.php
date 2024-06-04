@@ -50,7 +50,7 @@
                                 <div class="fr-grid-info">
                                     <ul>
                                         @php
-                                            $total_properties = App\Helpers\helpers::agentPropertiescount($agent->id);
+                                            $total_properties = App\Helpers\Helpers::agentPropertiescount($agent->id);
                                         @endphp
                                         <li>Properties<span>{{  $total_properties }}</span></li>
                                         <li>Email<span>{{ $agent->email }}</span></li>

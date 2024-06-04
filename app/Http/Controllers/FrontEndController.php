@@ -1,9 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Helpers\Helpers;
 use App\Models\Property;
+use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
 use Illuminate\Http\Request;
 
 
@@ -66,21 +66,21 @@ class FrontEndController extends Controller
         return view('frontend.agents',$data);
     }
 
-    public function agent($id) {
+    public function agentDetail($id) {
         $data = [];
         $data['title'] = 'Agent';
         $data['agent'] = Helpers::userDetail($id);
         $data['properties'] = Helpers::agentProperties($id);
-        return view('frontend.agent',$data);
+        return view('frontend.agentDetail',$data);
     }
 
-    public function agency($id) {
+    public function agencyDetail($id) {
         $data = [];
         $data['title'] = 'Agency';
         $data['agency'] = Helpers::userDetail($id);
         $data['properties'] = Helpers::agencyProperties($id);
         $data['agents'] = Helpers::agencyAgents($id);
-        return view('frontend.agency',$data);
+        return view('frontend.agencyDetail',$data);
     }
 
 

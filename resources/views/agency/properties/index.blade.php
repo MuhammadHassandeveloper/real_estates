@@ -64,7 +64,7 @@
                                         @php $i = 1; @endphp
                                         @foreach($properties as $property)
                                             @php
-                                                $res =  App\Helpers\helpers::property_category($property->property_category);
+                                                $res =  App\Helpers\Helpers::property_category($property->property_category);
                                                 $bgColor = $res[0];
                                                 $color = $res[1];
                                                 $text = $res[2];
@@ -84,11 +84,11 @@
                                                     </div>
                                                 </td>
                                                 <td class="agent_name">
-                                                    @php $agent = App\Helpers\helpers::userDetail($property->agent_id); @endphp
+                                                    @php $agent = App\Helpers\Helpers::userDetail($property->agent_id); @endphp
                                                     {{ $agent->first_name .' '.$agent->last_name }}
                                                 </td>
                                                 <td class="price">
-                                                    <span class="fw-medium">{{ App\Helpers\helpers::appCurrencySign() }}{{ $property->price }}</span>
+                                                    <span class="fw-medium">{{ App\Helpers\Helpers::appCurrencySign() }}{{ $property->price }}</span>
                                                 </td>
                                                 <td>
                                                     <span

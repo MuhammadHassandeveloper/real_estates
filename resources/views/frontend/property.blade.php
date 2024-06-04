@@ -6,7 +6,7 @@
 @section('content')
     @php
         use Carbon\Carbon;
-       $pimages = App\Helpers\helpers::propertImages($property->id);
+       $pimages = App\Helpers\Helpers::propertImages($property->id);
     @endphp
         <!-- ============================ Hero Banner  Start================================== -->
     <div class="single-advance-property gray">
@@ -43,7 +43,7 @@
                         </div>
 
                         <div class="property-price-info">
-                            <h4 class="property-price">{{ App\Helpers\helpers::appCurrencySign() }}{{ number_format($property->price) }}</h4>
+                            <h4 class="property-price">{{ App\Helpers\Helpers::appCurrencySign() }}{{ number_format($property->price) }}</h4>
                             <p class="property-sqa">{{ $property->property_category }}</p>
                         </div>
 

@@ -67,7 +67,7 @@
                                         @php $i = 1; @endphp
                                         @foreach($properties as $property)
                                             @php
-                                                $res =  App\Helpers\helpers::property_category($property->property_category);
+                                                $res =  App\Helpers\Helpers::property_category($property->property_category);
                                                 $bgColor = $res[0];
                                                 $color = $res[1];
                                                 $text = $res[2];
@@ -90,7 +90,7 @@
                                                 <td class="agent_name">{{ $property->state }}</td>
                                                 <td class="price">
                                                     <span
-                                                            class="fw-medium">{{ App\Helpers\helpers::appCurrencySign() }}{{ $property->price }}</span>
+                                                            class="fw-medium">{{ App\Helpers\Helpers::appCurrencySign() }}{{ $property->price }}</span>
                                                 </td>
                                                 <td>
                                                     <span

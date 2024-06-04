@@ -40,7 +40,7 @@
                                                     <h5>{{ Sentinel::getUser()->first_name .' '. Sentinel::getUser()->last_name }}
                                                         <i class="bi bi-patch-check-fill align-baseline text-info ms-1"></i>
                                                     </h5>
-                                                    <p class="text-muted">{{ App\Helpers\helpers::roleName(Sentinel::getUser()->id) }}</p>
+                                                    <p class="text-muted">{{ App\Helpers\Helpers::roleName(Sentinel::getUser()->id) }}</p>
                                                 </div>
                                             </div>
                                         </div>

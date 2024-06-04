@@ -5,8 +5,8 @@
 @section('content')
     @php
         use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
-        use App\Helpers\helpers;
-        $missingFields = helpers::checkAgentProfileCompletion(Sentinel::getUser()->id);
+        use App\Helpers\Helpers;
+        $missingFields = Helpers::checkAgentProfileCompletion(Sentinel::getUser()->id);
     @endphp
             <!-- Start Page-content -->
     <div class="page-content">
@@ -167,7 +167,7 @@
                                         @php $i = 1; @endphp
                                         @foreach($properties as $property)
                                             @php
-                                                $res =  App\Helpers\helpers::property_category($property->property_category);
+                                                $res =  App\Helpers\Helpers::property_category($property->property_category);
                                                 $bgColor = $res[0];
                                                 $color = $res[1];
                                                 $text = $res[2];
@@ -190,7 +190,7 @@
                                                 <td class="address">{{ $property->city }}</td>
                                                 <td class="agent_name">{{ $property->state }}</td>
                                                 <td class="price">
-                                                    <span class="fw-medium">{{ App\Helpers\helpers::appCurrencySign() }}{{ $property->price }}</span>
+                                                    <span class="fw-medium">{{ App\Helpers\Helpers::appCurrencySign() }}{{ $property->price }}</span>
                                                 </td>
                                                 <td>
                                                     <span class="badge {{ $bgColor }} {{ $color }} status">{{ $text  }}</span>

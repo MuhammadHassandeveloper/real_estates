@@ -140,7 +140,7 @@
                     <div class="row">
                         @if($properties && $properties->count() > 0)
                             @foreach($properties as $property)
-                                @php $pimages = App\Helpers\helpers::propertImages($property->id) @endphp
+                                @php $pimages = App\Helpers\Helpers::propertImages($property->id) @endphp
                                 <div class="col-lg-4 col-md-6 col-12">
                                     <div class="property-listing property-1">
                                         <div class="listing-img-wrapper">
@@ -173,7 +173,7 @@
 
                                             <div class="listing-footer-wrapper">
                                                 <div class="listing-price">
-                                                    <h4 class="list-pr">{{ App\Helpers\helpers::appCurrencySign() }}{{ number_format($property->price) }}</h4>
+                                                    <h4 class="list-pr">{{ App\Helpers\Helpers::appCurrencySign() }}{{ number_format($property->price) }}</h4>
                                                 </div>
                                                 <div class="listing-detail-btn">
                                                     <a href="{{ route('frontend.property-detail',['id' => $property->id,'title' => $property->title]) }}"
