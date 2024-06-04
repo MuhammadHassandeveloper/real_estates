@@ -75,7 +75,7 @@ Route::group(['middleware' => 'admin', 'prefix' => '/'], function () {
         Route::post('/upload', [AgentPropertyController::class, 'uploadImages'])->name('agent.property.upload_images');
         Route::post('/property-store', [AgentPropertyController::class, 'propertyStore'])->name('agent.store_property');
         Route::get('/property-detail/{id}', [AgentPropertyController::class, 'propertyDetail'])->name('agent.detail_property');
-        Route::get('/property-edit/{id}', [AgentPropertyController::class, 'propertyEdit'])->name('agent.edit_property');
+        Route::get('/property-edit/{id}', [AgentPropertyController::class, 'propertyEdit'])->name('agent.update_property');
         Route::post('/property-update', [AgentPropertyController::class, 'propertyUpdate'])->name('agent.update_property');
         Route::post('/delete', [AgentPropertyController::class, 'propertyDelete'])->name('agent.property.delete_property');
     });

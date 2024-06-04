@@ -24,7 +24,7 @@ use Stevebauman\Location\Facades\Location;
 use Illuminate\Support\Facades\Cache;
 
 
-class Helpers
+class AppHelper
 {
 
     public static function stripe_publich_key()

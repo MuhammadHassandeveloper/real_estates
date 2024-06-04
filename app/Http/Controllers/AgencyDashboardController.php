@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\Helpers;
+use App\Helpers\AppHelper;
 use App\Models\ActivityReport;
 use App\Models\Property;
 use Illuminate\Http\Request;
@@ -82,7 +82,7 @@ class AgencyDashboardController extends Controller
             $user->agency_logo = $filename;
         }
         $user->save();
-        Helpers::storeActivity('Profile Update','Update by','success',Sentinel::getUser()->id,1,Sentinel::getUser()->id,'Agent');
+        AppHelper::storeActivity('Profile Update','Update by','success',Sentinel::getUser()->id,1,Sentinel::getUser()->id,'Agent');
         return redirect()->back()->with('success', 'Profile updated successfully.');
     }
 
@@ -106,7 +106,7 @@ class AgencyDashboardController extends Controller
         $user->password = Hash::make($request->input('new_password'));
         $user->save();
 
-        Helpers::storeActivity('Password Update','Update by','success',Sentinel::getUser()->id,1,Sentinel::getUser()->id,'Agent');
+        AppHelper::storeActivity('Password Update','Update by','success',Sentinel::getUser()->id,1,Sentinel::getUser()->id,'Agent');
         return redirect()->back()->with('success', 'Password updated successfully.');
     }
 

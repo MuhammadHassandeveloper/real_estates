@@ -30,7 +30,7 @@
                     <div class="card">
                         <div class="card-body">
                             <div
-                                    class="swiper property-slider mb-3 swiper-initialized swiper-horizontal swiper-backface-hidden">
+                                class="swiper property-slider mb-3 swiper-initialized swiper-horizontal swiper-backface-hidden">
 
                                 <div class="swiper-wrapper" id="swiper-wrapper-daa4ad5163e03110e" aria-live="polite">
                                     <div class="swiper-slide swiper-slide-active" role="group" aria-label="1 / 3"
@@ -44,7 +44,7 @@
                                                 {{ $property->is_featured ? 'Featured' : 'Not Featured' }}
                                             </div>
 
-                                            @if($pimages->isNotEmpty())
+                                        @if($pimages->isNotEmpty())
                                                 <img src="{{ asset($pimages->first()->image_path) }}"
                                                      class="img-fluid w-100" style="height: 350px;">
                                             @endif
@@ -55,9 +55,7 @@
                             <!--end slider-->
 
                             <div class="pt-1">
-                                <h6 class="card-title">{{ $property->title }} (<span
-                                            class="badge text-bg-info align-middle ms-1"> {{ $property->propertyType->name }}  </span>)
-                                </h6>
+                                <h6 class="card-title">{{ $property->title }} (<span class="badge text-bg-info align-middle ms-1"> {{ $property->propertyType->name }}  </span>)</h6>
                                 <div class="text-muted hstack gap-2 flex-wrap list-unstyled mb-3">
                                     <div>
                                         <i class="bi bi-geo-alt align-baseline me-1"></i> {{ $property->address }}
@@ -84,7 +82,11 @@
                                                         <i class="bi bi-tag"></i>
                                                     </div>
                                                 </div>
+<<<<<<< HEAD
                                                 <p class="fs-md mb-0">{{ \App\Helpers\Helpers::appCurrencySign() }}{{ $property->price }}</p>
+=======
+                                                <p class="fs-md mb-0">{{ \App\Helpers\AppHelper::appCurrencySign() }}{{ $property->price }}</p>
+>>>>>>> parent of da1d971 (ok)
                                             </div>
                                         </div>
                                     </div>
@@ -93,7 +95,7 @@
                                             <div class="d-flex align-items-center gap-2">
                                                 <div class="avatar-xs flex-shrink-0">
                                                     <div
-                                                            class="avatar-title bg-warning-subtle text-warning fs-lg rounded">
+                                                        class="avatar-title bg-warning-subtle text-warning fs-lg rounded">
                                                         <i class="bi bi-house"></i>
                                                     </div>
                                                 </div>
@@ -106,7 +108,7 @@
                                             <div class="d-flex align-items-center gap-2">
                                                 <div class="avatar-xs flex-shrink-0">
                                                     <div
-                                                            class="avatar-title bg-danger-subtle text-danger fs-lg rounded">
+                                                        class="avatar-title bg-danger-subtle text-danger fs-lg rounded">
                                                         <i class="ph ph-bathtub"></i>
                                                     </div>
                                                 </div>
@@ -120,7 +122,7 @@
                                             <div class="d-flex align-items-center gap-2">
                                                 <div class="avatar-xs flex-shrink-0">
                                                     <div
-                                                            class="avatar-title bg-success-subtle text-success fs-lg rounded">
+                                                        class="avatar-title bg-success-subtle text-success fs-lg rounded">
                                                         <i class="bi bi-columns"></i>
                                                     </div>
                                                 </div>
@@ -134,7 +136,7 @@
                                             <div class="d-flex align-items-center gap-2">
                                                 <div class="avatar-xs flex-shrink-0">
                                                     <div
-                                                            class="avatar-title bg-warning-subtle text-warning fs-lg rounded">
+                                                        class="avatar-title bg-warning-subtle text-warning fs-lg rounded">
                                                         <i class="bi bi-house"></i> <!-- Icon for garages -->
                                                     </div>
                                                 </div>
@@ -148,7 +150,7 @@
                                             <div class="d-flex align-items-center gap-2">
                                                 <div class="avatar-xs flex-shrink-0">
                                                     <div
-                                                            class="avatar-title bg-warning-subtle text-warning fs-lg rounded">
+                                                        class="avatar-title bg-warning-subtle text-warning fs-lg rounded">
                                                         <i class="bi bi-door-open"></i> <!-- Icon for simple rooms -->
                                                     </div>
                                                 </div>
@@ -162,7 +164,7 @@
                                             <div class="d-flex align-items-center gap-2">
                                                 <div class="avatar-xs flex-shrink-0">
                                                     <div
-                                                            class="avatar-title bg-warning-subtle text-warning fs-lg rounded">
+                                                        class="avatar-title bg-warning-subtle text-warning fs-lg rounded">
                                                         <i class="bi bi-building"></i> <!-- Icon for simple rooms -->
                                                     </div>
                                                 </div>
@@ -184,7 +186,11 @@
                                     @endphp
                                     @foreach($selected_features as $ftype)
                                         @php
+<<<<<<< HEAD
                                             $feature = App\Helpers\Helpers::featureDetail($ftype);
+=======
+                                            $feature = App\Helpers\AppHelper::featureDetail($ftype);
+>>>>>>> parent of da1d971 (ok)
                                         @endphp
                                         <li class="w-lg">
                                             {{ $feature->name }}

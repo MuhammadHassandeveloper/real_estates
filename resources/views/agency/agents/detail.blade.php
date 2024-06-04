@@ -37,8 +37,7 @@
                                             <span class="trending-ribbon-text">{{ $properties_count }} Properties</span>
                                             <i class="mdi mdi-home-city text-white align-bottom float-end ms-2"></i>
                                         </div>
-                                        <img src="{{ $agent->photo ? asset('property_images/' . $agent->photo) : asset('assets/images/default-profile.png') }}"
-                                             alt="Agent Photo" class="img-fluid">
+                                        <img src="{{ $agent->photo ? asset('property_images/' . $agent->photo) : asset('assets/images/default-profile.png') }}" alt="Agent Photo" class="img-fluid">
                                     </div>
                                 </div>
                                 <div class="col-xl-8 col-md-7">
@@ -50,10 +49,8 @@
                                                     <tr>
                                                         <th>Agency:</th>
                                                         @php
-                                                                @endphp
-                                                        <td>
-                                                            <a href="#!">{{ $agency->first_name ? $agency->first_name .' '.$agency->last_name : 'N/A' }}</a>
-                                                        </td>
+                                                            @endphp
+                                                        <td><a href="#!">{{ $agency->first_name ? $agency->first_name .' '.$agency->last_name : 'N/A' }}</a></td>
                                                     </tr>
                                                     <tr>
                                                         <th>Email:</th>
@@ -119,7 +116,7 @@
                                         @php $i = 1; @endphp
                                         @foreach($properties as $property)
                                             @php
-                                                $res =  App\Helpers\Helpers::property_category($property->property_category);
+                                                $res =  App\Helpers\AppHelper::property_category($property->property_category);
                                                 $bgColor = $res[0];
                                                 $color = $res[1];
                                                 $text = $res[2];
@@ -142,11 +139,11 @@
                                                 <td class="agent_name">{{ $property->state }}</td>
                                                 <td class="price">
                                                     <span
-                                                            class="fw-medium">{{ App\Helpers\Helpers::appCurrencySign() }}{{ $property->price }}</span>
+                                                        class="fw-medium">{{ App\Helpers\AppHelper::appCurrencySign() }}{{ $property->price }}</span>
                                                 </td>
                                                 <td>
                                                     <span
-                                                            class="badge {{ $bgColor }} {{ $color }} status">{{ $text  }}</span>
+                                                        class="badge {{ $bgColor }} {{ $color }} status">{{ $text  }}</span>
                                                 </td>
                                                 <td>
                                                     <ul class="d-flex gap-2 list-unstyled mb-0">

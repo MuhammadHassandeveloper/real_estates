@@ -67,7 +67,11 @@
                                         @php $i = 1; @endphp
                                         @foreach($properties as $property)
                                             @php
+<<<<<<< HEAD
                                                 $res =  App\Helpers\Helpers::property_category($property->property_category);
+=======
+                                                $res =  App\Helpers\AppHelper::property_category($property->property_category);
+>>>>>>> parent of da1d971 (ok)
                                                 $bgColor = $res[0];
                                                 $color = $res[1];
                                                 $text = $res[2];
@@ -90,11 +94,15 @@
                                                 <td class="agent_name">{{ $property->state }}</td>
                                                 <td class="price">
                                                     <span
+<<<<<<< HEAD
                                                             class="fw-medium">{{ App\Helpers\Helpers::appCurrencySign() }}{{ $property->price }}</span>
+=======
+                                                        class="fw-medium">{{ App\Helpers\AppHelper::appCurrencySign() }}{{ $property->price }}</span>
+>>>>>>> parent of da1d971 (ok)
                                                 </td>
                                                 <td>
                                                     <span
-                                                            class="badge {{ $bgColor }} {{ $color }} status">{{ $text  }}</span>
+                                                        class="badge {{ $bgColor }} {{ $color }} status">{{ $text  }}</span>
                                                 </td>
                                                 <td>
                                                     <ul class="d-flex gap-2 list-unstyled mb-0">
@@ -153,7 +161,7 @@
                     <div class="modal-footer">
                         <div class="hstack gap-2 justify-content-end">
                             <button type="button" class="btn btn-ghost-danger" data-bs-dismiss="modal"><i
-                                        class="bi bi-x-lg align-baseline me-1"></i> Close
+                                    class="bi bi-x-lg align-baseline me-1"></i> Close
                             </button>
                             <button type="submit" class="btn btn-danger">Delete</button>
                         </div>

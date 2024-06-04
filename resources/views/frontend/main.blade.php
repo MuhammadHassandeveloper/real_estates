@@ -3,14 +3,17 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<<<<<<< HEAD
     <title>{{ \App\Helpers\Helpers::site_name() }} - @yield('title')</title>
+=======
+    <title>{{ \App\Helpers\AppHelper::site_name() }} - @yield('title')</title>
+>>>>>>> parent of da1d971 (ok)
     <link href="{{ asset('assets/css/styles.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/css/colors.css') }}" rel="stylesheet">
     <style>
         h4.modal-header-title {
             font-size: 2em !important;
         }
-
         .text-danger {
             display: flex;
             margin-top: 8px;
@@ -24,21 +27,19 @@
 <!-- ============================================================== -->
 <!-- Preloader - style you can find in spinners.css -->
 <!-- ============================================================== -->
-<div id="preloader">
-    <div class="preloader"><span></span><span></span></div>
-</div>
+<div id="preloader"><div class="preloader"><span></span><span></span></div></div>
 <!-- ============================================================== -->
 <!-- Main wrapper - style you can find in pages.scss -->
 <!-- ============================================================== -->
 <div id="main-wrapper">
 
-    <!-- header page -->
-    @include('frontend.components.header')
-    <!-- Start right Content here -->
-    @yield('content')
-    <!-- Page-footer -->
-    @include('frontend.components.footer')
-    <!-- end main content-->
+<!-- header page -->
+@include('frontend.components.header')
+<!-- Start right Content here -->
+@yield('content')
+<!-- Page-footer -->
+@include('frontend.components.footer')
+<!-- end main content-->
 
 </div>
 <!-- End Main wrapper -->
@@ -61,8 +62,8 @@
 
 <script>
     var forms = document.querySelectorAll('form');
-    forms.forEach(function (form) {
-        form.addEventListener('submit', function (event) {
+    forms.forEach(function(form) {
+        form.addEventListener('submit', function(event) {
             event.preventDefault();
             var submitButton = form.querySelector('button[type="submit"]');
             var originalText = submitButton.innerText; // Store the original text
@@ -72,10 +73,10 @@
                 <span class="text-end text-light spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>`
             );
             submitButton.disabled = true;
-            setTimeout(function () {
+            setTimeout(function() {
                 form.submit();
             }, 1000);
-            setTimeout(function () {
+            setTimeout(function() {
                 $($button).html(originalText);
                 submitButton.disabled = false;
             }, 3000);
@@ -83,7 +84,7 @@
     });
 
     //error message hide
-    setTimeout(function () {
+    setTimeout(function() {
         $('.error').hide();
     }, 5000);
 </script>
