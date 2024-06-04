@@ -131,11 +131,7 @@
                     <div class="row">
                         @if($properties && $properties->count() > 0)
                             @foreach($properties as $property)
-<<<<<<< HEAD
-                                @php $pimages = App\Helpers\Helpers::propertImages($property->id) @endphp
-=======
                                 @php $pimages = App\Helpers\AppHelper::propertImages($property->id) @endphp
->>>>>>> parent of da1d971 (ok)
                                 <div class="col-lg-4 col-md-6 col-12">
                                     <div class="property-listing property-1">
                                         <div class="listing-img-wrapper">
@@ -168,12 +164,8 @@
 
                                             <div class="listing-footer-wrapper">
                                                 <div class="listing-price">
-<<<<<<< HEAD
-                                                    <h4 class="list-pr">{{ App\Helpers\Helpers::appCurrencySign() }}{{ number_format($property->price) }}</h4>
-=======
-                                                    <h4 class="list-pr">{{ App\Helpers\AppHelper::appCurrencySign() }}{{ number_format($property->price) }}</h4>
->>>>>>> parent of da1d971 (ok)
-                                                </div>
+
+                                                    <h4 class="list-pr">{{ App\Helpers\AppHelper::appCurrencySign() }}{{ number_format($property->price) }}</h4></div>
                                                 <div class="listing-detail-btn">
                                                     <a href="{{ route('frontend.property-detail',['id' => $property->id,'title' => $property->title]) }}"
                                                        class="more-btn">More Info</a>

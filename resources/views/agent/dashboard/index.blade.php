@@ -6,7 +6,7 @@
     @php
         use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
 <<<<<<< HEAD
-        use App\Helpers\Helpers;
+        use App\Helpers\AppHelper;
         $missingFields = Helpers::checkAgentProfileCompletion(Sentinel::getUser()->id);
 =======
         use App\Helpers\AppHelper;

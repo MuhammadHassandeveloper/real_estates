@@ -34,12 +34,9 @@ Route::get('/properties/filter', [FrontEndController::class, 'filterProperties']
 Route::get('/property-detail/{id}/{title}', [FrontEndController::class, 'propertyDetail'])->name('frontend.property-detail');
 Route::get('/agencies', [FrontEndController::class, 'agencies'])->name('frontend.agencies');
 Route::get('/agents', [FrontEndController::class, 'agents'])->name('frontend.agents');
-<<<<<<< HEAD
 Route::get('/agent/{id}', [FrontEndController::class, 'agentDetail'])->name('frontend.agent');
 Route::get('/agency/{id}', [FrontEndController::class, 'agencyDetail'])->name('frontend.agency');
 
-=======
->>>>>>> parent of 8d387e3 (show single agent.agency.propety half done)
 Route::get('/about-us', [FrontEndController::class, 'aboutUs'])->name('frontend.about-us');
 Route::get('/contact-us', [FrontEndController::class, 'contactUs'])->name('frontend.contact-us');
 
