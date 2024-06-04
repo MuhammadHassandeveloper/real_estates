@@ -3,11 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<<<<<<< HEAD
-    <title>{{ \App\Helpers\Helpers::site_name() }} - @yield('title')</title>
-=======
-    <title>{{ \App\Helpers\AppHelper::site_name() }} - @yield('title')</title>
->>>>>>> parent of da1d971 (ok)
+    <title>{{ App\Helpers\AppHelper::site_name() }} - @yield('title')</title>
     <link href="{{ asset('assets/css/styles.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/css/colors.css') }}" rel="stylesheet">
     <style>

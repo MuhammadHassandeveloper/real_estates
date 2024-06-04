@@ -1,16 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-<<<<<<< HEAD
-use App\Helpers\Helpers;
-use App\Models\Property;
-use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
-=======
 
 use App\Helpers\AppHelper;
 use App\Models\Property;
 use App\Models\User;
->>>>>>> parent of da1d971 (ok)
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -75,31 +69,25 @@ class FrontEndController extends Controller
     public function agentDetail($id) {
         $data = [];
         $data['title'] = 'Agent';
-<<<<<<< HEAD
-        $data['agent'] = Helpers::userDetail($id);
-        $data['properties'] = Helpers::agentProperties($id);
+        $data['agent'] = AppHelper::userDetail($id);
+        $data['properties'] = AppHelper::agentProperties($id);
         return view('frontend.agentDetail',$data);
-=======
         $data['agent'] = AppHelper::userDetail($id);
         $data['properties'] = AppHelper::agentProperties($id);
         return view('frontend.agent',$data);
->>>>>>> parent of da1d971 (ok)
     }
 
     public function agencyDetail($id) {
         $data = [];
         $data['title'] = 'Agency';
-<<<<<<< HEAD
-        $data['agency'] = Helpers::userDetail($id);
-        $data['properties'] = Helpers::agencyProperties($id);
-        $data['agents'] = Helpers::agencyAgents($id);
+        $data['agency'] = AppHelper::userDetail($id);
+        $data['properties'] = AppHelper::agencyProperties($id);
+        $data['agents'] = AppHelper::agencyAgents($id);
         return view('frontend.agencyDetail',$data);
-=======
         $data['agency'] = AppHelper::userDetail($id);
         $data['properties'] = AppHelper::agencyProperties($id);
         $data['agents'] = AppHelper::agencyAgents($id);
         return view('frontend.agency',$data);
->>>>>>> parent of da1d971 (ok)
     }
 
 
