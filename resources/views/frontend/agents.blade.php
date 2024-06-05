@@ -33,7 +33,7 @@
                             <div class="agents-grid-wrap">
 
                                 <div class="fr-grid-thumb">
-                                    <a href="agent-page.html">
+                                    <a href="{{ route('frontend.agent',$agent->id) }}">
                                         <img src="{{ asset('uploads/'.$agent->photo) }}" class="img-fluid mx-auto" alt="">
                                     </a>
                                 </div>

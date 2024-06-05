@@ -72,9 +72,6 @@ class FrontEndController extends Controller
         $data['agent'] = AppHelper::userDetail($id);
         $data['properties'] = AppHelper::agentProperties($id);
         return view('frontend.agentDetail',$data);
-        $data['agent'] = AppHelper::userDetail($id);
-        $data['properties'] = AppHelper::agentProperties($id);
-        return view('frontend.agent',$data);
     }
 
     public function agencyDetail($id) {
@@ -84,10 +81,6 @@ class FrontEndController extends Controller
         $data['properties'] = AppHelper::agencyProperties($id);
         $data['agents'] = AppHelper::agencyAgents($id);
         return view('frontend.agencyDetail',$data);
-        $data['agency'] = AppHelper::userDetail($id);
-        $data['properties'] = AppHelper::agencyProperties($id);
-        $data['agents'] = AppHelper::agencyAgents($id);
-        return view('frontend.agency',$data);
     }
 
 
@@ -95,6 +88,7 @@ class FrontEndController extends Controller
         $data = [];
         $data['title'] = 'Property';
         $data['property'] = AppHelper::propertyDetail($id);
+        $data['fproperties'] =  AppHelper::RandomFeaturedProperties();
         return view('frontend.property',$data);
     }
 

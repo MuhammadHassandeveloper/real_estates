@@ -6,6 +6,7 @@
 @section('content')
     @php
         use Carbon\Carbon;
+        use App\Helpers\AppHelper;
     @endphp
         <!-- ============================ Hero Banner  Start================================== -->
     <div class="image-cover hero-banner" style="background:url('{{ asset('assets/img/a.jpg') }}') no-repeat;">
@@ -120,8 +121,8 @@
                         @if($properties && $properties->count() > 0)
                             @foreach($properties as $property)
                                 @php
-                                    $pimages = App\Helpers\AppHelper::propertImages($property->id);
-                                    $ptype = App\Helpers\AppHelper::propertyType($property->id);
+                                    $pimages = AppHelper::propertImages($property->id);
+                                    $ptype = AppHelper::propertyType($property->id);
                                     $created_at = Carbon::parse($property->created_at);
                                     $humanDiff = $created_at->diffForHumans();
                                 @endphp
@@ -146,7 +147,7 @@
                                                         {{ $property->title }}
                                                     </a>
                                                 </h3>
-                                                <p class="proerty_price">{{ App\Helpers\AppHelper::appCurrencySign() }}{{ number_format($property->price) }}</p>
+                                                <p class="proerty_price">{{ AppHelper::appCurrencySign() }}{{ number_format($property->price) }}</p>
                                             </div>
                                             <p class="property_add">{{ $property->address }}, {{ $property->city }}</p>
                                             <div class="property_meta">
@@ -216,13 +217,13 @@
                                 </div>
                                 <div class="agents-grid-wrap">
                                     <div class="fr-grid-thumb">
-                                        <a href="agent-page.html">
+                                        <a href="{{ route('frontend.agency',$agency->id) }}">
                                             <img src="{{ asset('uploads/'.$agency->agency_logo) }}" class="img-fluid mx-auto" alt=""/>
                                         </a>
                                     </div>
                                     <div class="fr-grid-deatil">
                                         <h5 class="fr-can-name font-14">
-                                            <a href="agent-page.html">{{ $agency->first_name .' '. $agency->last_name }}</a>
+                                            <a href="{{ route('frontend.agency',$agency->id) }}">{{ $agency->first_name .' '. $agency->last_name }}</a>
                                         </h5>
                                         <span class="fr-position"><i class="lni-map-marker"></i>{{ $agency->city .' '. $agency->state }}</span>
                                         <span class="agent-type theme-cl">Agency</span>
@@ -240,8 +241,8 @@
 
     <!-- ============================ Browse Place ================================== -->
     @php
-        $pimages = App\Helpers\AppHelper::propertImages($fproperty->id);
-        $ptype = App\Helpers\AppHelper::propertyType($fproperty->id);
+        $pimages = AppHelper::propertImages($fproperty->id);
+        $ptype = AppHelper::propertyType($fproperty->id);
         $created_at = Carbon::parse($fproperty->created_at);
         $humanDiff = $created_at->diffForHumans();
     @endphp
@@ -271,7 +272,7 @@
                             </div>
 
                             <div class="listing-price-with-compare">
-                                <h4 class="list-pr theme-cl">{{ App\Helpers\AppHelper::appCurrencySign() }}{{ number_format($property->price) }}</h4>
+                                <h4 class="list-pr theme-cl">{{ AppHelper::appCurrencySign() }}{{ number_format($property->price) }}</h4>
                                 <div class="lpc-right">
                                     <a href="#" data-toggle="tooltip" data-placement="top" title="Tooltip on top">
                                         <i class="ti-heart"></i>
@@ -314,8 +315,8 @@
                         @if($fproperties && $properties->count() > 0)
                             @foreach($fproperties as $property)
                                 @php
-                                    $pimages = App\Helpers\AppHelper::propertImages($property->id);
-                                    $ptype = App\Helpers\AppHelper::propertyType($property->id);
+                                    $pimages = AppHelper::propertImages($property->id);
+                                    $ptype = AppHelper::propertyType($property->id);
                                     $created_at = Carbon::parse($property->created_at);
                                     $humanDiff = $created_at->diffForHumans();
                                 @endphp
@@ -340,7 +341,7 @@
                                                         {{ $property->title }}
                                                     </a>
                                                 </h3>
-                                                <p class="proerty_price">{{ App\Helpers\AppHelper::appCurrencySign() }}{{ number_format($property->price) }}</p>
+                                                <p class="proerty_price">{{ AppHelper::appCurrencySign() }}{{ number_format($property->price) }}</p>
                                             </div>
                                             <p class="property_add">{{ $property->address }}, {{ $property->city }}</p>
                                             <div class="property_meta">
@@ -411,13 +412,13 @@
                                 </div>
                                 <div class="agents-grid-wrap">
                                     <div class="fr-grid-thumb">
-                                        <a href="agent-page.html">
+                                        <a href="{{ route('frontend.agency',$agency->id) }}">
                                             <img src="{{ asset('uploads/'.$agent->photo) }}" class="img-fluid mx-auto" alt=""/>
                                         </a>
                                     </div>
                                     <div class="fr-grid-deatil">
                                         <h5 class="fr-can-name font-14">
-                                            <a href="agent-page.html">{{ $agent->first_name .' '. $agent->last_name }}</a>
+                                            <a href="{{ route('frontend.agency',$agency->id) }}">{{ $agent->first_name .' '. $agent->last_name }}</a>
                                         </h5>
                                         <span class="fr-position"><i class="lni-map-marker"></i>{{ $agent->city .' '. $agent->state }}</span>
                                         <span class="agent-type theme-cl">Agent</span>

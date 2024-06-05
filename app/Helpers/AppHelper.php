@@ -95,12 +95,20 @@ class AppHelper
         return User::find($id);
     }
 
+    public static function agencyAgents($id) {
+        return User::where('agency_id',$id)->get();
+    }
+
     public static function propertyDetail($id) {
         return Property::find($id);
     }
 
    public static function agentProperties($id) {
         return Property::where('agent_id',$id)->get();
+    }
+
+   public static function agencyProperties($id) {
+        return Property::where('agency_id',$id)->get();
     }
 
 
@@ -224,6 +232,11 @@ class AppHelper
     public  static function SingleFeaturedProperty() {
         return Property::where('is_featured',1)->latest()->first();
     }
+
+    public static function RandomFeaturedProperties($count = 5) {
+        return Property::where('is_featured', 1)->inRandomOrder()->take($count)->get();
+    }
+
     public static function propertImages($id) {
         return $pimages = PropertyImage::where('property_id', $id)->get();
     }

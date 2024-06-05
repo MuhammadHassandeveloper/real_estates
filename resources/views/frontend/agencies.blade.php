@@ -24,13 +24,13 @@
                     @foreach($agencies as $agency)
                         <div class="col-lg-12 col-md-12">
                             <div class="agency agency-list">
-                                <a href="agency-page.html" class="agency-avatar">
+                                <a href="{{ route('frontend.agency',$agency->id) }}" class="agency-avatar">
                                     <img src="{{ asset('uploads/'.$agency->agency_logo) }}" alt="">
                                 </a>
 
                                 <div class="agency-content">
                                     <div class="agency-name">
-                                        <h4><a href="agency-page.html">{{ $agency->first_name .' '. $agency->last_name }}</a></h4>
+                                        <h4><a href="{{ route('frontend.agency',$agency->id) }}">{{ $agency->first_name .' '. $agency->last_name }}</a></h4>
                                         <span><i class="lni-map-marker"></i>{{ $agency->city .' '. $agency->state }}</span>
                                     </div>
 

@@ -5,15 +5,9 @@
 <head>
 
     <meta charset="utf-8">
-<<<<<<< HEAD
-    <title>{{ \App\Helpers\Helpers::site_name() }} - @yield('title')</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta content=">{{ \App\Helpers\Helpers::site_name() }}" name="{{ \App\Helpers\Helpers::site_name() }}">
-=======
     <title>{{ \App\Helpers\AppHelper::site_name() }} - @yield('title')</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content=">{{ \App\Helpers\AppHelper::site_name() }}" name="{{ \App\Helpers\AppHelper::site_name() }}">
->>>>>>> parent of da1d971 (ok)
     <link rel="shortcut icon" href="{{ asset('admin/assets/images/favicon.ico') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
