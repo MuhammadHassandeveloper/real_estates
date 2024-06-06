@@ -31,14 +31,6 @@
                                 </a>
                             </div>
                             <div class="agents-grid-wrap">
-
-                                <div class="fr-grid-thumb">
-                                    <a href="{{ route('frontend.agent',$agent->id) }}">
-                                        <img src="{{ asset('uploads/'.$agent->photo) }}" class="img-fluid mx-auto" alt="">
-                                    </a>
-                                </div>
-                                <div class="agents-grid-wrap">
-
                                     <div class="fr-grid-thumb">
                                         <a href="{{ route('frontend.agent',$agent->id) }}">
                                             <img src="{{ asset('uploads/'.$agent->photo) }}" class="img-fluid mx-auto"
@@ -67,34 +59,15 @@
 
                                 <div class="fr-grid-footer">
                                     <a href="{{ route('frontend.agent',$agent->id) }}"
-                                       class="btn btn-outline-theme full-width">View Profile<i
-                                                class="ti-arrow-right ml-1"></i></a>
-                                <div class="fr-grid-deatil">
-                                    <h5 class="fr-can-name"><a href="#">{{ $agent->first_name .' '. $agent->last_name }}</a></h5>
-                                    <span class="fr-position"><i class="lni-map-marker"></i>{{ $agent->city .' '. $agent->state }}</span>
-                                </div>
+                                       class="btn btn-outline-theme full-width">View Profile
+                                        <i class="ti-arrow-right ml-1"></i></a>
 
-                            </div>
-
-                            <div class="fr-grid-info">
-                                <ul>
-                                    @php
-                                          $total_properties = App\Helpers\AppHelper::agentPropertiescount($agent->id);
-                                    @endphp
-                                    <li>Properties<span>{{  $total_properties }}</span></li>
-                                    <li>Email<span>{{ $agent->email }}</span></li>
-                                    <li>Phone<span>{{ $agent->phone }}</span></li>
-                                </ul>
-                            </div>
-
-                            <div class="fr-grid-footer">
-                                <a href="#" class="btn btn-outline-theme full-width">View Profile<i class="ti-arrow-right ml-1"></i></a>
                             </div>
 
                         </div>
                     </div>
-                        </div>
                     @endforeach
+                </div>
 
                         <!-- Pagination -->
                         <div class="row">

@@ -67,11 +67,7 @@
                                         @php $i = 1; @endphp
                                         @foreach($properties as $property)
                                             @php
-<<<<<<< HEAD
-                                                $res =  App\Helpers\Helpers::property_category($property->property_category);
-=======
                                                 $res =  App\Helpers\AppHelper::property_category($property->property_category);
->>>>>>> parent of da1d971 (ok)
                                                 $bgColor = $res[0];
                                                 $color = $res[1];
                                                 $text = $res[2];
@@ -93,12 +89,7 @@
                                                 <td class="address">{{ $property->city }}</td>
                                                 <td class="agent_name">{{ $property->state }}</td>
                                                 <td class="price">
-                                                    <span
-<<<<<<< HEAD
-                                                            class="fw-medium">{{ App\Helpers\Helpers::appCurrencySign() }}{{ $property->price }}</span>
-=======
-                                                        class="fw-medium">{{ App\Helpers\AppHelper::appCurrencySign() }}{{ $property->price }}</span>
->>>>>>> parent of da1d971 (ok)
+                                                    <span class="fw-medium">{{ App\Helpers\AppHelper::appCurrencySign() }}{{ $property->price }}</span>
                                                 </td>
                                                 <td>
                                                     <span

@@ -2,6 +2,13 @@
 @section('title',$title)
 @section('properties-page','active')
 @section('style')
+    <style>
+        .agent-call {
+            position: absolute;
+            right: 5px;
+            top: -10px;
+        }
+    </style>
 @stop
 @section('content')
     @php
@@ -216,7 +223,6 @@
                         <!-- slide-property-sec -->
                         <div class="slide-property-sec mb-4">
                             <div class="pr-all-info">
-
                                 <div class="pr-single-info">
                                     <div class="share-opt-wrap">
                                         <button type="button" class="btn-share" data-toggle="dropdown"
@@ -235,16 +241,6 @@
                                 </div>
 
                                 <div class="pr-single-info">
-                                    <a href="JavaScript:Void(0);" data-toggle="tooltip" data-original-title="Get Print"><i
-                                            class="ti-printer"></i></a>
-                                </div>
-
-                                <div class="pr-single-info">
-                                    <a href="JavaScript:Void(0);" class="compare-button" data-toggle="tooltip"
-                                       data-original-title="Compare"><i class="ti-control-shuffle"></i></a>
-                                </div>
-
-                                <div class="pr-single-info">
                                     <a href="JavaScript:Void(0);" class="like-bitt add-to-favorite"
                                        data-toggle="tooltip" data-original-title="Add To Favorites"><i
                                             class="lni-heart-filled"></i></a>
@@ -260,17 +256,17 @@
                         <div class="agent-widget">
                             <div class="agent-title">
                                 <div class="agent-photo">
+                                    <div class="agent-call">
+                                        <a href="https://wa.me/{{ $user->whatsapp_phone }}">
+                                            <i class="lni-whatsapp"></i>
+                                        </a>
+                                    </div>
                                     <img src="{{ asset('uploads/'.$user->photo) }}" alt="">
                                 </div>
 
                                 <div class="agent-details">
                                     <h4 class="mb-2">
                                         <a href="{{ route('frontend.agent',$user->id) }}">{{ $user->first_name .' '.$user->last_name}}
-                                            <div class="agent-call">
-                                                <a href="https://wa.me/{{ $user->whatsapp_phone }}">
-                                                    <i class="lni-whatsapp"></i>
-                                                </a>
-                                            </div>
                                         </a>
                                     </h4>
                                     <span class="mt-2"><i class="lni-phone-handset"></i>{{ $user->phone }}</span>

@@ -13,8 +13,8 @@ class FrontEndController extends Controller
     public function index() {
         $data = [];
         $data['title'] = 'Home';
-        $data['properties'] = Property::where('is_featured',0)->latest()->limit(15)->get();
-        $data['fproperties'] = Property::where('is_featured',1)->latest()->limit(15)->get();
+        $data['properties'] = Property::where('is_featured',0)->latest()->limit(10)->inRandomOrder()->get();
+        $data['fproperties'] = Property::where('is_featured',1)->latest()->limit(10)->inRandomOrder()->get();
         $data['agencies'] = AppHelper::latestAgencies();
         $data['agents'] = AppHelper::latestAgents();
         $data['fproperty'] = AppHelper::SingleFeaturedProperty();
@@ -33,12 +33,13 @@ class FrontEndController extends Controller
             $properties->where('price', '<=', $request->max_price);
         }
 
-        if ($request->input('bathrooms')) {
-            $properties->where('bathrooms', $request->bathrooms);
-        }
-
         if ($request->input('bedrooms')) {
             $properties->where('bedrooms', $request->bedrooms);
+        }
+
+
+        if ($request->input('bathrooms')) {
+            $properties->where('bathrooms', $request->bathrooms);
         }
 
         if ($request->filled('city')) {

@@ -64,11 +64,7 @@
                                         @php $i = 1; @endphp
                                         @foreach($properties as $property)
                                             @php
-<<<<<<< HEAD
-                                                $res =  App\Helpers\Helpers::property_category($property->property_category);
-=======
                                                 $res =  App\Helpers\AppHelper::property_category($property->property_category);
->>>>>>> parent of da1d971 (ok)
                                                 $bgColor = $res[0];
                                                 $color = $res[1];
                                                 $text = $res[2];
@@ -88,19 +84,11 @@
                                                     </div>
                                                 </td>
                                                 <td class="agent_name">
-<<<<<<< HEAD
-                                                    @php $agent = App\Helpers\Helpers::userDetail($property->agent_id); @endphp
-                                                    {{ $agent->first_name .' '.$agent->last_name }}
-                                                </td>
-                                                <td class="price">
-                                                    <span class="fw-medium">{{ App\Helpers\Helpers::appCurrencySign() }}{{ $property->price }}</span>
-=======
                                                     @php $agent = App\Helpers\AppHelper::userDetail($property->agent_id); @endphp
                                                     {{ $agent->first_name .' '.$agent->last_name }}
                                                 </td>
                                                 <td class="price">
                                                     <span class="fw-medium">{{ App\Helpers\AppHelper::appCurrencySign() }}{{ $property->price }}</span>
->>>>>>> parent of da1d971 (ok)
                                                 </td>
                                                 <td>
                                                     <span

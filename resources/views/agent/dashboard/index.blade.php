@@ -5,13 +5,8 @@
 @section('content')
     @php
         use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
-<<<<<<< HEAD
-        use App\Helpers\AppHelper;
-        $missingFields = Helpers::checkAgentProfileCompletion(Sentinel::getUser()->id);
-=======
         use App\Helpers\AppHelper;
         $missingFields = AppHelper::checkAgentProfileCompletion(Sentinel::getUser()->id);
->>>>>>> parent of da1d971 (ok)
     @endphp
     <!-- Start Page-content -->
     <div class="page-content">
@@ -153,7 +148,7 @@
                                             @php $i = 1; @endphp
                                             @foreach($properties as $property)
                                                 @php
-                                                  $res =  App\Helpers\AppHelper::property_category($property->property_category);
+                                                  $res =  AppHelper::property_category($property->property_category);
                                                   $bgColor = $res[0];
                                                   $color = $res[1];
                                                   $text = $res[2];
@@ -174,7 +169,7 @@
                                                     <td class="address">{{ $property->city }}</td>
                                                     <td class="agent_name">{{ $property->state }}</td>
                                                     <td class="price">
-                                                        <span class="fw-medium">{{ App\Helpers\AppHelper::appCurrencySign() }}{{ $property->price }}</span>
+                                                        <span class="fw-medium">{{ AppHelper::appCurrencySign() }}{{ $property->price }}</span>
                                                     </td>
                                                     <td>
                                                         <span class="badge {{ $bgColor }} {{ $color }} status">{{ $text  }}</span>
@@ -318,7 +313,7 @@
                                         @php $i = 1; @endphp
                                         @foreach($properties as $property)
                                             @php
-                                                $res =  App\Helpers\Helpers::property_category($property->property_category);
+                                                $res =  AppHelper::property_category($property->property_category);
                                                 $bgColor = $res[0];
                                                 $color = $res[1];
                                                 $text = $res[2];
@@ -341,7 +336,7 @@
                                                 <td class="address">{{ $property->city }}</td>
                                                 <td class="agent_name">{{ $property->state }}</td>
                                                 <td class="price">
-                                                    <span class="fw-medium">{{ App\Helpers\Helpers::appCurrencySign() }}{{ $property->price }}</span>
+                                                    <span class="fw-medium">{{ AppHelper::appCurrencySign() }}{{ $property->price }}</span>
                                                 </td>
                                                 <td>
                                                     <span class="badge {{ $bgColor }} {{ $color }} status">{{ $text  }}</span>
@@ -366,10 +361,6 @@
                     </div>
                 </div><!--end col-->
             </div><!--end row-->
-
-=======
-            <!-- container-fluid -->
->>>>>>> parent of da1d971 (ok)
         </div>
         <!-- End Page-content -->
 @stop

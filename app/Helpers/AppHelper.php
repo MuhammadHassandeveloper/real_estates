@@ -230,7 +230,7 @@ class AppHelper
 
 
     public  static function SingleFeaturedProperty() {
-        return Property::where('is_featured',1)->latest()->first();
+        return Property::where('is_featured',1)->inRandomOrder()->first();
     }
 
     public static function RandomFeaturedProperties($count = 5) {

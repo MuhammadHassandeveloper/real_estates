@@ -104,8 +104,8 @@
                 <div class="col-lg-12 col-md-12">
                     <div class="sec-heading2 center  mb-3">
                         <div class="sec-left">
-                            <h3>New & featured Property</h3>
-                            <p>Find new & featured property for you.</p>
+                            <h3>New  Property</h3>
+                            <p>Find new  property for you.</p>
                         </div>
                         <div class="sec-right">
                             <a href="{{ route('frontend.properties') }}">View All<i
@@ -122,7 +122,7 @@
                             @foreach($properties as $property)
                                 @php
                                     $pimages = AppHelper::propertImages($property->id);
-                                    $ptype = AppHelper::propertyType($property->id);
+                                    $ptype = AppHelper::propertyType($property->property_type_id);
                                     $created_at = Carbon::parse($property->created_at);
                                     $humanDiff = $created_at->diffForHumans();
                                 @endphp
