@@ -1,7 +1,7 @@
-@extends('agent.main')
+@extends('agency.main')
 @section('title',$title)
 @section('properties-drops','show')
-@section('properties_list','active')
+@section('properties_rent_list','active')
 @section('style')
     <style>
         .row > * {
@@ -36,7 +36,7 @@
                             <div class="row gy-3 justify-content-end">
                                 <div class="col-md-auto col-6"></div>
                                 <div class="col-md-auto col-6 text-end">
-                                    <a href="{{ route('agent.create_property') }}" class="btn btn-secondary">
+                                    <a href="{{ route('agency.create_property') }}" class="btn btn-secondary">
                                         <i class="bi bi-plus align-baseline me-1"></i> Add New
                                     </a>
                                 </div>

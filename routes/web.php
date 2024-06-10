@@ -71,6 +71,8 @@ Route::group(['middleware' => 'admin', 'prefix' => '/'], function () {
 
         //properties routes
         Route::get('/properties', [AgentPropertyController::class, 'properties'])->name('agent.properties');
+        Route::get('/sale-properties', [AgentPropertyController::class, 'saleProperties'])->name('agent.sale.properties');
+        Route::get('/rent-properties', [AgentPropertyController::class, 'rentProperties'])->name('agent.rent.properties');
         Route::get('/property-create', [AgentPropertyController::class, 'propertyCreate'])->name('agent.create_property');
         Route::post('/upload', [AgentPropertyController::class, 'uploadImages'])->name('agent.property.upload_images');
         Route::post('/property-store', [AgentPropertyController::class, 'propertyStore'])->name('agent.store_property');
@@ -90,6 +92,8 @@ Route::group(['middleware' => 'admin', 'prefix' => '/'], function () {
 
         //properties routes
         Route::get('/properties', [AgencyPropertyController::class, 'properties'])->name('agency.properties');
+        Route::get('/sale-properties', [AgencyPropertyController::class, 'saleProperties'])->name('agency.sale.properties');
+        Route::get('/rent-properties', [AgencyPropertyController::class, 'rentProperties'])->name('agency.rent.properties');
         Route::get('/property-create', [AgencyPropertyController::class, 'propertyCreate'])->name('agency.create_property');
         Route::post('/upload', [AgencyPropertyController::class, 'uploadImages'])->name('agency.property.upload_images');
         Route::post('/property-store', [AgencyPropertyController::class, 'propertyStore'])->name('agency.store_property');

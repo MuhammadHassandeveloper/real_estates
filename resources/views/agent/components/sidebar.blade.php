@@ -47,6 +47,12 @@
                             <li class="nav-item">
                                 <a href="{{ route('agent.properties') }}" class="nav-link @yield('properties_list')">Properties</a>
                             </li>
+                            <li class="nav-item">
+                                <a href="{{ route('agent.sale.properties') }}" class="nav-link @yield('properties_sale_list')">Sale Properties</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('agent.rent.properties') }}" class="nav-link @yield('properties_rent_list')">Rent Properties</a>
+                            </li>
 
                             <li class="nav-item">
                                 <a href="{{ route('agent.create_property') }}" class="nav-link @yield('property_create')">Add Property</a>

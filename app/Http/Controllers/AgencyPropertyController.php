@@ -22,6 +22,23 @@ class AgencyPropertyController extends Controller
         return view('agency.properties.index', $data);
     }
 
+    public function rentProperties()
+    {
+        $data = array();
+        $data['title'] = 'Agency Rental Properties';
+        $data['properties'] = AppHelper::agencyRentProperties(Sentinel::getUser()->id);
+        return view('agency.properties.rent_properties', $data);
+    }
+
+    public function saleProperties()
+    {
+        $data = array();
+        $data['title'] = 'Agency Sale Properties';
+        $data['properties'] = AppHelper::agencySaleProperties(Sentinel::getUser()->id);
+        return view('agency.properties.sale_properties', $data);
+    }
+
+
     public function propertyCreate()
     {
         $data = array();
@@ -107,7 +124,7 @@ class AgencyPropertyController extends Controller
         $property->property_features = $property_features;
         $property->short_description = $request->short_description;
         $property->long_description = $request->long_description;
-
+        $property->rental_duration = $request->rental_duration;
         //owner details
         $property->owner_name = Sentinel::getUser()->first_name . ' ' . Sentinel::getUser()->last_name;
         $property->owner_email = Sentinel::getUser()->email;
@@ -199,6 +216,7 @@ class AgencyPropertyController extends Controller
         $property->property_features = json_encode($request->property_features, true);
         $property->short_description = $request->short_description;
         $property->long_description = $request->long_description;
+        $property->rental_duration = $request->rental_duration;
         $property->owner_name = Sentinel::getUser()->first_name . ' ' . Sentinel::getUser()->last_name;
         $property->owner_email = Sentinel::getUser()->email;
         $property->owner_phone = Sentinel::getUser()->phone;

@@ -55,7 +55,16 @@
                             <!--end slider-->
 
                             <div class="pt-1">
-                                <h6 class="card-title">{{ $property->title }} (<span class="badge text-bg-info align-middle ms-1"> {{ $property->propertyType->name }}  </span>)</h6>
+                                <h6 class="card-title">{{ $property->title }}
+                                    (<span class="badge text-bg-info align-middle ms-1">
+                                        {{ $property->propertyType->name }}
+                                    </span>)
+                                    @if(!is_null($property->rental_duration))
+                                        (<span class="badge text-bg-warning align-middle ms-1">
+                                        {{ $property->rental_duration}}
+                                    </span>)
+                                    @endif
+                                </h6>
                                 <div class="text-muted hstack gap-2 flex-wrap list-unstyled mb-3">
                                     <div>
                                         <i class="bi bi-geo-alt align-baseline me-1"></i> {{ $property->address }}
@@ -82,11 +91,7 @@
                                                         <i class="bi bi-tag"></i>
                                                     </div>
                                                 </div>
-<<<<<<< HEAD
-                                                <p class="fs-md mb-0">{{ \App\Helpers\Helpers::appCurrencySign() }}{{ $property->price }}</p>
-=======
                                                 <p class="fs-md mb-0">{{ \App\Helpers\AppHelper::appCurrencySign() }}{{ $property->price }}</p>
->>>>>>> parent of da1d971 (ok)
                                             </div>
                                         </div>
                                     </div>
@@ -186,12 +191,8 @@
                                     @endphp
                                     @foreach($selected_features as $ftype)
                                         @php
-<<<<<<< HEAD
-                                            $feature = App\Helpers\Helpers::featureDetail($ftype);
-=======
                                             $feature = App\Helpers\AppHelper::featureDetail($ftype);
->>>>>>> parent of da1d971 (ok)
-                                        @endphp
+                                            @endphp
                                         <li class="w-lg">
                                             {{ $feature->name }}
                                         </li>

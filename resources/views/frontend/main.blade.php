@@ -15,6 +15,33 @@
             margin-top: 8px;
             font-size: 12px !important
         }
+        .property-listing.property-1 .listing-name {
+            font-size: 14px !important;
+            margin-bottom: 2px;
+        }
+        .proerty_text .captlize {
+            font-size: 14px !important;
+        }
+        span.tag_p {
+            position: absolute;
+            left: 15px;
+            bottom: 20px;
+            display: inline-block;
+            padding: 7px 15px;
+            background: #00ba74;
+            border-radius: 4px;
+            color: #fff;
+        }
+        .property_add {
+            font-size: 12px !important;
+        }
+
+        .property-listing.property-1 .listing-location {
+            font-size: 12px !important;
+        }
+        .inc-fleat {
+            font-size: 12px !important;
+        }
     </style>
     @yield('style')
 </head>

@@ -34,6 +34,7 @@ return new class extends Migration
             $table->string('owner_name')->nullable();
             $table->string('owner_email')->nullable();
             $table->string('owner_phone')->nullable();
+            $table->string('rental_duration')->default('Monthly');
             $table->integer('is_featured')->default(0);
             $table->integer('status')->default(1);
             $table->timestamps();

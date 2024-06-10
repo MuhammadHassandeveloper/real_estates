@@ -107,10 +107,26 @@ class AppHelper
         return Property::where('agent_id',$id)->get();
     }
 
-   public static function agencyProperties($id) {
+    public static function agentRentProperties($id) {
+        return Property::where('agent_id',$id)->where('property_category','Rent')->get();
+    }
+
+    public static function agentSaleProperties($id) {
+        return Property::where('agent_id',$id)->where('property_category','Sale')->get();
+    }
+
+
+    public static function agencyProperties($id) {
         return Property::where('agency_id',$id)->get();
     }
 
+    public static function agencyRentProperties($id) {
+        return Property::where('agency_id',$id)->where('property_category','Rent')->get();
+    }
+
+    public static function agencySaleProperties($id) {
+        return Property::where('agency_id',$id)->where('property_category','Sale')->get();
+    }
 
     public static function agentPropertiescount($id) {
         return Property::where('agent_id',$id)->count();

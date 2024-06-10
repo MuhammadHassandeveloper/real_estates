@@ -165,7 +165,13 @@
                                             <div class="listing-footer-wrapper">
                                                 <div class="listing-price">
 
-                                                    <h4 class="list-pr">{{ App\Helpers\AppHelper::appCurrencySign() }}{{ number_format($property->price) }}</h4></div>
+                                                    <h4 class="list-pr">
+                                                        {{ App\Helpers\AppHelper::appCurrencySign() }}{{ number_format($property->price) }}
+                                                        @if(!is_null($property->rental_duration) && $property->rental_duration)
+                                                            <i>/ {{ $property->rental_duration}}</i>
+                                                        @endif
+                                                    </h4>
+                                                </div>
                                                 <div class="listing-detail-btn">
                                                     <a href="{{ route('frontend.property-detail',['id' => $property->id,'title' => $property->title]) }}"
                                                        class="more-btn">More Info</a>

@@ -1,7 +1,7 @@
 @extends('agent.main')
 @section('title',$title)
 @section('properties-drops','show')
-@section('properties_list','active')
+@section('properties_rent_list','active')
 @section('style')
     <style>
         .row > * {

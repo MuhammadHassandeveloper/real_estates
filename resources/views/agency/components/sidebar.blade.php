@@ -66,6 +66,13 @@
                             </li>
 
                             <li class="nav-item">
+                                <a href="{{ route('agency.sale.properties') }}" class="nav-link @yield('properties_sale_list')">Sale Properties</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('agency.rent.properties') }}" class="nav-link @yield('properties_rent_list')">Rent Properties</a>
+                            </li>
+
+                            <li class="nav-item">
                                 <a href="{{ route('agency.create_property') }}" class="nav-link @yield('property_create')">Add Property</a>
                             </li>
                         </ul>

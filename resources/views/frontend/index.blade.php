@@ -139,6 +139,12 @@
                                                 <span class="tag"><i class="ti-calendar"></i>{{ $humanDiff }}</span>
                                             </div>
                                             <span class="tag_t">{{ $property->property_category }}</span>
+                                            <span class="tag_p">
+                                                    {{ AppHelper::appCurrencySign() }}{{ number_format($property->price) }}
+                                                       @if(!is_null($property->rental_duration) && $property->rental_duration != null)
+                                                           <i>/ {{ $property->rental_duration}}</i>
+                                                       @endif
+                                            </span>
                                         </div>
                                         <div class="proerty_content">
                                             <div class="proerty_text">
@@ -147,7 +153,7 @@
                                                         {{ $property->title }}
                                                     </a>
                                                 </h3>
-                                                <p class="proerty_price">{{ AppHelper::appCurrencySign() }}{{ number_format($property->price) }}</p>
+
                                             </div>
                                             <p class="property_add">{{ $property->address }}, {{ $property->city }}</p>
                                             <div class="property_meta">
@@ -242,7 +248,7 @@
     <!-- ============================ Browse Place ================================== -->
     @php
         $pimages = AppHelper::propertImages($fproperty->id);
-        $ptype = AppHelper::propertyType($fproperty->id);
+        $ptype = AppHelper::propertyType($fproperty->property_type_id);
         $created_at = Carbon::parse($fproperty->created_at);
         $humanDiff = $created_at->diffForHumans();
     @endphp
@@ -272,7 +278,12 @@
                             </div>
 
                             <div class="listing-price-with-compare">
-                                <h4 class="list-pr theme-cl">{{ AppHelper::appCurrencySign() }}{{ number_format($property->price) }}</h4>
+                                <h4 class="list-pr theme-cl">
+                                    {{ AppHelper::appCurrencySign() }}{{ number_format($property->price) }}
+                                    @if(!is_null($property->rental_duration) && $property->rental_duration != null)
+                                        <i>/ {{ $property->rental_duration}}</i>
+                                    @endif
+                                </h4>
                                 <div class="lpc-right">
                                     <a href="#" data-toggle="tooltip" data-placement="top" title="Tooltip on top">
                                         <i class="ti-heart"></i>
@@ -316,7 +327,7 @@
                             @foreach($fproperties as $property)
                                 @php
                                     $pimages = AppHelper::propertImages($property->id);
-                                    $ptype = AppHelper::propertyType($property->id);
+                                    $ptype = AppHelper::propertyType($property->property_type_id);
                                     $created_at = Carbon::parse($property->created_at);
                                     $humanDiff = $created_at->diffForHumans();
                                 @endphp
@@ -333,6 +344,12 @@
                                                 <span class="tag"><i class="ti-calendar"></i>{{ $humanDiff }}</span>
                                             </div>
                                             <span class="tag_t">{{ $property->property_category }}</span>
+                                            <span class="tag_p">
+                                                {{ AppHelper::appCurrencySign() }}{{ number_format($property->price) }}
+                                                @if(!is_null($property->rental_duration) && $property->rental_duration != null)
+                                                    <i>/ {{ $property->rental_duration}}</i>
+                                                @endif
+                                            </span>
                                         </div>
                                         <div class="proerty_content">
                                             <div class="proerty_text">
@@ -341,7 +358,6 @@
                                                         {{ $property->title }}
                                                     </a>
                                                 </h3>
-                                                <p class="proerty_price">{{ AppHelper::appCurrencySign() }}{{ number_format($property->price) }}</p>
                                             </div>
                                             <p class="property_add">{{ $property->address }}, {{ $property->city }}</p>
                                             <div class="property_meta">

@@ -33,6 +33,7 @@ class Property extends Model
         'owner_email',
         'owner_phone',
         'is_featured',
+        'rental_duration',
         'status',
     ];
 

@@ -27,8 +27,12 @@
                     <div class="slide-property-first mb-4">
                         <div class="pr-price-into">
                             <h2>{{ AppHelper::appCurrencySign() }}{{ number_format($property->price) }}
+                                @if(!is_null($property->rental_duration))
+                                    <i>/ {{ $property->rental_duration}}</i>
+                                @endif
                                 <span class="prt-type rent">{{ $property->property_category }}</span>
                             </h2>
+
                             <span>{{ $property->title }}</span>
                             <span><i class="lni-map-marker"></i> {{ $property->address }}, {{ $property->city }}</span>
                         </div>
@@ -225,27 +229,19 @@
                             <div class="pr-all-info">
                                 <div class="pr-single-info">
                                     <div class="share-opt-wrap">
-                                        <button type="button" class="btn-share" data-toggle="dropdown"
-                                                aria-haspopup="true" aria-expanded="false"
-                                                data-original-title="Share this">
+                                        <button type="button" class="btn-share" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-original-title="Share this"
+                                                data-url="{{ route('frontend.property-detail', ['id' => $property->id, 'title' => $property->title]) }}">
                                             <i class="lni-share"></i>
                                         </button>
+
                                         <div class="dropdown-menu animated flipInX">
-                                            <a href="#" class="cl-facebook"><i class="lni-facebook"></i></a>
-                                            <a href="#" class="cl-twitter"><i class="lni-twitter"></i></a>
-                                            <a href="#" class="cl-gplus"><i class="lni-google-plus"></i></a>
-                                            <a href="#" class="cl-instagram"><i class="lni-instagram"></i></a>
+                                            <a href="javascript:void(0);" class="cl-facebook"><i class="lni-facebook"></i></a>
+                                            <a href="javascript:void(0);" class="cl-twitter"><i class="lni-twitter"></i></a>
+                                            <a href="javascript:void(0);" class="cl-instagram"><i class="lni-instagram"></i></a>
+                                            <a href="javascript:void(0);" class="cl-whatsapp"><i class="lni-whatsapp"></i></a>
                                         </div>
                                     </div>
-
                                 </div>
-
-                                <div class="pr-single-info">
-                                    <a href="JavaScript:Void(0);" class="like-bitt add-to-favorite"
-                                       data-toggle="tooltip" data-original-title="Add To Favorites"><i
-                                            class="lni-heart-filled"></i></a>
-                                </div>
-
                             </div>
                         </div>
 
@@ -339,5 +335,24 @@
 
 @stop
 @section('script')
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.btn-share').forEach(function(shareButton) {
+                shareButton.addEventListener('click', function() {
+                    var propertyUrl = shareButton.getAttribute('data-url');
+                    var facebookShareUrl = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(propertyUrl);
+                    var twitterShareUrl = 'https://twitter.com/intent/tweet?url=' + encodeURIComponent(propertyUrl);
+                    var instagramShareUrl = 'https://www.instagram.com/?url=' + encodeURIComponent(propertyUrl);
+                    var whatsappShareUrl = 'https://wa.me/?text=' + encodeURIComponent(propertyUrl);
+                    var dropdownMenu = shareButton.nextElementSibling;
+                    dropdownMenu.querySelector('.cl-facebook').setAttribute('href', facebookShareUrl);
+                    dropdownMenu.querySelector('.cl-twitter').setAttribute('href', twitterShareUrl);
+                    dropdownMenu.querySelector('.cl-instagram').setAttribute('href', instagramShareUrl);
+                    dropdownMenu.querySelector('.cl-whatsapp').setAttribute('href', whatsappShareUrl);
+                });
+            });
+        });
+
+    </script>
 @endsection
 
