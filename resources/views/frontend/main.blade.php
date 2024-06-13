@@ -33,14 +33,19 @@
             color: #fff;
         }
         .property_add {
-            font-size: 12px !important;
+            font-size: 14px !important;
         }
 
         .property-listing.property-1 .listing-location {
-            font-size: 12px !important;
+            font-size: 14px !important;
         }
         .inc-fleat {
             font-size: 12px !important;
+        }
+        .img-fluid {
+            max-width: 100%;
+            height: auto !important;
+            max-height: 250px !important;
         }
     </style>
     @yield('style')

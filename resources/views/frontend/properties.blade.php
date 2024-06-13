@@ -150,7 +150,7 @@
                                                     <h4 class="listing-name">
                                                         <a href="{{ route('frontend.property-detail',['id' => $property->id,'title' => $property->title]) }}">{{ $property->title }}</a>
                                                     </h4>
-                                                    <span class="listing-location"><i class="ti-location-pin"></i>{{ $property->address }}, {{ $property->city }}</span>
+                                                    <span class="listing-location"><i class="ti-location-pin"></i>{{ $property->address }}</span>
                                                 </div>
                                             </div>
 

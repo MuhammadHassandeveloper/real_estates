@@ -80,7 +80,7 @@
                                                     <div class="col-lg-4 col-md-6 col-sm-12 list-layout">
                                                         @php
                                                             $pimages = App\Helpers\AppHelper::propertImages($property->id);
-                                                            $ptype = App\Helpers\AppHelper::propertyType($property->id);
+                                                            $ptype = App\Helpers\AppHelper::propertyType($property->property_type_id);
                                                             $created_at = Carbon::parse($property->created_at);
                                                             $humanDiff = $created_at->diffForHumans();
                                                         @endphp
@@ -108,8 +108,7 @@
                                                                         </h3>
                                                                         <p class="proerty_price">{{ App\Helpers\AppHelper::appCurrencySign() }}{{ number_format($property->price) }}</p>
                                                                     </div>
-                                                                    <p class="property_add">{{ $property->address }}
-                                                                        , {{ $property->city }}</p>
+                                                                    <p class="property_add">{{ $property->address }}, {{ $property->city }}</p>
                                                                     <div class="property_meta">
                                                                         <div class="list-fx-features">
                                                                             <div class="listing-card-info-icon">
@@ -154,7 +153,7 @@
                                                     <div class="col-lg-4 col-md-6 col-sm-12 list-layout">
                                                         @php
                                                             $pimages = App\Helpers\AppHelper::propertImages($property->id);
-                                                            $ptype = App\Helpers\AppHelper::propertyType($property->id);
+                                                            $ptype = App\Helpers\AppHelper::propertyType($property->property_type_id);
                                                             $created_at = Carbon::parse($property->created_at);
                                                             $humanDiff = $created_at->diffForHumans();
                                                         @endphp

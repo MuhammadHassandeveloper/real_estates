@@ -2,14 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Country;
 use App\Models\PropertyFeature;
 use App\Models\PropertyType;
+use App\Models\State;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
 class AdminPropertyController extends Controller
 {
+
     public function property_types() {
         $data = array();
         $data['types'] = PropertyType::get();

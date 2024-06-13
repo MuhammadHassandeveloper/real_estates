@@ -2,7 +2,7 @@
 <div class="app-menu navbar-menu">
     <!-- LOGO -->
     <div class="navbar-brand-box">
-        <a href="index.html" class="logo logo-dark">
+        <a href="{{ url('admin/dashboard') }}" class="logo logo-dark">
             <span class="logo-sm">
                 <img src="assets/images/logo-sm.png" alt="" height="22">
             </span>
@@ -10,7 +10,7 @@
                 <img src="assets/images/logo-dark.png" alt="" height="22">
             </span>
         </a>
-        <a href="index.html" class="logo logo-light">
+        <a href="{{ url('admin/dashboard') }}" class="logo logo-light">
             <span class="logo-sm">
                 <img src="assets/images/logo-sm.png" alt="" height="22">
             </span>
@@ -37,6 +37,26 @@
                     </a>
                 </li>
 
+                <li class="nav-item">
+                    <a class="nav-link menu-link @yield('countries')" href="{{ route('admin.countries') }}">
+                        <i class="bi bi-flag"></i>
+                        <span data-key="t-widgets">Manage Countries</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link menu-link @yield('states')" href="{{ route('admin.states') }}">
+                        <i class="bi bi-geo-alt"></i>
+                        <span data-key="t-widgets">Manage States</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link menu-link @yield('cities')" href="{{ route('admin.cities') }}">
+                        <i class="bi bi-building"></i>
+                        <span data-key="t-widgets">Manage Cities</span>
+                    </a>
+                </li>
 
                 <li class="nav-item">
                     <a href="#sidebarRealeEstate" class="nav-link menu-link collapsed" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarRealeEstate">

@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -8,7 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class Property extends Model
 {
     use HasFactory;
+
     protected $table = 'properties';
+
     protected $fillable = [
         'title',
         'property_type_id',
@@ -23,8 +24,8 @@ class Property extends Model
         'garages',
         'rooms',
         'address',
-        'city',
-        'state',
+        'city_id', // Changed to city_id
+        'state_id', // Changed to state_id
         'zip_code',
         'building_age',
         'short_description',
@@ -35,7 +36,13 @@ class Property extends Model
         'is_featured',
         'rental_duration',
         'status',
+        'latitude',
+        'longitude',
+        'floor_plan',
+        'video_url',
     ];
+
+    // Define relationships
 
     public function agent()
     {
@@ -57,4 +64,13 @@ class Property extends Model
         return $this->belongsToMany(PropertyFeature::class, 'property_features');
     }
 
+    public function state()
+    {
+        return $this->belongsTo(State::class, 'state_id');
+    }
+
+    public function city()
+    {
+        return $this->belongsTo(City::class, 'city_id');
+    }
 }

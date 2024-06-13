@@ -18,12 +18,15 @@
     <link href="{{ asset('admin/assets/css/app.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('admin/assets/css/custom.min.css') }}" rel="stylesheet" type="text/css">
     {{-- datatable assets--}}
+    {{-- datatable assets--}}
     <link rel="stylesheet" type="text/css" href="{{ asset('admin/assets/vendors/css/vendors.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{ asset('admin/assets/vendors/css/tables/datatable/dataTables.bootstrap5.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{ asset('admin/assets/vendors/css/tables/datatable/responsive.bootstrap5.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{ asset('admin/assets/vendors/css/tables/datatable/buttons.bootstrap5.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{ asset('admin/assets/vendors/css/tables/datatable/rowGroup.bootstrap5.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('admin/assets/vendors/css/pickers/flatpickr/flatpickr.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('admin/assets/vendors/css/pickers/pickadate/pickadate.css')}}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css">
 <style>
     @media screen and (min-width: 768px) {
         #DataTables_Table_0_length {
@@ -119,6 +122,7 @@
 <script src="{{ asset('admin/assets/libs/toastify-js/src/toastify.js') }}"></script>
 <script src="{{ asset('admin/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
 <script src="{{ asset('admin/assets/libs/choices.js/public/assets/scripts/choices.min.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script src="{{ asset('admin/assets/js/app.js') }}"></script>
 @yield('script')
 

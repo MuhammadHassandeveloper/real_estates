@@ -76,7 +76,7 @@
                                             <option value="">--City--</option>
                                             @foreach($fproperties->unique('city') as $property)
                                                 <option value="{{$property->city}}" {{ request('city') == $property->city ? 'selected' : '' }}>
-                                                    {{ $property->city }}
+
                                                 </option>
                                             @endforeach
                                         </select>
@@ -155,7 +155,7 @@
                                                 </h3>
 
                                             </div>
-                                            <p class="property_add">{{ $property->address }}, {{ $property->city }}</p>
+                                            <p class="property_add">{{ $property->address }} </p>
                                             <div class="property_meta">
                                                 <div class="list-fx-features">
                                                     <div class="listing-card-info-icon">
@@ -245,62 +245,38 @@
     @endif
     <!-- ============================ Agencies End ================================== -->
 
-    <!-- ============================ Browse Place ================================== -->
-    @php
-        $pimages = AppHelper::propertImages($fproperty->id);
-        $ptype = AppHelper::propertyType($fproperty->property_type_id);
-        $created_at = Carbon::parse($fproperty->created_at);
-        $humanDiff = $created_at->diffForHumans();
-    @endphp
-    <section class="image-cover" style="background:url({{ asset('assets/img/new-banner-3.jpg') }}) no-repeat;" data-overlay="3">
-        <div class="ht-50"></div>
+    <!-- ============================ Slide Location Start ================================== -->
+    <section>
         <div class="container">
             <div class="row">
-                <div class="col-lg-7 col-md-10">
-                    <div class="home-slider-container">
-                        <!-- Slide Title -->
-                        <div class="home-slider-desc">
-                            <div class="modern-pro-wrap">
-                                <span class="property-type">{{ $fproperty->property_category }}</span>
-                                <span class="property-featured theme-bg">Featured</span>
-                            </div>
-                            <div class="home-slider-title">
-                                <h3><a href="{{ route('frontend.property-detail', ['id' => $property->id, 'title' => $property->title]) }}">{{ $fproperty->title }}</a></h3>
-                                <span><i class="lni-map-marker"></i> {{ $property->address }}, {{ $property->city }}</span>
-                            </div>
-
-                            <div class="slide-property-info">
-                                <ul>
-                                    <li>Beds: {{ $property->bedrooms }}</li>
-                                    <li>Bath: {{ $property->bathrooms }}</li>
-                                    <li>sqft: {{ $property->size_sqft }}</li>
-                                </ul>
-                            </div>
-
-                            <div class="listing-price-with-compare">
-                                <h4 class="list-pr theme-cl">
-                                    {{ AppHelper::appCurrencySign() }}{{ number_format($property->price) }}
-                                    @if(!is_null($property->rental_duration) && $property->rental_duration != null)
-                                        <i>/ {{ $property->rental_duration}}</i>
-                                    @endif
-                                </h4>
-                                <div class="lpc-right">
-                                    <a href="#" data-toggle="tooltip" data-placement="top" title="Tooltip on top">
-                                        <i class="ti-heart"></i>
-                                    </a>
-                                </div>
-                            </div>
-                            <a href="{{ route('frontend.property-detail', ['id' => $property->id, 'title' => $property->title]) }}" class="read-more">View Details <i class="fa fa-angle-right"></i></a>
-
-                        </div>
-                        <!-- Slide Title / End -->
+                <div class="col-lg-12 col-md-12">
+                    <div class="sec-heading center">
+                        <h2>Find Properties By Locations</h2>
+                        <p>Top &amp; perfect 100+ location to find best properties.</p>
                     </div>
                 </div>
             </div>
+
+            <div class="row">
+                <!-- Single Location Listing -->
+                @foreach($cityProperties as $cityProperty)
+                    <div class="col-lg-3 col-md-3 col-sm-6">
+                    <div class="location-listing">
+                        <div class="location-listing-thumb">
+                            <a href="{{ route('frontend.properties', ['city' => $cityProperty->city]) }}">
+                                <img src="{{ asset('assets/img/city-3.jpg') }}" class="img-fluid" alt=""></a>
+                        </div>
+                        <div class="location-listing-caption">
+                            <h4><a href="{{ route('frontend.properties', ['city' => $cityProperty->city]) }}">{{ $cityProperty->city }}</a></h4>
+                            <span class="theme-cl">{{ $cityProperty->property_count }} Property</span>
+                        </div>
+                    </div>
+                </div>
+                @endforeach
+            </div>
         </div>
-        <div class="ht-50"></div>
     </section>
-    <!-- ============================ Browse Place End ================================== -->
+    <!-- ============================ Slide Location End ================================== -->
 
     <!-- ============================ Featured Property Start ================================== -->
     @if($fproperties && $properties->count() > 0)
@@ -359,7 +335,7 @@
                                                     </a>
                                                 </h3>
                                             </div>
-                                            <p class="property_add">{{ $property->address }}, {{ $property->city }}</p>
+                                            <p class="property_add">{{ $property->address }} </p>
                                             <div class="property_meta">
                                                 <div class="list-fx-features">
                                                     <div class="listing-card-info-icon">

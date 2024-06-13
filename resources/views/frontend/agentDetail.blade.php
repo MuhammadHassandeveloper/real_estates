@@ -67,7 +67,7 @@
                                                     <div class="col-lg-4 col-md-6 col-sm-12 list-layout">
                                                         @php
                                                             $pimages = App\Helpers\AppHelper::propertImages($property->id);
-                                                            $ptype = App\Helpers\AppHelper::propertyType($property->id);
+                                                            $ptype = App\Helpers\AppHelper::propertyType($property->property_type_id);
                                                             $created_at = Carbon::parse($property->created_at);
                                                             $humanDiff = $created_at->diffForHumans();
                                                         @endphp
@@ -146,7 +146,7 @@
                                                     <div class="col-lg-4 col-md-6 col-sm-12 list-layout">
                                                         @php
                                                             $pimages = App\Helpers\AppHelper::propertImages($property->id);
-                                                            $ptype = App\Helpers\AppHelper::propertyType($property->id);
+                                                            $ptype = App\Helpers\AppHelper::propertyType($property->property_type_id);
                                                             $created_at = Carbon::parse($property->created_at);
                                                             $humanDiff = $created_at->diffForHumans();
                                                         @endphp

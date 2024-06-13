@@ -16,6 +16,9 @@ use App\Http\Controllers\AgencyAgentController;
 //admin Controllers
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\AdminPropertyController;
+use App\Http\Controllers\AdminCountryController;
+use App\Http\Controllers\AdminStateController;
+use App\Http\Controllers\AdminCityController;
 
 
 // clear all
@@ -116,6 +119,32 @@ Route::group(['middleware' => 'admin', 'prefix' => '/'], function () {
     // admin dashboard routes
     Route::group(array('prefix' => 'admin'), function () {
         Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('admin.index');
+
+
+        Route::group(['prefix' => 'countries'], function () {
+            Route::get('/', [AdminCountryController::class, 'countries'])->name('admin.countries');
+            Route::post('/store', [AdminCountryController::class, 'countryStore'])->name('admin.country_store');
+            Route::post('/update', [AdminCountryController::class, 'countryUpdate'])->name('admin.country_update');
+            Route::post('/delete', [AdminCountryController::class, 'countryDelete'])->name('admin.country_delete');
+            Route::get('/change-status/{id}', [AdminCountryController::class, 'changeStatus'])->name('admin.change.status');
+        });
+
+        Route::group(['prefix' => 'states'], function () {
+            Route::get('/', [AdminStateController::class, 'states'])->name('admin.states');
+            Route::post('/store', [AdminStateController::class, 'stateStore'])->name('admin.state_store');
+            Route::post('/update', [AdminStateController::class, 'stateUpdate'])->name('admin.state_update');
+            Route::post('/delete', [AdminStateController::class, 'stateDelete'])->name('admin.state_delete');
+        });
+
+        // City routes
+        Route::group(['prefix' => 'cities'], function () {
+            Route::get('/', [AdminCityController::class, 'index'])->name('admin.cities');
+            Route::post('/store', [AdminCityController::class, 'store'])->name('admin.city_store');
+            Route::post('/update', [AdminCityController::class, 'update'])->name('admin.city_update');
+            Route::post('/delete', [AdminCityController::class, 'delete'])->name('admin.city_delete');
+        });
+
+
         Route::group(['prefix' => 'property-types'], function () {
             Route::get('/', [AdminPropertyController::class, 'property_types'])->name('admin.property_types');
             Route::post('/store', [AdminPropertyController::class, 'property_types_store'])->name('admin.property_types_store');

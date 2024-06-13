@@ -6,6 +6,7 @@ use App\Helpers\AppHelper;
 use App\Models\Property;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class FrontEndController extends Controller
@@ -18,6 +19,11 @@ class FrontEndController extends Controller
         $data['agencies'] = AppHelper::latestAgencies();
         $data['agents'] = AppHelper::latestAgents();
         $data['fproperty'] = AppHelper::SingleFeaturedProperty();
+        $data['cityProperties'] = Property::select('city', DB::raw('count(*) as property_count'))
+            ->groupBy('city')
+            ->orderBy('property_count', 'desc')
+            ->limit(8)
+            ->get();
         return view('frontend.index',$data);
     }
 

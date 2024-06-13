@@ -70,6 +70,23 @@ class AppHelper
         return array($bgColor,$color,$text);
     }
 
+    public static function country_status($status) {
+        $color = '';
+        $text = '';
+        $bgColor= '';
+        if($status == 1) {
+            $text = 'Active';
+            $color = 'text-success';
+            $bgColor = 'bg-success-subtle';
+
+        } else {
+            $text = 'Inactive';
+            $color = 'text-warning';
+            $bgColor = 'bg-warning-subtle';
+        }
+        return array($bgColor,$color,$text);
+    }
+
     public static function property_payment_status($status) {
         $color = '';
         $text = '';

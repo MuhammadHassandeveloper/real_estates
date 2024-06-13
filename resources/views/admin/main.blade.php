@@ -18,15 +18,17 @@
     <link href="{{ asset('admin/assets/css/icons.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('admin/assets/css/app.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('admin/assets/css/custom.min.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('admin/assets/css/select2.css') }}" rel="stylesheet" type="text/css">
     {{-- datatable assets--}}
-    <link rel="stylesheet" type="text/css" href="{{ asset('admin/assets/1.11.5/css/dataTables.bootstrap5.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{ asset('admin/assets/vendors/css/vendors.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{ asset('admin/assets/vendors/css/tables/datatable/dataTables.bootstrap5.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{ asset('admin/assets/vendors/css/tables/datatable/responsive.bootstrap5.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{ asset('admin/assets/vendors/css/tables/datatable/buttons.bootstrap5.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{ asset('admin/assets/vendors/css/tables/datatable/rowGroup.bootstrap5.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('admin/assets/vendors/css/pickers/flatpickr/flatpickr.min.css')}}">
-<style>
+    <link rel="stylesheet" type="text/css" href="{{ asset('admin/assets/vendors/css/pickers/pickadate/pickadate.css')}}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css">
+    <style>
     @media screen and (min-width: 768px) {
         #DataTables_Table_0_length {
             display: inline !important;
@@ -100,7 +102,7 @@
 <script src="{{ asset('admin/assets/libs/list.js/list.min.js') }}"></script>
 <script src="{{ asset('admin/assets/libs/echarts/echarts.min.js') }}"></script>
 <script src="{{ asset('admin/assets/libs/apexcharts/apexcharts.min.js') }}"></script>
-<script src="{{ asset('admin/assets/js/pages/dashboard-real-estate.init.js') }}"></script>
+{{--<script src="{{ asset('admin/assets/js/pages/dashboard-real-estate.init.js') }}"></script>--}}
 
 {{-- datatables asstets  --}}
 <script src="{{asset('admin/assets/vendors/js/tables/datatable/jquery.dataTables.min.js')}}"></script>
@@ -117,8 +119,7 @@
 <script src="{{asset('admin/assets/vendors/js/tables/datatable/buttons.print.min.js')}}"></script>
 <script src="{{asset('admin/assets/vendors/js/tables/datatable/dataTables.rowGroup.min.js')}}"></script>
 
-
-
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script src="{{ asset('admin/assets/js/app.js') }}"></script>
 @yield('script')
 
