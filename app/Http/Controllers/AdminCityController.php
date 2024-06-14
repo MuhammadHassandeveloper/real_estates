@@ -12,10 +12,13 @@ class AdminCityController extends Controller
     // Display the list of cities
     public function index()
     {
-        $title = 'City List';
-        $cities = City::with('state')->get();
-        $states = State::all();
-        return view('admin.cities.index', compact('title', 'cities', 'states'));
+        $data['title'] = 'City List';
+        $data['states'] = State::whereHas('country', function ($query) {
+            $query->where('status', 1);})->get();
+
+        $data['cities'] = City::whereHas('state.country', function ($query) {$query->where('status', 1);
+        })->with('state')->get();
+        return view('admin.cities.index', $data);
     }
 
     public function store(Request $request)

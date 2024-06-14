@@ -13,8 +13,11 @@ class AdminStateController extends Controller
     {
         $data = array();
         $data['title'] = 'States List';
-        $data['states'] = State::with('country')->get();
-        $data['countries'] = Country::where('status',1)->get();
+        $data['states'] = State::whereHas('country', function ($query) {
+            $query->where('status', 1);})->get();
+
+        $data['countries'] = Country::where('status', 1)->get();
+
         return view('admin.states.index', $data);
     }
 

@@ -69,7 +69,7 @@ class AdminPropertyController extends Controller
     public function property_features() {
         $data = array();
         $data['features'] = PropertyFeature::get();
-        $data['title'] = 'Property types';
+        $data['title'] = 'Property Feature';
         return  view('admin/property_features/index',$data);
     }
 
@@ -118,10 +118,6 @@ class AdminPropertyController extends Controller
         }
 
     }
-
-
-
-
 
 
     public function properties() {
