@@ -76,7 +76,7 @@
                                     <div class="col-lg-6 col-md-6 col-12">
                                         <div class="mb-3">
                                             <label for="password" class="form-label">Password<span class="text-danger">*</span></label>
-                                            <input type="password" id="password" name="password" class="form-control" placeholder="Enter password" required>
+                                            <input type="password" id="password" name="password" class="form-control" placeholder="Enter password">
                                             @error('password')
                                             <span class="text-danger error" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -86,26 +86,38 @@
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-12">
                                         <div class="mb-3">
-                                            <label for="city" class="form-label">City<span class="text-danger">*</span></label>
-                                            <input type="text" id="city" name="city" class="form-control" placeholder="Enter city" value="{{ old('city', $agent->city) }}" required>
-                                            @error('city')
+                                            <label for="state_id" class="form-label">State<span class="text-danger">*</span></label>
+                                            <select class="form-control select2-dropdown" name="state_id" id="state_id" required>
+                                                <option value="">-- Select --</option>
+                                                @foreach($states as $state)
+                                                    <option value="{{ $state->id }}" {{ $agent->state_id == $state->id ? 'selected' : '' }}>{{ $state->name }}</option>
+                                                @endforeach
+                                            </select>
+                                            @error('state_id')
                                             <span class="text-danger error" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                             @enderror
                                         </div>
                                     </div>
-                                    <div class="col-lg-4 col-md-4 col-12">
+
+                                    <div class="col-lg-4 col-md-6 col-12">
                                         <div class="mb-3">
-                                            <label for="state" class="form-label">State<span class="text-danger">*</span></label>
-                                            <input type="text" id="state" name="state" class="form-control" placeholder="Enter state" value="{{ old('state', $agent->state) }}" required>
-                                            @error('state')
+                                            <label for="city_id" class="form-label">City<span class="text-danger">*</span></label>
+                                            <select class="form-control select2-dropdown" name="city_id" id="city_id" required>
+                                                <option value="">-- Select --</option>
+                                                @foreach($cities as $city)
+                                                    <option value="{{ $city->id }}" {{ $agent->city_id == $city->id ? 'selected' : '' }}>{{ $city->name }}</option>
+                                                @endforeach
+                                            </select>
+                                            @error('city_id')
                                             <span class="text-danger error" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                             @enderror
                                         </div>
                                     </div>
+
                                     <div class="col-lg-4 col-md-4 col-12">
                                         <div class="mb-3">
                                             <label for="zip_code" class="form-label">Zip Code<span class="text-danger">*</span></label>
@@ -156,5 +168,35 @@
     </div>
 @stop
 @section('script')
+    <script>
+        $(document).ready(function () {
+            $('.select2-dropdown').select2({
+                theme: 'bootstrap', // Use the Bootstrap theme for Select2
+            });
 
+            $('#state_id').change(function() {
+                var state_id = $(this).val();
+                if (state_id) {
+                    var url = '{{ route("get-cities", ":state_id") }}';
+                    url = url.replace(':state_id', state_id);
+
+                    $.ajax({
+                        url: url,
+                        type: 'GET',
+                        dataType: 'json',
+                        success: function(data) {
+                            $('#city_id').empty();
+                            $('#city_id').append('<option value="">-- Select --</option>');
+                            $.each(data, function(key, value) {
+                                $('#city_id').append('<option value="' + value.id + '">' + value.name + '</option>');
+                            });
+                        }
+                    });
+                } else {
+                    $('#city_id').empty();
+                    $('#city_id').append('<option value="">-- Select --</option>');
+                }
+            });
+        });
+    </script>
 @endsection

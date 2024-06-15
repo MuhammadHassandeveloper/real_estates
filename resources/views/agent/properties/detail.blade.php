@@ -68,7 +68,7 @@
                                 <div class="text-muted hstack gap-2 flex-wrap list-unstyled mb-3">
                                     <div>
                                         <i class="bi bi-geo-alt align-baseline me-1"></i> {{ $property->address }}
-                                        , {{ $property->city }}, {{ $property->state }}
+                                        , {{ $property->city->name }}, {{ $property->state->name }}
                                     </div>
                                     <div class="vr"></div>
                                     <div>

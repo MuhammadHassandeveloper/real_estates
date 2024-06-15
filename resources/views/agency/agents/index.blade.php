@@ -54,6 +54,8 @@
                                             <th scope="col" class="sort cursor-pointer" data-sort="last_name">Last Name</th>
                                             <th scope="col" class="sort cursor-pointer" data-sort="email">Email</th>
                                             <th scope="col" class="sort cursor-pointer" data-sort="phone">Phone</th>
+                                            <th scope="col" class="sort cursor-pointer" data-sort="phone">State</th>
+                                            <th scope="col" class="sort cursor-pointer" data-sort="phone">City</th>
                                             <th scope="col" class="sort cursor-pointer">Action</th>
                                         </tr>
                                         </thead>
@@ -68,6 +70,8 @@
                                                 <td class="last_name">{{ $agent->last_name }}</td>
                                                 <td class="email">{{ $agent->email }}</td>
                                                 <td class="phone">{{ $agent->phone }}</td>
+                                                <td class="phone">{{ $agent->state->name }}</td>
+                                                <td class="phone">{{ $agent->city->name }}</td>
                                                 <td>
                                                     <ul class="d-flex gap-2 list-unstyled mb-0">
                                                         <li>

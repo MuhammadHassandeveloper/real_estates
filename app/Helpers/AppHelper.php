@@ -4,6 +4,7 @@ namespace App\Helpers;
 use App\Models\ActivityReport;
 use App\Models\AgentBooking;
 use App\Models\Booking;
+use App\Models\City;
 use App\Models\CleaningPrice;
 use App\Models\PaypalAccount;
 use App\Models\Property;
@@ -11,6 +12,7 @@ use App\Models\PropertyFeature;
 use App\Models\PropertyImage;
 use App\Models\PropertyType;
 use App\Models\SiteSetting;
+use App\Models\State;
 use App\Models\Subscriptions;
 use App\Models\User;
 use Carbon\Carbon;
@@ -113,37 +115,114 @@ class AppHelper
     }
 
     public static function agencyAgents($id) {
-        return User::where('agency_id',$id)->get();
+        return User::where('agency_id', $id)
+            ->whereHas('country', function ($query) {
+                $query->where('status', 1);
+            })
+            ->whereNotNull('photo')
+            ->whereNotNull('city_id')
+            ->whereNotNull('state_id')
+            ->latest()
+            ->with(['city', 'state', 'country'])
+            ->get();
     }
+
+    public static function tenNonFeaturedProerties() {
+        return Property::where('is_featured', 0)
+            ->whereHas('country', function ($query) {
+                $query->where('status', 1);
+            })
+            ->latest()
+            ->limit(10)
+            ->inRandomOrder()
+            ->get();
+    }
+
+    public static function tenFeaturedProerties() {
+        return Property::where('is_featured', 1)
+            ->whereHas('country', function ($query) {
+                $query->where('status', 1);
+            })
+            ->latest()
+            ->limit(10)
+            ->inRandomOrder()
+            ->get();
+    }
+
 
     public static function propertyDetail($id) {
         return Property::find($id);
     }
 
-   public static function agentProperties($id) {
-        return Property::where('agent_id',$id)->get();
+    public static function cityProperties() {
+        return Property::whereHas('country', function ($query) {
+            $query->where('status', 1);
+        })
+            ->select('city_id', DB::raw('count(*) as property_count'))
+            ->groupBy('city_id')
+            ->orderBy('property_count', 'desc')
+            ->limit(8)
+            ->get();
+    }
+
+
+    public static function allFeaturedProperties() {
+
+    }
+
+    public static function agentProperties($id) {
+        return Property::where('agent_id', $id)
+            ->whereHas('country', function ($query) {
+                $query->where('status', 1);
+            })
+            ->get();
     }
 
     public static function agentRentProperties($id) {
-        return Property::where('agent_id',$id)->where('property_category','Rent')->get();
+        return Property::where('agent_id', $id)
+            ->where('property_category', 'Rent')
+            ->whereHas('country', function ($query) {
+                $query->where('status', 1);
+            })
+            ->get();
     }
 
     public static function agentSaleProperties($id) {
-        return Property::where('agent_id',$id)->where('property_category','Sale')->get();
+        return Property::where('agent_id', $id)
+            ->where('property_category', 'Sale')
+            ->whereHas('country', function ($query) {
+                $query->where('status', 1);
+            })
+            ->get();
     }
-
 
     public static function agencyProperties($id) {
-        return Property::where('agency_id',$id)->get();
+        return Property::where('agency_id', $id)
+            ->whereHas('country', function ($query) {
+                $query->where('status', 1);
+            })
+            ->get();
     }
 
+
     public static function agencyRentProperties($id) {
-        return Property::where('agency_id',$id)->where('property_category','Rent')->get();
+        return Property::where('agency_id', $id)
+            ->where('property_category', 'Rent')
+            ->whereHas('country', function ($query) {
+                $query->where('status', 1);
+            })
+            ->get();
     }
 
     public static function agencySaleProperties($id) {
-        return Property::where('agency_id',$id)->where('property_category','Sale')->get();
+        return Property::where('agency_id', $id)
+            ->where('property_category', 'Sale')
+            ->whereHas('country', function ($query) {
+                $query->where('status', 1);
+            })
+            ->get();
     }
+
 
     public static function agentPropertiescount($id) {
         return Property::where('agent_id',$id)->count();
@@ -157,16 +236,6 @@ class AppHelper
     public static function appCurrencySign(): string
     {
         return '$';
-    }
-
-    public static function appCurrencyCode(): string
-    {
-      return 'eur';
-    }
-
-    public static function featureDetail($id)
-    {
-      return PropertyFeature::find($id);
     }
 
     public static function propertyType($id)
@@ -204,63 +273,70 @@ class AppHelper
 
 
     public static function agents() {
-        return DB::table('role_users')
-            ->join('roles', 'role_users.role_id', '=', 'roles.id')
-            ->join('users', 'role_users.user_id', '=', 'users.id')
-            ->select('users.*')
-            ->whereNotNull('users.photo')
-            ->whereNotNull('users.city')
-            ->whereNotNull('users.state')
-            ->whereNotNull('users.whatsapp_phone')
-            ->where('roles.slug', 'agent')
-            ->latest()->paginate(12);
+        return User::whereHas('roles', function($query) {
+            $query->where('roles.slug', 'agent');
+        })
+            ->whereHas('country', function ($query) {
+                $query->where('status', 1);
+            })
+            ->whereNotNull('photo')
+            ->whereNotNull('city_id')
+            ->whereNotNull('state_id')
+            ->whereNotNull('whatsapp_phone')
+            ->latest()
+            ->with(['city', 'state', 'country'])
+            ->paginate(12);
     }
 
-
     public static function latestAgents() {
-        return DB::table('role_users')
-            ->join('roles', 'role_users.role_id', '=', 'roles.id')
-            ->join('users', 'role_users.user_id', '=', 'users.id')
-            ->select('users.*')
-            ->where('roles.slug', 'agent')
-            ->whereNotNull('users.photo')
-            ->whereNotNull('users.city')
-            ->whereNotNull('users.state')
-            ->whereNotNull('users.whatsapp_phone')
-            ->orderBy('users.created_at', 'desc')
+        return User::whereHas('roles', function($query) {
+            $query->where('slug', 'agent');
+        })
+            ->whereHas('country', function ($query) {
+                $query->where('status', 1);
+            })
+            ->whereNotNull('photo')
+            ->whereNotNull('city_id')
+            ->whereNotNull('state_id')
+            ->whereNotNull('whatsapp_phone')
+            ->orderBy('created_at', 'desc')
             ->limit(4)
+            ->with(['city', 'state', 'country'])
             ->get();
     }
 
     public static function agencies() {
-        return DB::table('role_users')
-            ->join('roles', 'role_users.role_id', '=', 'roles.id')
-            ->join('users', 'role_users.user_id', '=', 'users.id')
-            ->select('users.*')
-            ->whereNotNull('users.agency_logo')
-            ->whereNotNull('users.city')
-            ->whereNotNull('users.state')
-            ->whereNotNull('users.whatsapp_phone')
-            ->where('roles.slug', 'agency')
-            ->latest()->paginate(12);
+        return User::whereHas('roles', function($query) {
+            $query->where('slug', 'agency');
+        })
+            ->whereHas('country', function ($query) {
+                $query->where('status', 1);
+            })
+            ->whereNotNull('agency_logo')
+            ->whereNotNull('city_id')
+            ->whereNotNull('state_id')
+            ->whereNotNull('whatsapp_phone')
+            ->latest()
+            ->with(['city', 'state', 'country'])
+            ->paginate(12);
     }
-
 
     public static function latestAgencies() {
-         return DB::table('role_users')
-            ->join('roles', 'role_users.role_id', '=', 'roles.id')
-            ->join('users', 'role_users.user_id', '=', 'users.id')
-            ->select('users.*')
-            ->where('roles.slug', 'agency')
-            ->whereNotNull('users.agency_logo')
-            ->whereNotNull('users.city')
-            ->whereNotNull('users.state')
-            ->whereNotNull('users.whatsapp_phone')
-            ->orderBy('users.created_at', 'desc')
+        return User::whereHas('roles', function($query) {
+            $query->where('slug', 'agency');
+        })
+            ->whereHas('country', function ($query) {
+                $query->where('status', 1);
+            })
+            ->whereNotNull('agency_logo')
+            ->whereNotNull('city_id')
+            ->whereNotNull('state_id')
+            ->whereNotNull('whatsapp_phone')
+            ->orderBy('created_at', 'desc')
             ->limit(4)
+            ->with(['city', 'state', 'country'])
             ->get();
     }
-
 
     public  static function SingleFeaturedProperty() {
         return Property::where('is_featured',1)->inRandomOrder()->first();
@@ -271,7 +347,7 @@ class AppHelper
     }
 
     public static function propertImages($id) {
-        return $pimages = PropertyImage::where('property_id', $id)->get();
+        return PropertyImage::where('property_id', $id)->get();
     }
 
     public static function checkAgentProfileCompletion($id)
@@ -332,6 +408,42 @@ class AppHelper
             'role' => $role,
         ]);
         return $store;
+    }
+
+    public  static function stateCities($state_id){
+        return City::whereHas('state', function ($query) use ($state_id) {
+            $query->where('id', $state_id)
+                ->whereHas('country', function ($query) {
+                    $query->where('status', 1);
+                });
+        })->with('state')->get();
+    }
+
+    public static function countries() {
+
+       return Country::where('status', 1)->get();
+    }
+
+    public static function state($state_id) {
+        return State::find($state_id);
+    }
+
+    public static function stateCountry($country_id) {
+        return Country::find($country_id);
+    }
+
+    public static function states() {
+        return State::whereHas('country', function ($query) {
+            $query->where('status', 1);
+        })->get();
+    }
+
+    public static function cities() {
+        return City::whereHas('state.country', function ($query) {
+            $query->where('status', 1);
+        })
+            ->with('state')
+            ->get();
     }
 
 }

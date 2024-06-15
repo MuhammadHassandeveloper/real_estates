@@ -38,11 +38,7 @@
                                                     <h5>{{ Sentinel::getUser()->first_name .' '. Sentinel::getUser()->last_name }}
                                                         <i class="bi bi-patch-check-fill align-baseline text-info ms-1"></i>
                                                     </h5>
-<<<<<<< HEAD
-                                                    <p class="text-muted">{{ App\Helpers\Helpers::roleName(Sentinel::getUser()->id) }}</p>
-=======
                                                     <p class="text-muted">{{ App\Helpers\AppHelper::roleName(Sentinel::getUser()->id) }}</p>
->>>>>>> parent of da1d971 (ok)
                                                 </div>
                                             </div>
                                         </div>
@@ -108,15 +104,35 @@
                                                             <!--end col-->
                                                             <div class="col-lg-4">
                                                                 <div class="mb-3">
-                                                                    <label for="cityInput" class="form-label">City</label>
-                                                                    <input type="text" class="form-control" id="cityInput" name="city" placeholder="City" value="{{ old('city', $user->city) }}">
+                                                                    <label for="state_id" class="form-label">State<span class="text-danger">*</span></label>
+                                                                    <select class="form-control select2-dropdown" name="state_id" id="state_id" required>
+                                                                        <option value="">-- Select --</option>
+                                                                        @foreach($states as $state)
+                                                                            <option value="{{ $state->id }}" {{ $user->state_id == $state->id ? 'selected' : '' }}>{{ $state->name }}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                    @error('state_id')
+                                                                    <span class="text-danger error" role="alert">
+                                                                                <strong>{{ $message }}</strong>
+                                                                            </span>
+                                                                    @enderror
                                                                 </div>
                                                             </div>
-                                                            <!--end col-->
+
                                                             <div class="col-lg-4">
                                                                 <div class="mb-3">
-                                                                    <label for="stateInput" class="form-label">State</label>
-                                                                    <input type="text" class="form-control" id="stateInput" name="state" placeholder="State" value="{{ old('state', $user->state) }}">
+                                                                    <label for="city_id" class="form-label">City<span class="text-danger">*</span></label>
+                                                                    <select class="form-control select2-dropdown" name="city_id" id="city_id" required>
+                                                                        <option value="">-- Select --</option>
+                                                                        @foreach($cities as $city)
+                                                                            <option value="{{ $city->id }}" {{ $user->city_id == $city->id ? 'selected' : '' }}>{{ $city->name }}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                    @error('city_id')
+                                                                    <span class="text-danger error" role="alert">
+                                                                    <strong>{{ $message }}</strong>
+                                                                </span>
+                                                                                        @enderror
                                                                 </div>
                                                             </div>
                                                             <!--end col-->
@@ -256,4 +272,36 @@
 @stop
 @section('script')
     <script src="{{ asset('admin/assets/js/pages/passowrd-create.init.js') }}"></script>
+    <script>
+        $(document).ready(function () {
+            $('.select2-dropdown').select2({
+                theme: 'bootstrap', // Use the Bootstrap theme for Select2
+            });
+
+            $('#state_id').change(function() {
+                var state_id = $(this).val();
+                if (state_id) {
+                    var url = '{{ route("get-cities", ":state_id") }}';
+                    url = url.replace(':state_id', state_id);
+
+                    $.ajax({
+                        url: url,
+                        type: 'GET',
+                        dataType: 'json',
+                        success: function(data) {
+                            $('#city_id').empty();
+                            $('#city_id').append('<option value="">-- Select --</option>');
+                            $.each(data, function(key, value) {
+                                $('#city_id').append('<option value="' + value.id + '">' + value.name + '</option>');
+                            });
+                        }
+                    });
+                } else {
+                    $('#city_id').empty();
+                    $('#city_id').append('<option value="">-- Select --</option>');
+                }
+            });
+        });
+    </script>
+
 @endsection

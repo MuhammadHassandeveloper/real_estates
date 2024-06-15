@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers\AppHelper;
 use App\Models\ActivityReport;
+use App\Models\City;
 use App\Models\Property;
 use Illuminate\Http\Request;
 use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
@@ -23,7 +24,9 @@ class AgencyDashboardController extends Controller
     public function profile()
     {
         $data = array();
-        $data['title'] = 'Agent Profile';
+        $data['title'] = 'Agency Profile';
+        $data['states'] = AppHelper::states();
+        $data['cities'] = City::where('state_id',Sentinel::getUser()->state_id)->get();
         return view('agency.profile', $data);
     }
 
@@ -43,8 +46,8 @@ class AgencyDashboardController extends Controller
                 'regex:/^(\+?\d{1,4}|\d{1,4})?\s?\d{7,10}$/',
                 'min:10'
             ],
-            'city' => 'required|string|max:255',
-            'state' => 'required|string|max:255',
+            'city_id' => 'required|max:255',
+            'state_id' => 'required|max:255',
             'zip_code' => 'required|string|min:5|max:6',
             'bio' => 'nullable|string|min:5|max:1000',
             'agency_logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
@@ -69,8 +72,9 @@ class AgencyDashboardController extends Controller
         $user->last_name = $request->input('last_name');
         $user->phone = $request->input('phone');
         $user->whatsapp_phone = $request->input('whatsapp_phone');
-        $user->city = $request->input('city');
-        $user->state = $request->input('state');
+        $user->country_id = AppHelper::state($request->state_id)->country_id;
+        $user->city_id = $request->input('city_id');
+        $user->state_id = $request->input('state_id');
         $user->zip_code = $request->input('zip_code');
         $user->bio = $request->input('bio');
 

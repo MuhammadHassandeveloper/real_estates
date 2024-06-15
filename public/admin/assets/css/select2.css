@@ -1,6 +1,6 @@
-.select2-container {
-    width: 100% !important;
-}
+/*.select2-container {*/
+/*    width: 100% !important;*/
+/*}*/
 .select2-dropdown {
     z-index: 1050 !important;
     max-height: 200px;

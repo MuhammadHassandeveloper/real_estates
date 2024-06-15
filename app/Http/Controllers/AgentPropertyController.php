@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\AppHelper;
+use App\Models\City;
 use App\Models\Property;
 use App\Models\PropertyFeature;
 use App\Models\PropertyImage;
@@ -45,6 +46,8 @@ class AgentPropertyController extends Controller
         $data['ptypes'] = PropertyType::get();
         $data['ftypes'] = PropertyFeature::get();
         $data['title'] = 'Create Property';
+        $data['states'] = AppHelper::states();
+        $data['cities'] =  AppHelper::cities();
         return view('agent.properties.create', $data);
     }
 
@@ -89,9 +92,9 @@ class AgentPropertyController extends Controller
             'garages' => 'required|integer',
             'size_sqft' => 'required|integer',
             'price' => 'required|integer',
-            'address' => 'required|string|max:255',
-            'city' => 'required|string|max:255',
-            'state' => 'required|string|max:255',
+            'address' => 'required|max:255',
+            'city_id' => 'required|max:255',
+            'state_id' => 'required|max:255',
             'zip_code' => 'required|string|max:10',
             'building_age' => 'required|integer',
             'is_featured' => 'required|boolean',
@@ -116,8 +119,9 @@ class AgentPropertyController extends Controller
         $property->size_sqft = $request->size_sqft;
         $property->price = $request->price;
         $property->address = $request->address;
-        $property->city = $request->city;
-        $property->state = $request->state;
+        $property->country_id = AppHelper::state($request->state_id)->country_id;
+        $property->city_id = $request->city_id;
+        $property->state_id = $request->state_id;
         $property->zip_code = $request->zip_code;
         $property->building_age = $request->building_age;
         $property->is_featured = $request->is_featured;
@@ -169,7 +173,9 @@ class AgentPropertyController extends Controller
         $data['property'] = Property::find($id);
         $data['ftypes'] = PropertyFeature::get();
         $data['pimages'] = PropertyImage::where('property_id', $id)->get();
-        $data['title'] = 'Create Property';
+        $data['title'] = 'Update Property';
+        $data['states'] = AppHelper::states();
+        $data['cities'] = City::where('state_id', $data['property']->state_id)->get();
         return view('agent.properties.edit', $data);
     }
 
@@ -186,8 +192,8 @@ class AgentPropertyController extends Controller
             'size_sqft' => 'required|integer',
             'price' => 'required|integer',
             'address' => 'required|string|max:255',
-            'city' => 'required|string|max:255',
-            'state' => 'required|string|max:255',
+            'city_id' => 'required|',
+            'city_id' => 'required|',
             'zip_code' => 'required|string|max:10',
             'building_age' => 'required|integer',
             'is_featured' => 'required|boolean',
@@ -208,8 +214,9 @@ class AgentPropertyController extends Controller
         $property->size_sqft = $request->size_sqft;
         $property->price = $request->price;
         $property->address = $request->address;
-        $property->city = $request->city;
-        $property->state = $request->state;
+        $property->country_id = AppHelper::state($request->state_id)->country_id;
+        $property->city_id = $request->city_id;
+        $property->state_id = $request->state_id;
         $property->zip_code = $request->zip_code;
         $property->building_age = $request->building_age;
         $property->is_featured = $request->is_featured;

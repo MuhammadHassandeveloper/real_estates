@@ -50,7 +50,7 @@ Route::get('/signup', [AuthController::class, 'signupForm'])->name('frontend.sig
 Route::post('/user-store', [AuthController::class, 'userStore'])->name('frontend.user_store');
 Route::get('logout', [AuthController::class, 'destroy'])->name('logout');
 Route::get('/', [FrontEndController::class, 'index'])->name('frontend.index');
-
+Route::get('get-cities/{state_id}', [FrontEndController::class, 'getCities'])->name('get-cities');
 
 // admin login and logout routes
 Route::get('/post-login', [AuthController::class, 'postLogin'])->name('post.login');
@@ -60,6 +60,8 @@ Route::get('admin/logout', [AuthController::class, 'adminLogout'])->name('admin.
 // agent login and logout
 Route::get('agent/login', [AuthController::class, 'agentLogin'])->name('agent.login');
 Route::get('agent/logout', [AuthController::class, 'agentLogout'])->name('agent.logout');
+
+
 
 
 //Define the routes within prefix

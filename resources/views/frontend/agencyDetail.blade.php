@@ -6,6 +6,7 @@
 @section('content')
     @php
         use Carbon\Carbon;
+        use App\Helpers\AppHelper;
     @endphp
     <div class="agent-page">
         <div class="container">
@@ -22,7 +23,7 @@
                                 <h4><a href="javascript:void(0);">{{ $agency->first_name .' '. $agency->last_name }}</a>
                                 </h4>
                                 <span>
-                                    <i class="lni-map-marker"></i>{{ $agency->city .' '. $agency->state }}
+                                    <i class="lni-map-marker"></i>{{ $agency->city->name .' '. $agency->state->name }}
                                 </span>
                             </div>
 
@@ -79,8 +80,7 @@
                                                 @if($property->property_category == 'Rent')
                                                     <div class="col-lg-4 col-md-6 col-sm-12 list-layout">
                                                         @php
-                                                            $pimages = App\Helpers\AppHelper::propertImages($property->id);
-                                                            $ptype = App\Helpers\AppHelper::propertyType($property->property_type_id);
+                                                            $pimages = $property->images;
                                                             $created_at = Carbon::parse($property->created_at);
                                                             $humanDiff = $created_at->diffForHumans();
                                                         @endphp
@@ -106,9 +106,9 @@
                                                                                 {{ $property->title }}
                                                                             </a>
                                                                         </h3>
-                                                                        <p class="proerty_price">{{ App\Helpers\AppHelper::appCurrencySign() }}{{ number_format($property->price) }}</p>
+                                                                        <p class="proerty_price">{{ AppHelper::appCurrencySign() }}{{ number_format($property->price) }}</p>
                                                                     </div>
-                                                                    <p class="property_add">{{ $property->address }}, {{ $property->city }}</p>
+                                                                    <p class="property_add">{{ $property->address }}, {{ $property->city->name }}</p>
                                                                     <div class="property_meta">
                                                                         <div class="list-fx-features">
                                                                             <div class="listing-card-info-icon">
@@ -117,15 +117,14 @@
                                                                             </div>
                                                                             <div class="listing-card-info-icon">
                                                                             <span
-                                                                                class="inc-fleat inc-type">{{ $ptype->name }}</span>
+                                                                                class="inc-fleat inc-type">{{ $property->propertyType->name }}</span>
                                                                             </div>
                                                                             <div class="listing-card-info-icon">
-                                                        <span
-                                                            class="inc-fleat inc-area">{{ $property->size_sqft }}</span>
+                                                                                <span
+                                                                                    class="inc-fleat inc-area">{{ $property->size_sqft }}</span>
                                                                             </div>
                                                                             <div class="listing-card-info-icon">
-                                                        <span
-                                                            class="inc-fleat inc-bath">{{ $property->bathrooms }}</span>
+                                                                                <span class="inc-fleat inc-bath">{{ $property->bathrooms }}</span>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -152,8 +151,7 @@
                                                 @if($property->property_category == 'Sale')
                                                     <div class="col-lg-4 col-md-6 col-sm-12 list-layout">
                                                         @php
-                                                            $pimages = App\Helpers\AppHelper::propertImages($property->id);
-                                                            $ptype = App\Helpers\AppHelper::propertyType($property->property_type_id);
+                                                            $pimages = $property->images;
                                                             $created_at = Carbon::parse($property->created_at);
                                                             $humanDiff = $created_at->diffForHumans();
                                                         @endphp
@@ -179,10 +177,9 @@
                                                                                 {{ $property->title }}
                                                                             </a>
                                                                         </h3>
-                                                                        <p class="proerty_price">{{ App\Helpers\AppHelper::appCurrencySign() }}{{ number_format($property->price) }}</p>
+                                                                        <p class="proerty_price">{{ AppHelper::appCurrencySign() }}{{ number_format($property->price) }}</p>
                                                                     </div>
-                                                                    <p class="property_add">{{ $property->address }}
-                                                                        , {{ $property->city }}</p>
+                                                                    <p class="property_add">{{ $property->address }}, {{ $property->city->name }}</p>
                                                                     <div class="property_meta">
                                                                         <div class="list-fx-features">
                                                                             <div class="listing-card-info-icon">
@@ -191,15 +188,15 @@
                                                                             </div>
                                                                             <div class="listing-card-info-icon">
                                                                             <span
-                                                                                class="inc-fleat inc-type">{{ $ptype->name }}</span>
+                                                                                class="inc-fleat inc-type">{{ $property->propertyType->name }}</span>
                                                                             </div>
                                                                             <div class="listing-card-info-icon">
-                                                        <span
-                                                            class="inc-fleat inc-area">{{ $property->size_sqft }}</span>
+                                                                                <span
+                                                                                    class="inc-fleat inc-area">{{ $property->size_sqft }}</span>
                                                                             </div>
                                                                             <div class="listing-card-info-icon">
-                                                        <span
-                                                            class="inc-fleat inc-bath">{{ $property->bathrooms }}</span>
+                                                                            <span
+                                                                                class="inc-fleat inc-bath">{{ $property->bathrooms }}</span>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -241,7 +238,7 @@
                                                             <h5 class="fr-can-name">
                                                                 <a href="{{ route('frontend.agent',$agent->id) }}">{{ $agent->first_name .' '. $agent->last_name }}</a>
                                                             </h5>
-                                                            <span class="fr-position"><i class="lni-map-marker"></i>{{ $agent->city .' '. $agent->state }}</span>
+                                                            <span class="fr-position"><i class="lni-map-marker"></i>{{ $agent->city->name .' '. $agent->state->name }}</span>
                                                         </div>
 
                                                     </div>
@@ -249,7 +246,7 @@
                                                     <div class="fr-grid-info">
                                                         <ul>
                                                             @php
-                                                                $total_properties = App\Helpers\AppHelper::agentPropertiescount($agent->id);
+                                                                $total_properties = AppHelper::agentPropertiescount($agent->id);
                                                             @endphp
                                                             <li>Properties<span>{{  $total_properties }}</span></li>
                                                             <li>Email<span>{{ $agent->email }}</span></li>

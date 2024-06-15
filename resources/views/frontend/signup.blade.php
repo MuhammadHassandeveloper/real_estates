@@ -122,9 +122,7 @@
                                     <div class="col-lg-6 col-md-6">
                                         <div class="form-group">
                                             <div class="input-with-icon">
-                                                <input type="password"
-                                                       class="form-control @error('password') is-invalid @enderror"
-                                                       name="password" placeholder="Password">
+                                                <input type="password" class="form-control @error('password') is-invalid @enderror" name="password" placeholder="Password">
                                                 <i class="ti-unlock"></i>
                                             </div>
                                             @error('password')
@@ -134,6 +132,39 @@
                                             @enderror
                                         </div>
                                     </div>
+
+                                    <div class="col-lg-6 col-md-6 mb-5">
+                                        <div class="input-with-icon">
+                                            <select class="form-control select2-dropdown @error('state_id') is-invalid @enderror" name="state_id" id="state_id" required>
+                                                <option value="">-- Select --</option>
+                                                @foreach($states as $state)
+                                                    <option value="{{ $state->id }}" {{ old('state_id') == $state->id ? 'selected' : '' }}>{{ $state->name }}</option>
+                                                @endforeach
+                                            </select>
+                                            <i class="ti-location-pin"></i>
+                                            @error('state_id')
+                                            <span class="text-danger error" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6 col-md-6 mb-5">
+                                        <div class="input-with-icon">
+                                            <select class="form-control select2-dropdown" name="city_id" id="city_id" required>
+                                                <option value="">-- Select --</option>
+                                                <!-- Cities will be appended here -->
+                                            </select>
+                                            <i class="ti-location-pin"></i>
+                                            @error('city_id')
+                                            <span class="text-danger error" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+
                                 </div>
 
                                 <div class="form-group">
@@ -153,5 +184,35 @@
     <!-- ============================ Login End ================================== -->
 @stop
 @section('script')
+    <script>
+        $(document).ready(function () {
+            $('.select2-dropdown').select2({
+                theme: 'bootstrap', // Use the Bootstrap theme for Select2
+            });
+        });
+    </script>
+    <script>
+        $('#state_id').change(function() {
+            var state_id = $(this).val();
+            if (state_id) {
+                var url = '{{ route("get-cities", ":state_id") }}';
+                url = url.replace(':state_id', state_id);
+
+                $.ajax({
+                    url: url,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(data) {
+                        $('#city_id').empty();
+                        $.each(data, function(key, value) {
+                            $('#city_id').append('<option value="' + value.id + '">' + value.name + '</option>');
+                        });
+                    }
+                });
+            } else {
+                $('#city_id').empty();
+            }
+        });
+    </script>
 @endsection
 

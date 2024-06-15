@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\AppHelper;
+use App\Models\City;
 use App\Models\Property;
 use App\Models\PropertyFeature;
 use App\Models\PropertyImage;
 use App\Models\PropertyType;
+use App\Models\State;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
@@ -31,6 +33,8 @@ class AgencyAgentController extends Controller
     {
         $data = array();
         $data['title'] = 'Create Agent';
+        $data['states'] = AppHelper::states();
+        $data['cities'] =  AppHelper::cities();
         return view('agency.agents.create', $data);
     }
 
@@ -51,21 +55,22 @@ class AgencyAgentController extends Controller
         $data = array();
         $data['title'] = 'Agent Edit';
         $data['agent'] = User::findOrFail($id);
+        $data['states'] = AppHelper::states();
+        $data['cities'] = City::where('state_id', $data['agent']->state_id)->get();
         return view('agency.agents.edit', $data);
     }
 
 
     public function agentStore(Request $request)
     {
-
         $validator = Validator::make($request->all(), [
             'first_name' => 'required|string',
             'last_name' => 'required|string',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|min:8',
             'phone' => 'required|numeric|min:11|unique:users,phone',
-            'city' => 'required',
-            'state' => 'required',
+            'city_id' => 'required',
+            'state_id' => 'required',
             'zip_code' => 'required',
             'bio' => 'required',
             'photo' => 'required|image',
@@ -80,8 +85,9 @@ class AgencyAgentController extends Controller
         $data['first_name'] = $request->first_name;
         $data['last_name'] = $request->last_name;
         $data['phone'] = $request->phone;
-        $data['city'] = $request->city;
-        $data['state'] = $request->state;
+        $data['country_id'] = AppHelper::state($request->state_id)->country_id;
+        $data['state_id'] = $request->state_id;
+        $data['city_id'] = $request->city_id;
         $data['zip_code'] = $request->zip_code;
         $data['bio'] = $request->bio;
         $data['agency_id'] = Sentinel::getUser()->id;
@@ -107,7 +113,7 @@ class AgencyAgentController extends Controller
             $file = $request->photo;
             $extension = $file->getClientOriginalExtension();
             $filename = rand(0, 9999) . time() . '.' . $extension;
-            $file->move(public_path('property_images'), $filename);
+            $file->move(public_path('uploads/'), $filename);
             $data['photo'] = $filename;
         }
 
@@ -143,8 +149,8 @@ class AgencyAgentController extends Controller
             'email' => 'required|email|unique:users,email,' . $id,
             'password' => 'nullable|min:8',
             'phone' => 'required|numeric|min:11|unique:users,phone,' . $id,
-            'city' => 'required',
-            'state' => 'required',
+            'city_id' => 'required',
+            'state_id' => 'required',
             'zip_code' => 'required',
             'bio' => 'required',
             'photo' => 'nullable|image',
@@ -153,12 +159,12 @@ class AgencyAgentController extends Controller
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
-
         $data = $request->only([
             'first_name','last_name','phone',
-            'city','state','zip_code','bio',
+            'city_id','state_id','zip_code','bio',
         ]);
 
+        $data['country_id'] = AppHelper::state($request->state_id)->country_id;
         if ($request->filled('password')) {
             $data['password'] = Hash::make($request->input('password'));
         }
@@ -166,10 +172,10 @@ class AgencyAgentController extends Controller
             $file = $request->file('photo');
             $extension = $file->getClientOriginalExtension();
             $filename = rand(0, 9999) . time() . '.' . $extension;
-            $file->move(public_path('property_images'), $filename);
+            $file->move(public_path('uploads/'), $filename);
             $data['photo'] = $filename;
-            if ($agent->photo && file_exists(public_path('property_images/' . $agent->photo))) {
-                unlink(public_path('property_images/' . $agent->photo));
+            if ($agent->photo && file_exists(public_path('uploads/' . $agent->photo))) {
+                unlink(public_path('uploads/' . $agent->photo));
             }
         }
         $agent->update($data);

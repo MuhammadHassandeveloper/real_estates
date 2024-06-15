@@ -41,7 +41,7 @@
                                         <h5 class="fr-can-name">
                                             <a href="{{ route('frontend.agent',$agent->id) }}">{{ $agent->first_name .' '. $agent->last_name }}</a>
                                         </h5>
-                                        <span class="fr-position"><i class="lni-map-marker"></i>{{ $agent->city .' '. $agent->state }}</span>
+                                        <span class="fr-position"><i class="lni-map-marker"></i>{{ $agent->city->name .' '. $agent->state->name }}</span>
                                     </div>
 
                                 </div>

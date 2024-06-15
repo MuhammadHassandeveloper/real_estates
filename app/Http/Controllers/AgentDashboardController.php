@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers\AppHelper;
 use App\Models\ActivityReport;
+use App\Models\City;
 use App\Models\Property;
 use Illuminate\Http\Request;
 use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
@@ -24,6 +25,8 @@ class AgentDashboardController extends Controller
     {
         $data = array();
         $data['title'] = 'Agent Profile';
+        $data['states'] = AppHelper::states();
+        $data['cities'] = City::where('state_id',Sentinel::getUser()->state_id)->get();
         return view('agent.profile', $data);
     }
 
@@ -34,8 +37,9 @@ class AgentDashboardController extends Controller
         $user->last_name = $request->input('last_name');
         $user->phone = $request->input('phone');
         $user->whatsapp_phone = $request->input('whatsapp_phone');
-        $user->city = $request->input('city');
-        $user->state = $request->input('state');
+        $user->country_id = AppHelper::state($request->state_id)->country_id;
+        $user->city_id = $request->input('city_id');
+        $user->state_id = $request->input('state_id');
         $user->zip_code = $request->input('zip_code');
         $user->bio = $request->input('bio');
 

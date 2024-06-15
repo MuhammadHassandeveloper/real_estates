@@ -172,23 +172,30 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-lg-4 col-md-4 col-12">
+                                    <div class="col-lg-4 col-md-6 col-12">
                                         <div class="mb-3">
-                                            <label for="city-input" class="form-label">City<span class="text-danger">*</span></label>
-                                            <input type="text" class="form-control" name="city" id="city-input" placeholder="Enter city" value="{{ old('city') }}" required>
-                                            @error('city')
+                                            <label for="state_id" class="form-label">State<span class="text-danger">*</span></label>
+                                            <select class="form-control select2-dropdown" name="state_id" id="state_id" required>
+                                                <option value="">-- Select --</option>
+                                                @foreach($states as $state)
+                                                    <option value="{{ $state->id }}" {{ old('state_id') == $state->id ? 'selected' : '' }}>{{ $state->name }}</option>
+                                                @endforeach
+                                            </select>
+                                            @error('state_id')
                                             <span class="text-danger error" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
                                             @enderror
                                         </div>
                                     </div>
-
-                                    <div class="col-lg-4 col-md-4 col-12">
+                                    <div class="col-lg-4 col-md-6 col-12">
                                         <div class="mb-3">
-                                            <label for="state-input" class="form-label">State<span class="text-danger">*</span></label>
-                                            <input type="text" class="form-control" name="state" id="state-input" placeholder="Enter state" value="{{ old('state') }}" required>
-                                            @error('state')
+                                            <label for="city_id" class="form-label">City<span class="text-danger">*</span></label>
+                                            <select class="form-control" name="city_id" id="city_id" required>
+                                                <option value="">-- Select --</option>
+                                                <!-- Cities will be appended here -->
+                                            </select>
+                                            @error('city_id')
                                             <span class="text-danger error" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
@@ -355,6 +362,37 @@
                         'X-CSRF-TOKEN': '{{ csrf_token() }}'
                     }
                 }
+            }
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $('.select2-dropdown').select2({
+                theme: 'bootstrap', // Use the Bootstrap theme for Select2
+            });
+        });
+    </script>
+    <script>
+        $('#state_id').change(function() {
+            var state_id = $(this).val();
+            if (state_id) {
+                var url = '{{ route("get-cities", ":state_id") }}';
+                url = url.replace(':state_id', state_id);
+
+                $.ajax({
+                    url: url,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(data) {
+                        $('#city_id').empty();
+                        $.each(data, function(key, value) {
+                            $('#city_id').append('<option value="' + value.id + '">' + value.name + '</option>');
+                        });
+                    }
+                });
+            } else {
+                $('#city_id').empty();
             }
         });
     </script>

@@ -17,7 +17,7 @@
     <link href="{{ asset('admin/assets/css/icons.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('admin/assets/css/app.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('admin/assets/css/custom.min.css') }}" rel="stylesheet" type="text/css">
-    {{-- datatable assets--}}
+    <link href="{{ asset('admin/assets/css/select2.css') }}" rel="stylesheet" type="text/css">
     {{-- datatable assets--}}
     <link rel="stylesheet" type="text/css" href="{{ asset('admin/assets/vendors/css/vendors.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{ asset('admin/assets/vendors/css/tables/datatable/dataTables.bootstrap5.min.css')}}">

@@ -8,7 +8,7 @@ class Country extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'country_code', 'currency_sign', 'currency','status'];
+    protected $fillable = ['name', 'country_code', 'currency_sign', 'currency', 'status'];
 
     // A country has many states
     public function states()
@@ -20,5 +20,17 @@ class Country extends Model
     public function cities()
     {
         return $this->hasMany(City::class);
+    }
+
+    // A country has many users
+    public function users()
+    {
+        return $this->hasMany(User::class);
+    }
+
+    // A country has many properties
+    public function properties()
+    {
+        return $this->hasMany(Property::class);
     }
 }

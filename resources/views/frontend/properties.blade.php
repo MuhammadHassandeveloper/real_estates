@@ -82,11 +82,11 @@
                                     <div class="col-lg-3 col-sm-6">
                                         <div class="form-group">
                                             <div class="input-with-icon">
-                                                <select name="city" class="form-control">
+                                                <select name="city_id" class="form-control">
                                                     <option value="">--City--</option>
-                                                    @foreach($fproperties->unique('city') as $property)
-                                                        <option value="{{$property->city}}" {{ request('city') == $property->city ? 'selected' : '' }}>
-                                                            {{ $property->city }}
+                                                    @foreach($cities->unique('name') as $city)
+                                                        <option value="{{$city->id}}" {{ request('city_id') == $city->id ? 'selected' : '' }}>
+                                                            {{ $city->name }}
                                                         </option>
                                                     @endforeach
                                                 </select>
@@ -131,7 +131,7 @@
                     <div class="row">
                         @if($properties && $properties->count() > 0)
                             @foreach($properties as $property)
-                                @php $pimages = App\Helpers\AppHelper::propertImages($property->id) @endphp
+                                @php $pimages = $property->images;@endphp
                                 <div class="col-lg-4 col-md-6 col-12">
                                     <div class="property-listing property-1">
                                         <div class="listing-img-wrapper">
@@ -166,7 +166,7 @@
                                                 <div class="listing-price">
 
                                                     <h4 class="list-pr">
-                                                        {{ App\Helpers\AppHelper::appCurrencySign() }}{{ number_format($property->price) }}
+                                                        {{ $property->country->currency_sign }}{{ number_format($property->price) }}
                                                         @if(!is_null($property->rental_duration) && $property->rental_duration)
                                                             <i>/ {{ $property->rental_duration}}</i>
                                                         @endif

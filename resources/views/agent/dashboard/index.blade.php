@@ -146,8 +146,8 @@
                                                            class="propert_name text-reset stretched-link">{{ $property->title }}</a>
                                                     </div>
                                                 </td>
-                                                <td class="address">{{ $property->city }}</td>
-                                                <td class="agent_name">{{ $property->state }}</td>
+                                                <td class="address">{{ $property->city->name }}</td>
+                                                <td class="agent_name">{{ $property->state->name }}</td>
                                                 <td class="price">
                                                     <span class="fw-medium">{{ AppHelper::appCurrencySign() }}{{ $property->price }}</span>
                                                 </td>

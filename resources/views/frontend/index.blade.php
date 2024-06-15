@@ -6,7 +6,6 @@
 @section('content')
     @php
         use Carbon\Carbon;
-        use App\Helpers\AppHelper;
     @endphp
         <!-- ============================ Hero Banner  Start================================== -->
     <div class="image-cover hero-banner" style="background:url('{{ asset('assets/img/a.jpg') }}') no-repeat;">
@@ -72,12 +71,10 @@
                             <div class="col-lg-12 col-md-12 col-sm-12">
                                 <div class="form-group">
                                     <div class="input-with-icon">
-                                        <select name="city" class="form-control">
+                                        <select name="city_id" class="form-control">
                                             <option value="">--City--</option>
-                                            @foreach($fproperties->unique('city') as $property)
-                                                <option value="{{$property->city}}" {{ request('city') == $property->city ? 'selected' : '' }}>
-
-                                                </option>
+                                            @foreach($cities as $city)
+                                                <option value="{{$city->id}}" {{ request('city_id') == $city->name ? 'selected' : '' }}>{{ $city->name }}</option>
                                             @endforeach
                                         </select>
                                         <i class="ti-briefcase"></i>
@@ -121,8 +118,7 @@
                         @if($properties && $properties->count() > 0)
                             @foreach($properties as $property)
                                 @php
-                                    $pimages = AppHelper::propertImages($property->id);
-                                    $ptype = AppHelper::propertyType($property->property_type_id);
+                                    $pimages = $pimages = $property->images;
                                     $created_at = Carbon::parse($property->created_at);
                                     $humanDiff = $created_at->diffForHumans();
                                 @endphp
@@ -140,7 +136,7 @@
                                             </div>
                                             <span class="tag_t">{{ $property->property_category }}</span>
                                             <span class="tag_p">
-                                                    {{ AppHelper::appCurrencySign() }}{{ number_format($property->price) }}
+                                                    {{ $property->country->currency_sign }}{{ number_format($property->price) }}
                                                        @if(!is_null($property->rental_duration) && $property->rental_duration != null)
                                                            <i>/ {{ $property->rental_duration}}</i>
                                                        @endif
@@ -162,7 +158,7 @@
                                                         <span class="inc-fleat inc-bed">{{ $property->bedrooms }}</span>
                                                     </div>
                                                     <div class="listing-card-info-icon">
-                                                        <span class="inc-fleat inc-type">{{ $ptype->name }}</span>
+                                                        <span class="inc-fleat inc-type">{{ $property->propertyType->name }}</span>
                                                     </div>
                                                     <div class="listing-card-info-icon">
                                                         <span
@@ -231,7 +227,7 @@
                                         <h5 class="fr-can-name font-14">
                                             <a href="{{ route('frontend.agency',$agency->id) }}">{{ $agency->first_name .' '. $agency->last_name }}</a>
                                         </h5>
-                                        <span class="fr-position"><i class="lni-map-marker"></i>{{ $agency->city .' '. $agency->state }}</span>
+                                        <span class="fr-position"><i class="lni-map-marker"></i>{{ $agency->city->name .' '. $agency->state->name }}</span>
                                         <span class="agent-type theme-cl">Agency</span>
                                     </div>
                                 </div>
@@ -263,11 +259,12 @@
                     <div class="col-lg-3 col-md-3 col-sm-6">
                     <div class="location-listing">
                         <div class="location-listing-thumb">
-                            <a href="{{ route('frontend.properties', ['city' => $cityProperty->city]) }}">
-                                <img src="{{ asset('assets/img/city-3.jpg') }}" class="img-fluid" alt=""></a>
+                            <a href="{{ route('frontend.properties', ['city_id' => $cityProperty->city->id]) }}">
+                                <img src="{{ asset('city_images/'.$cityProperty->city->image) }}" class="city-img-fluid" alt=""></a>
                         </div>
                         <div class="location-listing-caption">
-                            <h4><a href="{{ route('frontend.properties', ['city' => $cityProperty->city]) }}">{{ $cityProperty->city }}</a></h4>
+                            <h4>
+                                <a href="{{ route('frontend.properties', ['city_id' => $cityProperty->city->id]) }}">{{ $cityProperty->city->name }}</a></h4>
                             <span class="theme-cl">{{ $cityProperty->property_count }} Property</span>
                         </div>
                     </div>
@@ -279,7 +276,7 @@
     <!-- ============================ Slide Location End ================================== -->
 
     <!-- ============================ Featured Property Start ================================== -->
-    @if($fproperties && $properties->count() > 0)
+    @if($fproperties && $fproperties->count() > 0)
         <section class="pb-0">
             <div class="container">
             <div class="row">
@@ -299,11 +296,10 @@
             <div class="row">
                 <div class="col-lg-12 col-md-12">
                     <div class="property-slide">
-                        @if($fproperties && $properties->count() > 0)
+                        @if($fproperties && $fproperties->count() > 0)
                             @foreach($fproperties as $property)
                                 @php
-                                    $pimages = AppHelper::propertImages($property->id);
-                                    $ptype = AppHelper::propertyType($property->property_type_id);
+                                    $pimages = $pimages = $property->images;
                                     $created_at = Carbon::parse($property->created_at);
                                     $humanDiff = $created_at->diffForHumans();
                                 @endphp
@@ -312,8 +308,7 @@
                                     <div class="property_item classical-list">
                                         <div class="image">
                                             <a href="{{ route('frontend.property-detail', ['id' => $property->id, 'title' => $property->title]) }}">
-                                                <img src="{{ asset($pimages->first()->image_path) }}"
-                                                     alt="latest property" class="img-fluid">
+                                                <img src="{{ asset($pimages->first()->image_path) }}" alt="latest property" class="img-fluid">
                                             </a>
 
                                             <div class="sb-date">
@@ -321,7 +316,7 @@
                                             </div>
                                             <span class="tag_t">{{ $property->property_category }}</span>
                                             <span class="tag_p">
-                                                {{ AppHelper::appCurrencySign() }}{{ number_format($property->price) }}
+                                                {{ $property->country->currency_sign }}{{ number_format($property->price) }}
                                                 @if(!is_null($property->rental_duration) && $property->rental_duration != null)
                                                     <i>/ {{ $property->rental_duration}}</i>
                                                 @endif
@@ -342,7 +337,7 @@
                                                         <span class="inc-fleat inc-bed">{{ $property->bedrooms }}</span>
                                                     </div>
                                                     <div class="listing-card-info-icon">
-                                                        <span class="inc-fleat inc-type">{{ $ptype->name }}</span>
+                                                        <span class="inc-fleat inc-type">{{$property->propertyType->name}}</span>
                                                     </div>
                                                     <div class="listing-card-info-icon">
                                                         <span
@@ -412,7 +407,7 @@
                                         <h5 class="fr-can-name font-14">
                                             <a href="{{ route('frontend.agency',$agency->id) }}">{{ $agent->first_name .' '. $agent->last_name }}</a>
                                         </h5>
-                                        <span class="fr-position"><i class="lni-map-marker"></i>{{ $agent->city .' '. $agent->state }}</span>
+                                        <span class="fr-position"><i class="lni-map-marker"></i>{{ $agent->city->name .' '. $agent->state->name }}</span>
                                         <span class="agent-type theme-cl">Agent</span>
                                     </div>
                                 </div>

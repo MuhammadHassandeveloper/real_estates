@@ -24,8 +24,9 @@ class Property extends Model
         'garages',
         'rooms',
         'address',
-        'city_id', // Changed to city_id
-        'state_id', // Changed to state_id
+        'country_id',
+        'city_id',
+        'state_id',
         'zip_code',
         'building_age',
         'short_description',
@@ -36,10 +37,6 @@ class Property extends Model
         'is_featured',
         'rental_duration',
         'status',
-        'latitude',
-        'longitude',
-        'floor_plan',
-        'video_url',
     ];
 
     // Define relationships
@@ -47,6 +44,11 @@ class Property extends Model
     public function agent()
     {
         return $this->belongsTo(User::class, 'agent_id');
+    }
+
+    public function agency()
+    {
+        return $this->belongsTo(User::class, 'agency_id');
     }
 
     public function propertyType()
@@ -59,9 +61,9 @@ class Property extends Model
         return $this->hasMany(PropertyImage::class, 'property_id');
     }
 
-    public function features()
+    public function country()
     {
-        return $this->belongsToMany(PropertyFeature::class, 'property_features');
+        return $this->belongsTo(Country::class);
     }
 
     public function state()
@@ -72,5 +74,20 @@ class Property extends Model
     public function city()
     {
         return $this->belongsTo(City::class, 'city_id');
+    }
+
+    public function getPropertyFeaturesAttribute($value)
+    {
+        return json_decode($value);
+    }
+
+    public function setPropertyFeaturesAttribute($value)
+    {
+        $this->attributes['property_features'] = json_encode($value);
+    }
+
+    public function features()
+    {
+        return PropertyFeature::whereIn('id', $this->property_features)->get();
     }
 }

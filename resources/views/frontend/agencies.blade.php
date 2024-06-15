@@ -31,7 +31,7 @@
                                 <div class="agency-content">
                                     <div class="agency-name">
                                         <h4><a href="{{ route('frontend.agency',$agency->id) }}">{{ $agency->first_name .' '. $agency->last_name }}</a></h4>
-                                        <span><i class="lni-map-marker"></i>{{ $agency->city .' '. $agency->state }}</span>
+                                        <span><i class="lni-map-marker"></i>{{ $agency->city->name .' '. $agency->state->name }}</span>
                                     </div>
 
                                     <div class="agency-desc">

@@ -14,7 +14,7 @@
     @php
         use Carbon\Carbon;
         use App\Helpers\AppHelper;
-       $pimages =AppHelper::propertImages($property->id);
+       $pimages = $property->images;
     @endphp
 
     <section class="gray">
@@ -26,7 +26,7 @@
 
                     <div class="slide-property-first mb-4">
                         <div class="pr-price-into">
-                            <h2>{{ AppHelper::appCurrencySign() }}{{ number_format($property->price) }}
+                            <h2>{{ $property->country->currency_sign }}{{ number_format($property->price) }}
                                 @if(!is_null($property->rental_duration))
                                     <i>/ {{ $property->rental_duration}}</i>
                                 @endif
@@ -34,7 +34,7 @@
                             </h2>
 
                             <span>{{ $property->title }}</span>
-                            <span><i class="lni-map-marker"></i> {{ $property->address }}, {{ $property->city }}</span>
+                            <span><i class="lni-map-marker"></i> {{ $property->address }}, {{ $property->city->name }}</span>
                         </div>
                     </div>
 
@@ -73,13 +73,11 @@
                                 <li><strong>Bath:</strong> {{ $property->bathrooms }}</li>
                                 <li><strong>Garages</strong>{{ $property->garages }}</li>
                                 <li><strong>Sqft:</strong> {{ $property->size_sqft }}</li>
-                                <li><strong>Type</strong>
-                                    {{ AppHelper::propertyType($property->property_type_id)->name }}
-                                </li>
+                                <li><strong>Type</strong>{{$property->propertyType->name}}</li>
                                 <li><strong>Price</strong>
-                                    {{ AppHelper::appCurrencySign() }}{{ number_format($property->price) }}
+                                    {{ $property->country->currency_sign  }}{{ number_format($property->price) }}
                                 </li>
-                                <li><strong>City</strong>{{ $property->city }}</li>
+                                <li><strong>City</strong>{{ $property->city->name }}</li>
                                 <li><strong>Building Age</strong>{{ $property->building_age }}</li>
                             </ul>
                         </div>
@@ -121,10 +119,10 @@
                         <div class="block-body">
                             <ul class="avl-features third">
                                 @php
-                                    $pfeatures = json_decode($property->property_features,true);
+                                    $pfeatures = $property->features()
                                 @endphp
                                 @foreach($pfeatures as $feature)
-                                    <li>{{ AppHelper::featureDetail($feature)->name }}</li>
+                                    <li>{{ $feature->name }}</li>
                                 @endforeach
                             </ul>
                         </div>
@@ -306,14 +304,14 @@
                                                         </a>
                                                     </h4>
                                                     <span><i class="ti-location-pin"></i>
-                                                          {{ $property->state,$property->city }}
+                                                          {{ $property->state->name,$property->city->name }}
                                                     </span>
                                                     <div class="lists_property_price">
                                                         <div class="lists_property_types">
                                                             <div class="property_types_vlix">{{ $property->property_category }}</div>
                                                         </div>
                                                         <div class="lists_property_price_value">
-                                                            <h4>{{ AppHelper::appCurrencySign() }}{{ number_format($property->price) }}</h4>
+                                                            <h4>{{ $property->country->currency_sign }}{{ number_format($property->price) }}</h4>
                                                         </div>
                                                     </div>
                                                 </div>

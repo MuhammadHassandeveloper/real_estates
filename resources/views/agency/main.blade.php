@@ -17,7 +17,7 @@
     <link href="{{ asset('admin/assets/css/icons.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('admin/assets/css/app.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('admin/assets/css/custom.min.css') }}" rel="stylesheet" type="text/css">
-    {{-- datatable assets--}}
+    <link href="{{ asset('admin/assets/css/select2.css') }}" rel="stylesheet" type="text/css">
     {{-- datatable assets--}}
     <link rel="stylesheet" type="text/css" href="{{ asset('admin/assets/vendors/css/vendors.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{ asset('admin/assets/vendors/css/tables/datatable/dataTables.bootstrap5.min.css')}}">
@@ -27,6 +27,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('admin/assets/vendors/css/pickers/flatpickr/flatpickr.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{ asset('admin/assets/vendors/css/pickers/pickadate/pickadate.css')}}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css">
+
 <style>
     @media screen and (min-width: 768px) {
         #DataTables_Table_0_length {

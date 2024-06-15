@@ -62,11 +62,11 @@
                                                     </tr>
                                                     <tr>
                                                         <th>City:</th>
-                                                        <td>{{ $agent->city }}</td>
+                                                        <td>{{ $agent->city->name }}</td>
                                                     </tr>
                                                     <tr>
                                                         <th>State:</th>
-                                                        <td>{{ $agent->state }}</td>
+                                                        <td>{{ $agent->state->name }}</td>
                                                     </tr>
                                                     <tr>
                                                         <th>Bio:</th>

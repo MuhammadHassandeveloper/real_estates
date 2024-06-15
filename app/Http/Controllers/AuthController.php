@@ -32,6 +32,8 @@ class AuthController extends Controller
 
         $data = array();
         $data['title'] = 'Signup';
+        $data['states'] = AppHelper::states();
+        $data['cities'] =  AppHelper::cities();
         return view('frontend/signup', $data);
     }
 
@@ -44,6 +46,9 @@ class AuthController extends Controller
             'first_name' => 'required|string',
             'last_name' => 'required|string',
             'email' => 'required|email|unique:users,email',
+            'password' => 'required|min:8',
+            'state_id' => 'required',
+            'city_id' => 'required',
             'password' => 'required|min:8',
             'phone' => 'required|numeric|min:11|unique:users,phone',
             'role_type' => 'required',
@@ -58,6 +63,9 @@ class AuthController extends Controller
         $data['first_name'] = $request->first_name;
         $data['last_name'] = $request->last_name;
         $data['phone'] = $request->phone;
+        $data['country_id'] = AppHelper::state($request->state_id)->country_id;
+        $data['state_id'] = $request->state_id;
+        $data['city_id'] = $request->city_id;
         $password = Hash::make($request->input('password'));
         $user = Sentinel::register(array(
             'email' => $request->email,
