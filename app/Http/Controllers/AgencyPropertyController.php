@@ -124,7 +124,7 @@ class AgencyPropertyController extends Controller
         $property->zip_code = $request->zip_code;
         $property->building_age = $request->building_age;
         $property->is_featured = $request->is_featured;
-        $property_features = json_encode($request->property_features, true);
+        $property_features = $request->property_features;
         $property->property_features = $property_features;
         $property->short_description = $request->short_description;
         $property->long_description = $request->long_description;
@@ -220,7 +220,7 @@ class AgencyPropertyController extends Controller
         $property->zip_code = $request->zip_code;
         $property->building_age = $request->building_age;
         $property->is_featured = $request->is_featured;
-        $property->property_features = json_encode($request->property_features, true);
+        $property->property_features = $request->property_features;
         $property->short_description = $request->short_description;
         $property->long_description = $request->long_description;
         $property->rental_duration = $request->rental_duration;

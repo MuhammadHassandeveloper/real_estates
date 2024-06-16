@@ -266,7 +266,7 @@
                                     @foreach($ftypes as $ftype)
                                             <div class="col-lg-4 col-md-4 col-12">
                                                 <div class="mb-3 form-check">
-                                                    <input type="checkbox" name="property_features[]" class="form-check-input" id="additionalFeatures{{ $ftype->id }}" value="{{ $ftype->id }}" {{ in_array($ftype->id, json_decode($property->property_features, true)) ? 'checked' : '' }}>
+                                                    <input type="checkbox" name="property_features[]" class="form-check-input" id="additionalFeatures{{ $ftype->id }}" value="{{ $ftype->id }}" {{ in_array($ftype->id, $property->property_features) ? 'checked' : '' }}>
                                                     <label class="form-check-label" for="additionalFeatures{{ $ftype->id }}">{{ $ftype->name }}</label>
                                                 </div>
                                             </div>

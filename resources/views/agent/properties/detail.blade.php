@@ -187,15 +187,10 @@
                                 <h6 class="card-title mb-3">Property Features</h6>
                                 <ul class="list-unstyled hstack flex-wrap gap-3">
                                     @php
-                                        $selected_features = json_decode($property->property_features, true);
+                                        $selected_features = $property->features();
                                     @endphp
-                                    @foreach($selected_features as $ftype)
-                                        @php
-                                            $feature = App\Helpers\AppHelper::featureDetail($ftype);
-                                        @endphp
-                                        <li class="w-lg">
-                                            {{ $feature->name }}
-                                        </li>
+                                    @foreach($selected_features as $feature)
+                                        <li class="w-lg">{{ $feature->name }}</li>
                                     @endforeach
                                 </ul>
                             </div>

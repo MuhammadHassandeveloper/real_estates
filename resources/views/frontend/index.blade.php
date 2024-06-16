@@ -390,7 +390,8 @@
             <div class="row">
                 @if($agents)
                     @foreach($agents as $agent)
-                        <div class="col-lg-3 col-md-4 col-sm-6">
+                        @if($agent->photo)
+                            <div class="col-lg-3 col-md-4 col-sm-6">
                             <div class="agents-grid">
                                 <div class="agent-call">
                                     <a href="https://wa.me/{{ $agent->whatsapp_phone }}">
@@ -399,13 +400,13 @@
                                 </div>
                                 <div class="agents-grid-wrap">
                                     <div class="fr-grid-thumb">
-                                        <a href="{{ route('frontend.agency',$agency->id) }}">
+                                        <a href="{{ route('frontend.agent',$agent->id) }}">
                                             <img src="{{ asset('uploads/'.$agent->photo) }}" class="img-fluid mx-auto" alt=""/>
                                         </a>
                                     </div>
                                     <div class="fr-grid-deatil">
                                         <h5 class="fr-can-name font-14">
-                                            <a href="{{ route('frontend.agency',$agency->id) }}">{{ $agent->first_name .' '. $agent->last_name }}</a>
+                                            <a href="{{ route('frontend.agent',$agent->id) }}">{{ $agent->first_name .' '. $agent->last_name }}</a>
                                         </h5>
                                         <span class="fr-position"><i class="lni-map-marker"></i>{{ $agent->city->name .' '. $agent->state->name }}</span>
                                         <span class="agent-type theme-cl">Agent</span>
@@ -414,6 +415,7 @@
 
                             </div>
                         </div>
+                        @endif
                     @endforeach
                 @endif
             </div>

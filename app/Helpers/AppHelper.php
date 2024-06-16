@@ -282,7 +282,6 @@ class AppHelper
             ->whereNotNull('photo')
             ->whereNotNull('city_id')
             ->whereNotNull('state_id')
-            ->whereNotNull('whatsapp_phone')
             ->latest()
             ->with(['city', 'state', 'country'])
             ->paginate(12);
@@ -315,7 +314,6 @@ class AppHelper
             ->whereNotNull('agency_logo')
             ->whereNotNull('city_id')
             ->whereNotNull('state_id')
-            ->whereNotNull('whatsapp_phone')
             ->latest()
             ->with(['city', 'state', 'country'])
             ->paginate(12);
@@ -421,11 +419,12 @@ class AppHelper
 
     public static function countries() {
 
-       return Country::where('status', 1)->get();
+       return Country::where('status', 1)
+           ->get();
     }
 
     public static function state($state_id) {
-        return State::find($state_id);
+        return State::with('country')->find($state_id);
     }
 
     public static function stateCountry($country_id) {
