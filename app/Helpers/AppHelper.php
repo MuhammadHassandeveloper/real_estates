@@ -442,7 +442,7 @@ class AppHelper
         return City::whereHas('state.country', function ($query) {
             $query->where('status', 1);
         })
-            ->with('state')
+//            ->with('state','country')
             ->get();
     }
 
