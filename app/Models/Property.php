@@ -90,4 +90,9 @@ class Property extends Model
     {
         return PropertyFeature::whereIn('id', $this->property_features)->get();
     }
+
+    public function favoriteByUsers()
+    {
+        return $this->hasMany(FavoriteProperty::class);
+    }
 }

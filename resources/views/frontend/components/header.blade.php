@@ -91,9 +91,9 @@
                                 </a>
                             </li>
 
-                            @elseif ($user->inRole('user'))
+                            @elseif ($user->inRole('customer'))
                             <li class="active">
-                                <a href="{{ url('/user/dashboard') }}">
+                                <a href="{{ url('/customer/dashboard') }}">
                                     <i class="fas fa-user-circle mr-1"></i>Dashboard
                                 </a>
                             </li>

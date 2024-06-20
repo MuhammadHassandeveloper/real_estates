@@ -445,4 +445,13 @@ class AppHelper
             ->get();
     }
 
+    public static function CustometFavoriteproperties($customer_id) {
+       return Property::join('favorite_properties', 'properties.id', '=', 'favorite_properties.property_id')
+            ->where('favorite_properties.user_id', $customer_id)
+            ->select('properties.*')
+            ->latest()
+            ->get();
+    }
+
+
 }

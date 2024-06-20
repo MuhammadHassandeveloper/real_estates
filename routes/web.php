@@ -20,6 +20,9 @@ use App\Http\Controllers\AdminCountryController;
 use App\Http\Controllers\AdminStateController;
 use App\Http\Controllers\AdminCityController;
 
+//customer controllers
+use App\Http\Controllers\CustomerDashboardController;
+use App\Http\Controllers\CustomerPropertyController;
 
 // clear all
 Route::get('/all-clear', function () {
@@ -115,6 +118,22 @@ Route::group(['middleware' => 'admin', 'prefix' => '/'], function () {
         Route::get('/agent-edit/{id}', [AgencyAgentController::class, 'agentEdit'])->name('agency.edit_agent');
         Route::post('/agent-update', [AgencyAgentController::class, 'agentUpdate'])->name('agency.update_agent');
         Route::post('/agent-delete', [AgencyAgentController::class, 'agentDelete'])->name('agency.property.delete_agent');
+    });
+
+
+    // customer dashboard routes
+    Route::group(array('prefix' => 'customer'), function () {
+        Route::get('/dashboard', [CustomerDashboardController::class, 'index'])->name('customer.index');
+        Route::get('/profile', [CustomerDashboardController::class, 'profile'])->name('customer.profile');
+        Route::post('/profile-update', [CustomerDashboardController::class, 'profileUpdate'])->name('customer.profile_update');
+        Route::post('/password-update', [CustomerDashboardController::class, 'passwordUpdate'])->name('customer.password_update');
+        Route::get('/activities', [CustomerDashboardController::class, 'activities'])->name('customer.activities');
+
+        //properties routes
+        Route::get('/properties', [CustomerPropertyController::class, 'properties'])->name('customer.properties');
+        Route::get('/sale-properties', [CustomerPropertyController::class, 'saleProperties'])->name('customer.sale.properties');
+        Route::get('/rent-properties', [CustomerPropertyController::class, 'rentProperties'])->name('customer.rent.properties');
+        Route::get('/property-detail/{id}', [CustomerPropertyController::class, 'propertyDetail'])->name('customer.detail_property');
     });
 
 

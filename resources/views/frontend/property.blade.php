@@ -240,6 +240,16 @@
                                         </div>
                                     </div>
                                 </div>
+                                @if (Sentinel::check())
+                                    @php $user = Sentinel::getUser();@endphp
+                                    @if ($user->inRole('customer'))
+                                        <div class="pr-single-info">
+                                            <a href="" class="like-bitt add-to-favorite" data-toggle="tooltip" data-original-title="Add To Favorites">
+                                                <i class="lni-heart-filled"></i>
+                                            </a>
+                                        </div>
+                                    @endif
+                                @endif
                             </div>
                         </div>
 
