@@ -93,12 +93,7 @@
                                                                 <i class="ph-eye"></i>
                                                             </a>
                                                         </li>
-                                                        <li>
-                                                            <a href="{{url('agent/property-edit',$property->id)}}"
-                                                               class="btn btn-subtle-secondary btn-icon btn-sm edit-item-btn">
-                                                                <i class="ph-pencil"></i>
-                                                            </a>
-                                                        </li>
+
                                                         <li>
                                                             <a href="javascript:void(0);" data-bs-toggle="modal"
                                                                class="btn btn-subtle-danger btn-icon btn-sm remove-item-btn btn-delete">
@@ -132,10 +127,10 @@
                             id="close-addAgencyModal"></button>
                 </div>
 
-                <form action="{{ route('agent.property.delete_property') }}" method="post">
+                <form action="{{ route('customer.delete_property') }}" method="post">
                     @csrf
                     <div class="modal-body">
-                        <input type="hidden" name="id" id="Pid">
+                        <input type="hidden" name="property_id" id="Pid">
                         <p>Deleting this row will be permanently remove it from the system. This action cannot be
                             undone. Are you certain you want to proceed?</p>
                     </div>

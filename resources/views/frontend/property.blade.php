@@ -277,17 +277,25 @@
                                 </div>
                                 <div class="clearfix"></div>
                             </div>
-
-                            <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Your Email">
-                            </div>
-                            <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Your Phone">
-                            </div>
-                            <div class="form-group">
-                                <textarea class="form-control">I'm interested in this property.</textarea>
-                            </div>
-                            <button class="btn btn-theme full-width">Send Message</button>
+                                @if (Sentinel::check())
+                                    @php $user = Sentinel::getUser();@endphp
+                                    @if ($user->inRole('customer'))
+                                    <form action="{{ route('frontend.property.agent.message') }}" method="post">
+                                        <input type="hidden" name="agent_id" value="{{ $user->id }}">
+                                        <input type="hidden" name="property_id" value="{{ $property->id }}">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" required placeholder="Your Email" value="{{ $user->email }}">
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" required value="{{ $user->phone }}" placeholder="Your Phone">
+                                            </div>
+                                            <div class="form-group">
+                                                <textarea class="form-control" required placeholder="Enter Your Message"></textarea>
+                                            </div>
+                                            <button class="btn btn-theme full-width" type="submit">Send Message</button>
+                                        </form>
+                                        @endif
+                                    @endif
                         </div>
 
                         <!-- Featured Property -->

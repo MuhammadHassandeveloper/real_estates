@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\AppHelper;
+use App\Mail\CustomerMessage;
 use App\Models\FavoriteProperty;
+use App\Models\Message;
 use App\Models\Property;
 use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class FrontEndController extends Controller
 {
@@ -139,6 +142,24 @@ class FrontEndController extends Controller
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'An error occurred: ' . $e->getMessage());
         }
+    }
+
+    public function propertyAgentMessage(Request $request)
+    {
+        $user = Sentinel::getUser();
+        $propertyId = $request->property_id;
+        $agentId = $request->agent_id;
+        $message = Message::create([
+            'customer_id' => $user->id,
+            'agent_id' => $agentId,
+            'property_id' => $propertyId,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'message' => $request->message,
+        ]);
+
+        Mail::to($message->agent->email)->send(new CustomerMessage($message));
+        return redirect()->back()->with('success', 'Your message has been sent successfully.');
     }
 
 

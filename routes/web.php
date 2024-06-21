@@ -44,6 +44,7 @@ Route::get('/agencies', [FrontEndController::class, 'agencies'])->name('frontend
 Route::get('/agents', [FrontEndController::class, 'agents'])->name('frontend.agents');
 Route::get('/agent-detail/{id}', [FrontEndController::class, 'agentDetail'])->name('frontend.agent');
 Route::get('/agency-detail/{id}', [FrontEndController::class, 'agencyDetail'])->name('frontend.agency');
+Route::post('/property-agent-message', [FrontEndController::class, 'propertyAgentMessage'])->name('frontend.property.agent.message');
 
 Route::get('/about-us', [FrontEndController::class, 'aboutUs'])->name('frontend.about-us');
 Route::get('/contact-us', [FrontEndController::class, 'contactUs'])->name('frontend.contact-us');
@@ -136,6 +137,7 @@ Route::group(['middleware' => 'admin', 'prefix' => '/'], function () {
         Route::get('/sale-properties', [CustomerPropertyController::class, 'saleProperties'])->name('customer.sale.properties');
         Route::get('/rent-properties', [CustomerPropertyController::class, 'rentProperties'])->name('customer.rent.properties');
         Route::get('/property-detail/{id}', [CustomerPropertyController::class, 'propertyDetail'])->name('customer.detail_property');
+        Route::post('/property-delete', [CustomerPropertyController::class, 'propertyDelete'])->name('customer.delete_property');
     });
 
 

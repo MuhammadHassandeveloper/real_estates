@@ -85,4 +85,6 @@ class CustomerDashboardController extends Controller
         $data['title'] = 'Activity';
         return view('customer.activity_report',$data);
     }
+
+
 }
