@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\AppHelper;
+use App\Models\FavoriteProperty;
 use App\Models\Property;
+use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
 use Illuminate\Http\Request;
 
 class FrontEndController extends Controller
@@ -111,5 +113,33 @@ class FrontEndController extends Controller
         $cities = AppHelper::stateCities($state_id);
         return response()->json($cities);
     }
+
+    public function propertyMakeFav($p_id) {
+        try {
+            $user = Sentinel::getUser();
+            if (!$user) {
+                return redirect()->back()->with('error', 'You need to be logged in to favorite a property.');
+            }
+
+            // Check if property is already favorited by the user
+            $count = FavoriteProperty::where('user_id', $user->id)->where('property_id', $p_id)->count();
+            if ($count > 0) {
+                return redirect()->back()->with('error', 'You have already added this property to favorites.');
+            }
+
+            $FavoriteProperty = new FavoriteProperty;
+            $FavoriteProperty->user_id = $user->id;
+            $FavoriteProperty->property_id = $p_id;
+            $res = $FavoriteProperty->save();
+            if ($res) {
+                return redirect()->back()->with('success', 'You have successfully favorited this property.');
+            } else {
+                return redirect()->back()->with('error', 'Something went wrong. Please try again.');
+            }
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'An error occurred: ' . $e->getMessage());
+        }
+    }
+
 
 }

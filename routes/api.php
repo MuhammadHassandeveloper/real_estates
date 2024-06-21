@@ -8,6 +8,8 @@ use App\Http\Controllers\Api\ApiController;
 
 Route::get('states', [ApiController::class, 'states']);
 Route::get('cities', [ApiController::class, 'cities']);
+Route::post('state-cities', [ApiController::class, 'StateCites']);
+
 //User Auth Controller
 Route::post('register', [ApiAuthController::class, 'register']);
 Route::post('login', [ApiAuthController::class, 'login']);

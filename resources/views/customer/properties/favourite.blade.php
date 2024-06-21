@@ -32,16 +32,6 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card" id="agentList">
-                        <div class="card-header">
-                            <div class="row gy-3 justify-content-end">
-                                <div class="col-md-auto col-6"></div>
-                                <div class="col-md-auto col-6 text-end">
-                                    <a href="{{ route('agent.create_property') }}" class="btn btn-secondary">
-                                        <i class="bi bi-plus align-baseline me-1"></i> Add New
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
                         <div class="card-body">
                             <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
                                 <div class="d-flex justify-content-between align-items-center mx-0 row">

@@ -38,6 +38,8 @@ Route::get('/properties', [FrontEndController::class, 'properties'])->name('fron
 Route::get('/properties/filter', [FrontEndController::class, 'filterProperties'])->name('frontend.properties.filter');
 
 Route::get('/property-detail/{id}/{title}', [FrontEndController::class, 'propertyDetail'])->name('frontend.property-detail');
+Route::get('/property-make-fav/{id}', [FrontEndController::class, 'propertyMakeFav'])->name('frontend.property-make-favourite');
+
 Route::get('/agencies', [FrontEndController::class, 'agencies'])->name('frontend.agencies');
 Route::get('/agents', [FrontEndController::class, 'agents'])->name('frontend.agents');
 Route::get('/agent-detail/{id}', [FrontEndController::class, 'agentDetail'])->name('frontend.agent');
@@ -130,7 +132,7 @@ Route::group(['middleware' => 'admin', 'prefix' => '/'], function () {
         Route::get('/activities', [CustomerDashboardController::class, 'activities'])->name('customer.activities');
 
         //properties routes
-        Route::get('/properties', [CustomerPropertyController::class, 'properties'])->name('customer.properties');
+        Route::get('/fav-properties', [CustomerPropertyController::class, 'favProperties'])->name('customer.fav-properties');
         Route::get('/sale-properties', [CustomerPropertyController::class, 'saleProperties'])->name('customer.sale.properties');
         Route::get('/rent-properties', [CustomerPropertyController::class, 'rentProperties'])->name('customer.rent.properties');
         Route::get('/property-detail/{id}', [CustomerPropertyController::class, 'propertyDetail'])->name('customer.detail_property');

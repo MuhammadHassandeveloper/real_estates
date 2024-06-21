@@ -157,7 +157,7 @@
                                                 <td>
                                                     <ul class="d-flex gap-2 list-unstyled mb-0">
                                                         <li>
-                                                            <a href="{{url('agent/property-detail',$property->id)}}"
+                                                            <a href="{{url('customer/property-detail',$property->id)}}"
                                                                class="btn btn-subtle-primary btn-icon btn-sm ">
                                                                 <i class="ph-eye"></i>
                                                             </a>
