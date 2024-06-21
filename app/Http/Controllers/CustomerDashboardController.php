@@ -51,7 +51,7 @@ class CustomerDashboardController extends Controller
             $user->photo = $filename;
         }
         $user->save();
-        AppHelper::storeActivity('Profile Update','Update by','success',Sentinel::getUser()->id,1,Sentinel::getUser()->id,'Customer');
+        AppHelper::storeActivity('Profile Update','Update by'.' '.Sentinel::getUser()->first_name . ' ' . Sentinel::getUser()->last_name,'success',Sentinel::getUser()->id,1,Sentinel::getUser()->id,'Customer');
         return redirect()->back()->with('success', 'Profile updated successfully.');
     }
 
@@ -75,7 +75,7 @@ class CustomerDashboardController extends Controller
         $user->password = Hash::make($request->input('new_password'));
         $user->save();
 
-        AppHelper::storeActivity('Password Update','Update by','success',Sentinel::getUser()->id,1,Sentinel::getUser()->id,'Customer');
+        AppHelper::storeActivity('Password Update','Update by'.Sentinel::getUser()->first_name . ' ' . Sentinel::getUser()->last_name ,'success',Sentinel::getUser()->id,1,Sentinel::getUser()->id,'Customer');
         return redirect()->back()->with('success', 'Password updated successfully.');
     }
 
@@ -84,6 +84,5 @@ class CustomerDashboardController extends Controller
         $data['activities'] = ActivityReport::where('system_id',Sentinel::getUser()->id)->where('type',1)->where('role','Customer')->latest()->get();
         $data['title'] = 'Activity';
         return view('customer.activity_report',$data);
-
     }
 }

@@ -128,7 +128,7 @@ class AuthController extends Controller
                 return redirect('/admin/dashboard')->with('success', 'Successfully logged in');
             } elseif ($user->inRole('agent')) {
                 AppHelper::storeActivity(
-                    'User Login',
+                    'Agent Login',
                     'Agent ' . Sentinel::getUser()->first_name . ' ' . Sentinel::getUser()->last_name . ' logged in successfully.', // Content
                     'success',
                     Sentinel::getUser()->id,
@@ -138,8 +138,26 @@ class AuthController extends Controller
                 );
                 return redirect('/agent/dashboard')->with('success', 'Successfully logged in');
             } elseif ($user->inRole('customer')) {
+                AppHelper::storeActivity(
+                    'Customer Login',
+                    'Customer ' . Sentinel::getUser()->first_name . ' ' . Sentinel::getUser()->last_name . ' logged in successfully.', // Content
+                    'success',
+                    Sentinel::getUser()->id,
+                    1, // Type
+                    Sentinel::getUser()->id,
+                    'Customer' // Role
+                );
                 return redirect('/customer/dashboard')->with('success', 'Successfully logged in');
             } elseif ($user->inRole('agency')) {
+                AppHelper::storeActivity(
+                    'Agency Login',
+                    'Agency ' . Sentinel::getUser()->first_name . ' ' . Sentinel::getUser()->last_name . ' logged in successfully.', // Content
+                    'success',
+                    Sentinel::getUser()->id,
+                    1, // Type
+                    Sentinel::getUser()->id,
+                    'Agency' // Role
+                );
                 return redirect('/agency/dashboard')->with('success', 'Successfully logged in');
             }
         } else {
@@ -151,14 +169,13 @@ class AuthController extends Controller
     {
         AppHelper::storeActivity(
             'User Logout',
-            'Agent ' . Sentinel::getUser()->first_name . ' ' . Sentinel::getUser()->last_name . ' Logout in successfully.', // Content
+            'User ' . Sentinel::getUser()->first_name . ' ' . Sentinel::getUser()->last_name . ' Logout in successfully.', // Content
             'success',
             Sentinel::getUser()->id,
             1, // Type
             Sentinel::getUser()->id,
-            'Agent' // Role
+            'User' // Role
         );
-
         Sentinel::logout();
         Auth::logout();
         return redirect('login')->with('success', 'Logout successfully');

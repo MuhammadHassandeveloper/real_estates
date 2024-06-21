@@ -71,7 +71,7 @@
                                                     <h6 class="card-title mb-0">Personal Details</h6>
                                                 </div>
                                                 <div class="card-body">
-                                                    <form action="{{ route('agent.profile_update') }}" method="POST" enctype="multipart/form-data">
+                                                    <form action="{{ route('customer.profile_update') }}" method="POST" enctype="multipart/form-data">
                                                         @csrf
                                                         <div class="row">
                                                             <div class="col-lg-6">
@@ -185,7 +185,7 @@
                                                     <h6 class="card-title mb-0">Changes Password</h6>
                                                 </div>
                                                 <div class="card-body">
-                                                    <form action="{{ route('agent.password_update') }}" method="POST">
+                                                    <form action="{{ route('customer.password_update') }}" method="POST">
                                                         @csrf
                                                         <div class="row g-2 justify-content-lg-between align-items-center">
                                                             <div class="col-lg-4">
