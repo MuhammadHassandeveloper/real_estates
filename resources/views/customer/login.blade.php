@@ -67,11 +67,8 @@
                     <!--end row-->
                 </div>
             </div>
-            <!--end col-->
         </div>
-        <!--end row-->
     </div>
-    <!--end container-->
 </section>
 
 <script src="{{ asset('admin/assets/libs/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
