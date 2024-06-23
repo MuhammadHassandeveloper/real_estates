@@ -44,7 +44,7 @@ Route::get('/agencies', [FrontEndController::class, 'agencies'])->name('frontend
 Route::get('/agents', [FrontEndController::class, 'agents'])->name('frontend.agents');
 Route::get('/agent-detail/{id}', [FrontEndController::class, 'agentDetail'])->name('frontend.agent');
 Route::get('/agency-detail/{id}', [FrontEndController::class, 'agencyDetail'])->name('frontend.agency');
-Route::post('/property-agent-message', [FrontEndController::class, 'propertyAgentMessage'])->name('frontend.property.agent.message');
+Route::post('/property-customer-message', [FrontEndController::class, 'propertyCustomerMessage'])->name('frontend.property.customer.message');
 
 Route::get('/about-us', [FrontEndController::class, 'aboutUs'])->name('frontend.about-us');
 Route::get('/contact-us', [FrontEndController::class, 'contactUs'])->name('frontend.contact-us');

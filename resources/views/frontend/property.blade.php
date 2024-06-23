@@ -280,17 +280,17 @@
                                 @if (Sentinel::check())
                                     @php $user = Sentinel::getUser();@endphp
                                     @if ($user->inRole('customer'))
-                                    <form action="{{ route('frontend.property.agent.message') }}" method="post">
+                                    <form action="{{ route('frontend.property.customer.message') }}" method="post">
                                         <input type="hidden" name="agent_id" value="{{ $user->id }}">
                                         <input type="hidden" name="property_id" value="{{ $property->id }}">
                                             <div class="form-group">
-                                                <input type="text" class="form-control" required placeholder="Your Email" value="{{ $user->email }}">
+                                                <input type="email" name="email" class="form-control" required placeholder="Your Email" value="{{ $user->email }}">
                                             </div>
                                             <div class="form-group">
-                                                <input type="text" class="form-control" required value="{{ $user->phone }}" placeholder="Your Phone">
+                                                <input type="tel" name="phone" class="form-control" required value="{{ $user->phone }}" placeholder="Your Phone">
                                             </div>
                                             <div class="form-group">
-                                                <textarea class="form-control" required placeholder="Enter Your Message"></textarea>
+                                                <textarea class="form-control" name="message" required placeholder="Enter Your Message"></textarea>
                                             </div>
                                             <button class="btn btn-theme full-width" type="submit">Send Message</button>
                                         </form>

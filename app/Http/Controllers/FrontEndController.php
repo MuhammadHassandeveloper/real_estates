@@ -144,7 +144,7 @@ class FrontEndController extends Controller
         }
     }
 
-    public function propertyAgentMessage(Request $request)
+    public function propertyCustomerMessage(Request $request)
     {
         $user = Sentinel::getUser();
         $propertyId = $request->property_id;
