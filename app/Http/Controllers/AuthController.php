@@ -6,9 +6,11 @@ use App\Helpers\AppHelper;
 use App\Models\User;
 use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
@@ -96,6 +98,7 @@ class AuthController extends Controller
         }
         if ($role) {
             $role->users()->attach($user);
+            $this->sendWelcomeEmail($user);
             return redirect()->to('login')->with('success', 'Registration successful. Please log in.');
         } else {
             return back()->with('error', 'Registration not successful');
@@ -194,5 +197,16 @@ class AuthController extends Controller
         $data = array();
         $data['title'] = 'Admin Login';
         return view('admin.login',$data);
+    }
+
+
+    protected function sendWelcomeEmail($user)
+    {
+        $data = ['user' => $user];
+        Mail::send('emails.welcome', $data, function ($message) use ($user) {
+            $site = AppHelper::site_name();
+            $message->to($user->email, $user->first_name)
+                ->subject('Welcome to'.'  '.$site);
+        });
     }
 }
