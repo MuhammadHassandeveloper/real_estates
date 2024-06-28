@@ -4,15 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Helpers\AppHelper;
 use App\Models\User;
-use Cartalyst\Sentinel\Reminders\EloquentReminder as Reminder;
 use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
@@ -264,9 +262,6 @@ class AuthController extends Controller
             'password' => 'required|min:8|confirmed',
         ]);
 
-        dd($request->all());
-
-
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
@@ -281,7 +276,7 @@ class AuthController extends Controller
         );
 
         return $status == Password::PASSWORD_RESET
-            ? redirect()->route('login.get')->with('success', 'Your password has been successfully reset.')
+            ? redirect()->route('frontend.login_form')->with('success', 'Your password has been successfully reset.')
             : back()->withErrors(['email' => [__($status)]]);
     }
 

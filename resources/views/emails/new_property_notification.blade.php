@@ -14,12 +14,15 @@
             background-color: #ffffff;
             padding: 20px;
             border: 1px solid #dddddd;
+            border-radius: 8px;
         }
         .header {
             text-align: center;
             padding: 20px 0;
-            background-color: #00ba74;
-            color: #ffffff;
+        }
+        .header img {
+            max-width: 150px;
+            margin-bottom: 20px;
         }
         .content {
             padding: 20px;
@@ -30,6 +33,7 @@
             padding: 20px;
             background-color: #f4f4f4;
             color: #777777;
+            border-top: 1px solid #dddddd;
         }
         .button-container {
             text-align: center;
@@ -42,12 +46,24 @@
             text-decoration: none;
             border-radius: 5px;
         }
-        .logo {
-            max-width: 150px;
-            margin: 0 auto 20px;
+        .content h2 {
+            color: #00ba74;
+            margin-top: 20px;
+        }
+        .content table {
+            width: 100%;
+            margin-top: 10px;
+            border-collapse: collapse;
+        }
+        .content table th, .content table td {
+            padding: 10px;
+            border: 1px solid #dddddd;
+        }
+        .ii a[href] {
+            color: #ffffff !important;
         }
 
-        .ii a[href] {
+         a {
             color: #ffffff !important;
         }
     </style>
@@ -57,93 +73,61 @@
     <table width="100%" cellspacing="0" cellpadding="0">
         <tr>
             <td class="header">
-                <img src="{{ asset('assets/img/logo.png') }}" alt="Logo" class="logo">
-                <h1>New Property Created</h1>
+                <img src="{{ asset('assets/img/logo.png') }}" alt="Logo">
             </td>
         </tr>
         <tr>
             <td class="content">
-                <table width="100%" cellspacing="0" cellpadding="0">
+                <h1>New Property Created</h1>
+                <h2>Property Details</h2>
+                <table>
                     <tr>
-                        <td>
-                            <h2>Property Details</h2>
-                            <table width="100%" cellspacing="0" cellpadding="0">
-                                <tr>
-                                    <td><strong>Title:</strong></td>
-                                    <td>{{ $property->title }}</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Type:</strong></td>
-                                    <td>{{ $property->property_type_id }}</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Category:</strong></td>
-                                    <td>{{ $property->property_category }}</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Bedrooms:</strong></td>
-                                    <td>{{ $property->bedrooms }}</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Bathrooms:</strong></td>
-                                    <td>{{ $property->bathrooms }}</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Size (sqft):</strong></td>
-                                    <td>{{ $property->size_sqft }}</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Price:</strong></td>
-                                    <td>{{ $property->price }}</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Address:</strong></td>
-                                    <td>{{ $property->address }}</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>City:</strong></td>
-                                    <td>{{ $property->city->name }}</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>State:</strong></td>
-                                    <td>{{ $property->state->name }}</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Zip Code:</strong></td>
-                                    <td>{{ $property->zip_code }}</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Building Age:</strong></td>
-                                    <td>{{ $property->building_age }}</td>
-                                </tr>
-                            </table>
-                        </td>
+                        <th>Title</th>
+                        <td>{{ $property->title }}</td>
                     </tr>
                     <tr>
-                        <td>
-                            <h2>Agent/Agency Details</h2>
-                            <table width="100%" cellspacing="0" cellpadding="0">
-                                <tr>
-                                    <td><strong>Name:</strong></td>
-                                    <td>{{ $agent->first_name }} {{ $agent->last_name }}</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Email:</strong></td>
-                                    <td>{{ $agent->email }}</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Phone:</strong></td>
-                                    <td>{{ $agent->phone }}</td>
-                                </tr>
-                            </table>
-                        </td>
+                        <th>Type</th>
+                        <td>{{ $property->propertyType->name }}</td>
                     </tr>
                     <tr>
-                        <td class="button-container">
-                            <a href="{{ url('/login') }}" class="button">Login to Admin Panel</a>
-                        </td>
+                        <th>Category</th>
+                        <td>{{ $property->property_category }}</td>
+                    </tr>
+                    <tr>
+                        <th>Price</th>
+                        <td>{{ $property->price }}</td>
+                    </tr>
+                    <tr>
+                        <th>Address</th>
+                        <td>{{ $property->address }}</td>
+                    </tr>
+                    <tr>
+                        <th>City</th>
+                        <td>{{ $property->city->name }}</td>
+                    </tr>
+                    <tr>
+                        <th>State</th>
+                        <td>{{ $property->state->name }}</td>
                     </tr>
                 </table>
+                <h2>User Details</h2>
+                <table>
+                    <tr>
+                        <th>Name</th>
+                        <td>{{ $agent->first_name }} {{ $agent->last_name }}</td>
+                    </tr>
+                    <tr>
+                        <th>Email</th>
+                        <td>{{ $agent->email }}</td>
+                    </tr>
+                    <tr>
+                        <th>Phone</th>
+                        <td>{{ $agent->phone }}</td>
+                    </tr>
+                </table>
+                <div class="button-container">
+                    <a style="color: white;" href="{{ url('/login') }}" class="button">Login to Admin Panel</a>
+                </div>
             </td>
         </tr>
         <tr>

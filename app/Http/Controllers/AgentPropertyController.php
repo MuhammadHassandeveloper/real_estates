@@ -12,6 +12,7 @@ use App\Models\PropertyType;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
+use Illuminate\Support\Facades\Mail;
 
 
 class AgentPropertyController extends Controller

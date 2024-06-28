@@ -78,7 +78,7 @@
                                     <p>Thank you for registering with us. We're excited to have you on board.</p>
                                     <p>If you have any questions, feel free to reach out to our support team.</p>
                                     <div class="button-container">
-                                        <a href="{{ url('/login') }}" class="button">Login to Your Account</a>
+                                        <a style="color: white;" href="{{ url('/login') }}" class="button">Login to Your Account</a>
                                     </div>
                                     <p>Best Regards,<br>{{ App\Helpers\AppHelper::site_name() }} Team</p>
                                 </td>
