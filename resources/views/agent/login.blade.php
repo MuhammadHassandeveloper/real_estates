@@ -5,15 +5,9 @@
 <head>
 
     <meta charset="utf-8">
-<<<<<<< HEAD
-    <title>{{ \App\Helpers\Helpers::site_name() }} - @yield('title')</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta content=">{{ \App\Helpers\Helpers::site_name() }}" name="{{ \App\Helpers\Helpers::site_name() }}">
-=======
     <title>{{ \App\Helpers\AppHelper::site_name() }} - @yield('title')</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content=">{{ \App\Helpers\AppHelper::site_name() }}" name="{{ \App\Helpers\AppHelper::site_name() }}">
->>>>>>> parent of da1d971 (ok)
     <link rel="shortcut icon" href="{{ asset('admin/assets/images/favicon.ico') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
@@ -40,12 +34,7 @@
                                 <div class="card-body p-sm-5 m-lg-4">
                                     <div class="text-center">
                                         <h5 class="fs-3xl">Welcome Back</h5>
-<<<<<<< HEAD
-                                        <p class="text-muted">Sign in to continue
-                                            to {{ \App\Helpers\Helpers::site_name() }}.</p>
-=======
                                         <p class="text-muted">Sign in to continue to {{ \App\Helpers\AppHelper::site_name() }}.</p>
->>>>>>> parent of da1d971 (ok)
                                     </div>
                                     <div class="p-2">
                                         <form action="{{ url('post-login') }}">
@@ -63,6 +52,12 @@
                                                     <input name="password" type="password" class="form-control pe-5 password-input " placeholder="Enter password" id="password-input" required="">
                                                     <button class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted password-addon" type="button" id="password-addon"><i class="ri-eye-fill align-middle"></i></button>
                                                 </div>
+                                            </div>
+
+                                            <div class="modal-divider">
+                                                    <span>Forgot Password ?
+                                                        <a href="{{ route('forgot-password') }}">Password</a>
+                                                    </span>
                                             </div>
 
                                             <div class="mt-2">

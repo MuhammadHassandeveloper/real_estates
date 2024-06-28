@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers\AppHelper;
 use App\Models\User;
+use Cartalyst\Sentinel\Reminders\EloquentReminder as Reminder;
 use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
@@ -11,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
@@ -98,6 +100,7 @@ class AuthController extends Controller
         }
         if ($role) {
             $role->users()->attach($user);
+            $user = User::find($user->id);
             $this->sendWelcomeEmail($user);
             return redirect()->to('login')->with('success', 'Registration successful. Please log in.');
         } else {
@@ -209,4 +212,78 @@ class AuthController extends Controller
                 ->subject('Welcome to'.'  '.$site);
         });
     }
+
+
+    public function showForgotPasswordForm()
+    {
+        $data = [];
+        $data['title'] = 'Forgot Password';
+        return view('frontend.forgot-password', $data);
+    }
+
+    public function sendResetPasswordEmail(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email|exists:users,email',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+        $user = User::where('email', $request->email)->first();
+        $token = Password::createToken($user);
+        $this->sendResetEmail($user, $token);
+        return back()->with('success', 'Password reset link sent to your email address.');
+    }
+
+    protected function sendResetEmail($user, $token)
+    {
+        $email = $user->email;
+        $name = $user->first_name . ' ' . $user->last_name;
+        $link = url('reset-password/' . $token);
+        $request_time = date('h:i:s', time());
+        Mail::send('emails.password-reset', compact('link', 'name','email','request_time'), function ($message) use ($email, $name) {
+            $message->to($email, $name)
+                ->subject('Your Password Reset Link');
+        });
+    }
+
+    public function showResetPasswordForm($token)
+    {
+        $data = [];
+        $data['title'] = 'Reset Password';
+        $data['token'] = $token;
+        return view('frontend.reset-password', $data);
+    }
+
+    public function resetPassword(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'token' => 'required',
+            'email' => 'required|email',
+            'password' => 'required|min:8|confirmed',
+        ]);
+
+        dd($request->all());
+
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $status = Password::reset(
+            $request->only('email', 'password', 'password_confirmation', 'token'),
+            function ($user, $password) {
+                $user->forceFill([
+                    'password' => Hash::make($password)
+                ])->save();
+            }
+        );
+
+        return $status == Password::PASSWORD_RESET
+            ? redirect()->route('login.get')->with('success', 'Your password has been successfully reset.')
+            : back()->withErrors(['email' => [__($status)]]);
+    }
+
+
 }

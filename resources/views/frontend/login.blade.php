@@ -60,6 +60,10 @@
                                         <button type="submit" class="btn search-btn">Login</button>
                                     </div>
 
+                                    <div class="text-center">
+                                        <p class="mt-2"><a href="{{ route('forgot-password') }}" class="link">Forgot password?</a></p>
+                                    </div>
+
                                 </form>
                             </div>
                         </div>

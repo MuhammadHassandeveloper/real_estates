@@ -67,6 +67,12 @@ Route::get('admin/logout', [AuthController::class, 'adminLogout'])->name('admin.
 Route::get('agent/login', [AuthController::class, 'agentLogin'])->name('agent.login');
 Route::get('agent/logout', [AuthController::class, 'agentLogout'])->name('agent.logout');
 
+//forgot password section
+Route::get('forgot-password', [AuthController::class, 'showForgotPasswordForm'])->name('forgot-password');
+Route::post('forgot-password', [AuthController::class, 'sendResetPasswordEmail']);
+Route::get('reset-password/{token}', [AuthController::class, 'showResetPasswordForm'])->name('reset-password');
+Route::post('reset-password', [AuthController::class, 'resetPassword']);
+
 
 
 

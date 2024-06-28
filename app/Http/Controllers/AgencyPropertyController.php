@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\AppHelper;
+use App\Mail\NewPropertyNotification;
 use App\Models\City;
 use App\Models\Property;
 use App\Models\PropertyFeature;
@@ -134,6 +135,12 @@ class AgencyPropertyController extends Controller
         $property->owner_email = Sentinel::getUser()->email;
         $property->owner_phone = Sentinel::getUser()->phone;
         $property->save();
+
+        //send email notification to admin
+        $agent = User::find($request->agent_id);
+        $adminEmail = AppHelper::adminEmail();
+        Mail::to($adminEmail)->send(new NewPropertyNotification($property, $agent));
+
 
         foreach ($request->property_images as $imageData) {
             $fileDetails = json_decode($imageData, true);

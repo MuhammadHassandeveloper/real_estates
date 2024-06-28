@@ -110,6 +110,10 @@ class AppHelper
         return 'Real Estate';
     }
 
+   public static function adminEmail() {
+        return 'muhammadhassan5075729@gmail.com';
+    }
+
     public static function userDetail($id) {
         return User::find($id);
     }
