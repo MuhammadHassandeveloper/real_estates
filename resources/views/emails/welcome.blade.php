@@ -85,7 +85,8 @@
                             </tr>
                             <tr>
                                 <td class="footer">
-                                    <p>Thank you for joining us!</p>
+                                    <p>Thank you for using {{ config('app.name') }}. If you have any questions, please contact our support team.</p>
+                                    <p>&copy; {{ date('Y') }} {{ config('app.name') }}. All rights reserved.</p>
                                 </td>
                             </tr>
                         </table>

@@ -16,7 +16,7 @@
                             <div class="hero-search mb-2">
                                 <h1>Login</h1>
                             </div>
-                            <div class="hero-search-content">
+                            <div class="hero-search-content login-form">
                                 <form action="{{ url('post-login') }}" class="login-form">
                                     @csrf
                                     <div class="row mt-2">

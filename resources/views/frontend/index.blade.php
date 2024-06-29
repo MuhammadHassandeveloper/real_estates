@@ -118,29 +118,29 @@
                         @if($properties && $properties->count() > 0)
                             @foreach($properties as $property)
                                 @php
-                                    $pimages = $pimages = $property->images;
+                                    $pimages = $property->images;
                                     $created_at = Carbon::parse($property->created_at);
                                     $humanDiff = $created_at->diffForHumans();
+                                    $firstImage = $pimages->first() ? $pimages->first()->image_path : null;
+                                    $secondImage = $pimages->skip(1)->first() ? $pimages->skip(1)->first()->image_path : null;
+                                    $imagePath = $firstImage ?? $secondImage;
                                 @endphp
                                     <!-- Single Property -->
                                 <div class="single-items">
                                     <div class="property_item classical-list">
                                         <div class="image">
                                             <a href="{{ route('frontend.property-detail', ['id' => $property->id, 'title' => $property->title]) }}">
-                                                <img src="{{ asset($pimages->first()->image_path) }}"
-                                                     alt="latest property" class="img-fluid">
+                                                    <img src="{{ asset($imagePath) }}" alt="latest property" class="img-fluid">
                                             </a>
-
                                             <div class="sb-date">
                                                 <span class="tag"><i class="ti-calendar"></i>{{ $humanDiff }}</span>
                                             </div>
                                             <span class="tag_t">{{ $property->property_category }}</span>
-                                            <span class="tag_p">
-                                                    {{ $property->country->currency_sign }}{{ number_format($property->price) }}
-                                                       @if(!is_null($property->rental_duration) && $property->rental_duration != null)
-                                                           <i>/ {{ $property->rental_duration}}</i>
-                                                       @endif
-                                            </span>
+                                            <span class="tag_p">{{ $property->country->currency_sign }}{{ number_format($property->price) }}
+                                                @if(!is_null($property->rental_duration))
+                                                    <i>/ {{ $property->rental_duration }}</i>
+                                                @endif
+                                </span>
                                         </div>
                                         <div class="proerty_content">
                                             <div class="proerty_text">
@@ -149,9 +149,8 @@
                                                         {{ $property->title }}
                                                     </a>
                                                 </h3>
-
                                             </div>
-                                            <p class="property_add">{{ $property->address }} </p>
+                                            <p class="property_add">{{ $property->address }}</p>
                                             <div class="property_meta">
                                                 <div class="list-fx-features">
                                                     <div class="listing-card-info-icon">
@@ -161,18 +160,15 @@
                                                         <span class="inc-fleat inc-type">{{ $property->propertyType->name }}</span>
                                                     </div>
                                                     <div class="listing-card-info-icon">
-                                                        <span
-                                                            class="inc-fleat inc-area">{{ $property->size_sqft }}</span>
+                                                        <span class="inc-fleat inc-area">{{ $property->size_sqft }}</span>
                                                     </div>
                                                     <div class="listing-card-info-icon">
-                                                        <span
-                                                            class="inc-fleat inc-bath">{{ $property->bathrooms }}</span>
+                                                        <span class="inc-fleat inc-bath">{{ $property->bathrooms }}</span>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="property_links">
-                                                <a href="{{ route('frontend.property-detail', ['id' => $property->id, 'title' => $property->title]) }}"
-                                                   class="btn btn-theme-light">Property Detail</a>
+                                                <a href="{{ route('frontend.property-detail', ['id' => $property->id, 'title' => $property->title]) }}" class="btn btn-theme-light">Property Detail</a>
                                             </div>
                                         </div>
                                     </div>
@@ -184,6 +180,7 @@
                     </div>
                 </div>
             </div>
+
 
         </div>
     </section>
@@ -302,13 +299,16 @@
                                     $pimages = $pimages = $property->images;
                                     $created_at = Carbon::parse($property->created_at);
                                     $humanDiff = $created_at->diffForHumans();
+                                    $firstImage = $pimages->first() ? $pimages->first()->image_path : null;
+                                    $secondImage = $pimages->skip(1)->first() ? $pimages->skip(1)->first()->image_path : null;
+                                    $imagePath = $firstImage ?? $secondImage;
                                 @endphp
                                     <!-- Single Property -->
                                 <div class="single-items">
                                     <div class="property_item classical-list">
                                         <div class="image">
                                             <a href="{{ route('frontend.property-detail', ['id' => $property->id, 'title' => $property->title]) }}">
-                                                <img src="{{ asset($pimages->first()->image_path) }}" alt="latest property" class="img-fluid">
+                                                <img src="{{ asset($imagePath) }}" alt="latest property" class="img-fluid">
                                             </a>
 
                                             <div class="sb-date">

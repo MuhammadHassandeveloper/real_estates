@@ -149,6 +149,7 @@ class FrontEndController extends Controller
         $user = Sentinel::getUser();
         $propertyId = $request->property_id;
         $agentId = $request->agent_id;
+
         $message = Message::create([
             'customer_id' => $user->id,
             'agent_id' => $agentId,
@@ -159,8 +160,9 @@ class FrontEndController extends Controller
         ]);
 
         Mail::to($message->agent->email)->send(new CustomerMessage($message));
+        Mail::to(AppHelper::adminEmail())->send(new CustomerMessage($message));
+
         return redirect()->back()->with('success', 'Your message has been sent successfully.');
     }
-
 
 }

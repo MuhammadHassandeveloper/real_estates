@@ -281,6 +281,7 @@
                                     @php $user = Sentinel::getUser();@endphp
                                     @if ($user->inRole('customer'))
                                     <form action="{{ route('frontend.property.customer.message') }}" method="post">
+                                        @csrf
                                         <input type="hidden" name="agent_id" value="{{ $user->id }}">
                                         <input type="hidden" name="property_id" value="{{ $property->id }}">
                                             <div class="form-group">

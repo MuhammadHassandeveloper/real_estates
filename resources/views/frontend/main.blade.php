@@ -99,6 +99,12 @@
             height: 160px !important;
             max-height: 250px !important;
         }
+        input {
+            font-size: 14px !important;
+        }
+        .form-control {
+            font-size: 14px !important;
+        }
     </style>
     @yield('style')
 </head>

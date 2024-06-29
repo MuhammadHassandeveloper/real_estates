@@ -18,8 +18,6 @@
         .header {
             text-align: center;
             padding: 20px 0;
-            background-color: #00ba74;
-            color: #ffffff;
         }
         .header h1 {
             margin: 0;
@@ -41,11 +39,6 @@
             max-width: 150px;
             margin: 0 auto 20px;
         }
-
-
-        .ii a[href] {
-            color: #ffffff !important;
-        }
     </style>
 </head>
 <body>
@@ -59,20 +52,29 @@
                             <tr>
                                 <td class="header">
                                     <img src="{{ asset('assets/img/logo.png') }}" alt="Logo" class="logo">
-                                    <h1>{{ App\Helpers\AppHelper::site_name() }}</h1>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="content">
-                                    <h2>Contact Message From Customer</h2>
-                                    <p><strong>Email:</strong> {{ $email }}</p>
-                                    <p><strong>Phone:</strong> {{ $phone }}</p>
-                                    <p><strong>Message:</strong> {{ $message }}</p>
+                                    <h2>Customer Inquiry</h2>
+                                    <p><strong>Email:</strong> {{ $customerMessage->email }}</p>
+                                    <p><strong>Phone:</strong> {{ $customerMessage->phone }}</p>
+                                    <p><strong>Message:</strong> {{ $customerMessage->message }}</p>
+                                </td>
+                            </tr>
+                            @php $p = App\Helpers\AppHelper::propertyDetail($customerMessage->property_id) @endphp
+                            <tr>
+                                <td class="content">
+                                    <h2>Property Details</h2>
+                                    <p><strong>Title:</strong> {{ $p->title }}</p>
+                                    <p><strong>Type:</strong> {{$p->propertyType->name}}</p>
+                                    <p><strong>Address:</strong> {{ $p->address }}</p>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="footer">
-                                    <p>Thank you for contacting us!</p>
+                                    <p>Thank you for using {{ config('app.name') }}. If you have any questions, please contact our support team.</p>
+                                    <p>&copy; {{ date('Y') }} {{ config('app.name') }}. All rights reserved.</p>
                                 </td>
                             </tr>
                         </table>

@@ -1,7 +1,5 @@
 <?php
 
-// app/Mail/CustomerMessage.php
-
 namespace App\Mail;
 
 use App\Models\Message;
@@ -13,17 +11,16 @@ class CustomerMessage extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $message;
+    public $customerMessage;
 
     public function __construct(Message $message)
     {
-        $this->message = $message;
+        $this->customerMessage = $message;
     }
 
     public function build()
     {
         return $this->view('emails.customer_message')
-            ->with('message', $this->message)
-            ->subject('New Message from Customer');
+            ->subject('New Inquiry About Your Property');
     }
 }
