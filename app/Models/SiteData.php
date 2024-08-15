@@ -17,6 +17,8 @@ class SiteData extends Model
         'currency_code',
         'site_logo',
         'favicon',
+        'dashboard_logo',
+        'dashboard_favicon',
         'stripe_public_key',
         'stripe_secret_key',
         'facebook_url',

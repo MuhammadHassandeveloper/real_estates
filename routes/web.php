@@ -8,17 +8,14 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AgentDashboardController;
 use App\Http\Controllers\AgentPropertyController;
 
-//agency Controllers
-use App\Http\Controllers\AgencyDashboardController;
-use App\Http\Controllers\AgencyPropertyController;
-use App\Http\Controllers\AgencyAgentController;
-
 //admin Controllers
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\AdminPropertyController;
 use App\Http\Controllers\AdminCountryController;
 use App\Http\Controllers\AdminStateController;
 use App\Http\Controllers\AdminCityController;
+use App\Http\Controllers\AdminUserController;
+use App\Http\Controllers\SiteDataController;
 
 //customer controllers
 use App\Http\Controllers\CustomerDashboardController;
@@ -30,6 +27,12 @@ Route::get('/all-clear', function () {
     return 'All cleared!';
 });
 
+
+// Call the Artisan command to generate the CSV
+Route::get('/update-status', function () {
+    Artisan::call('rental:update-status');
+    return 'successfully statues chnage and command run';
+});
 
 
 //forntend routes
@@ -43,11 +46,20 @@ Route::get('/property-make-fav/{id}', [FrontEndController::class, 'propertyMakeF
 Route::get('/agencies', [FrontEndController::class, 'agencies'])->name('frontend.agencies');
 Route::get('/agents', [FrontEndController::class, 'agents'])->name('frontend.agents');
 Route::get('/agent-detail/{id}', [FrontEndController::class, 'agentDetail'])->name('frontend.agent');
-Route::get('/agency-detail/{id}', [FrontEndController::class, 'agencyDetail'])->name('frontend.agency');
 Route::post('/property-customer-message', [FrontEndController::class, 'propertyCustomerMessage'])->name('frontend.property.customer.message');
+Route::post('/property-customer-review', [FrontEndController::class, 'propertyCustomerReview'])->name('frontend.property.customer.review');
 
-Route::get('/about-us', [FrontEndController::class, 'aboutUs'])->name('frontend.about-us');
+//rent and purchased property routes
+Route::post('/property-rent', [FrontEndController::class, 'propertyRent'])->name('frontend.property.rent');
+Route::get('/property-purchased/{id}', [FrontEndController::class, 'propertyPurchased'])->name('frontend.property.purchased');
+
+Route::get('/property_stripe_success', [FrontEndController::class, 'stripe_success']);
+Route::get('/purchased_property_stripe_success', [FrontEndController::class, 'purchased_property_stripe_success']);
+Route::get('/property_stripe_cancel', [FrontEndController::class, 'stripe_cancel']);
+
+
 Route::get('/contact-us', [FrontEndController::class, 'contactUs'])->name('frontend.contact-us');
+Route::get('/about-us', [FrontEndController::class, 'aboutUs'])->name('frontend.about-us');
 
 
 
@@ -97,38 +109,13 @@ Route::group(['middleware' => 'admin', 'prefix' => '/'], function () {
         Route::get('/property-edit/{id}', [AgentPropertyController::class, 'propertyEdit'])->name('agent.edit_property');
         Route::post('/property-update', [AgentPropertyController::class, 'propertyUpdate'])->name('agent.update_property');
         Route::post('/delete', [AgentPropertyController::class, 'propertyDelete'])->name('agent.property.delete_property');
+
+        //customer properties routes
+        Route::get('/customer-favourite-properties', [AgentPropertyController::class, 'customerFavouriteProperties'])->name('agent.customer.favourite.properties');
+        Route::get('/customer-purchased-properties', [AgentPropertyController::class, 'customerPurchasedProperties'])->name('agent.customer.purchased.properties');
+        Route::get('/customer-rental-properties', [AgentPropertyController::class, 'customerRentalProperties'])->name('agent.customer.rent.properties');
+
     });
-
-    // agency dashboard routes
-    Route::group(array('prefix' => 'agency'), function () {
-        Route::get('/dashboard', [AgencyDashboardController::class, 'index'])->name('agency.index');
-        Route::get('/profile', [AgencyDashboardController::class, 'profile'])->name('agency.profile');
-        Route::post('/profile-update', [AgencyDashboardController::class, 'profileUpdate'])->name('agency.profile_update');
-        Route::post('/password-update', [AgencyDashboardController::class, 'passwordUpdate'])->name('agency.password_update');
-        Route::get('/activities', [AgencyDashboardController::class, 'activities'])->name('agency.activities');
-
-        //properties routes
-        Route::get('/properties', [AgencyPropertyController::class, 'properties'])->name('agency.properties');
-        Route::get('/sale-properties', [AgencyPropertyController::class, 'saleProperties'])->name('agency.sale.properties');
-        Route::get('/rent-properties', [AgencyPropertyController::class, 'rentProperties'])->name('agency.rent.properties');
-        Route::get('/property-create', [AgencyPropertyController::class, 'propertyCreate'])->name('agency.create_property');
-        Route::post('/upload', [AgencyPropertyController::class, 'uploadImages'])->name('agency.property.upload_images');
-        Route::post('/property-store', [AgencyPropertyController::class, 'propertyStore'])->name('agency.store_property');
-        Route::get('/property-detail/{id}', [AgencyPropertyController::class, 'propertyDetail'])->name('agency.detail_property');
-        Route::get('/property-edit/{id}', [AgencyPropertyController::class, 'propertyEdit'])->name('agency.edit_property');
-        Route::post('/property-update', [AgencyPropertyController::class, 'propertyUpdate'])->name('agency.update_property');
-        Route::post('/delete', [AgencyPropertyController::class, 'propertyDelete'])->name('agency.property.delete_property');
-
-        //agents routes
-        Route::get('/agents', [AgencyAgentController::class, 'agents'])->name('agency.agents');
-        Route::get('/agent-create', [AgencyAgentController::class, 'agentCreate'])->name('agency.create_agent');
-        Route::post('/agent-store', [AgencyAgentController::class, 'agentStore'])->name('agency.store_agent');
-        Route::get('/agent-detail/{id}', [AgencyAgentController::class, 'agentDetail'])->name('agency.detail_agent');
-        Route::get('/agent-edit/{id}', [AgencyAgentController::class, 'agentEdit'])->name('agency.edit_agent');
-        Route::post('/agent-update', [AgencyAgentController::class, 'agentUpdate'])->name('agency.update_agent');
-        Route::post('/agent-delete', [AgencyAgentController::class, 'agentDelete'])->name('agency.property.delete_agent');
-    });
-
 
     // customer dashboard routes
     Route::group(array('prefix' => 'customer'), function () {
@@ -140,8 +127,8 @@ Route::group(['middleware' => 'admin', 'prefix' => '/'], function () {
 
         //properties routes
         Route::get('/fav-properties', [CustomerPropertyController::class, 'favProperties'])->name('customer.fav-properties');
-        Route::get('/sale-properties', [CustomerPropertyController::class, 'saleProperties'])->name('customer.sale.properties');
-        Route::get('/rent-properties', [CustomerPropertyController::class, 'rentProperties'])->name('customer.rent.properties');
+        Route::get('/purchased-properties', [CustomerPropertyController::class, 'purchasedProperties'])->name('customer.purchased.properties');
+        Route::get('/rent-properties', [CustomerPropertyController::class, 'rentalProperties'])->name('customer.rent.properties');
         Route::get('/property-detail/{id}', [CustomerPropertyController::class, 'propertyDetail'])->name('customer.detail_property');
         Route::post('/property-delete', [CustomerPropertyController::class, 'propertyDelete'])->name('customer.delete_property');
     });
@@ -149,8 +136,14 @@ Route::group(['middleware' => 'admin', 'prefix' => '/'], function () {
 
     // admin dashboard routes
     Route::group(array('prefix' => 'admin'), function () {
-        Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('admin.index');
 
+        Route::get('/site-data/edit', [SiteDataController::class, 'edit'])->name('admin.siteData.edit');
+        Route::post('/site-data/update', [SiteDataController::class, 'updateSiteData'])->name('admin.siteData.update');
+
+        Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('admin.index');
+        Route::get('/profile', [AdminDashboardController::class, 'profile'])->name('admin.profile');
+        Route::post('/profile-update', [AdminDashboardController::class, 'profileUpdate'])->name('admin.profile_update');
+        Route::post('/password-update', [AdminDashboardController::class, 'passwordUpdate'])->name('admin.password_update');
 
         Route::group(['prefix' => 'countries'], function () {
             Route::get('/', [AdminCountryController::class, 'countries'])->name('admin.countries');
@@ -192,7 +185,22 @@ Route::group(['middleware' => 'admin', 'prefix' => '/'], function () {
 
         Route::group(['prefix' => 'properties'], function () {
             Route::get('/', [AdminPropertyController::class, 'properties'])->name('admin.properties');
+            Route::get('/property-detail/{id}', [AdminPropertyController::class, 'propertyDetail'])->name('admin.properties.detail_property');
+            Route::get('/customer-rental', [AdminPropertyController::class, 'customerRentalProperties'])->name('admin.customer.rent.properties');
+            Route::get('/customer-purchased', [AdminPropertyController::class, 'customerPurchasedProperties'])->name('admin.customer.purchased.properties');
+            Route::get('/customer-favourite', [AdminPropertyController::class, 'customerFavrouriteProperties'])->name('admin.customer.favourite.properties');
+            Route::get('/set-review', [AdminPropertyController::class, 'setReview'])->name('admin.properties.review.set');
         });
+        Route::group(['prefix' => 'users'], function () {
+            Route::get('/agents', [AdminUserController::class, 'agents'])->name('admin.agents');
+            Route::get('/agencies', [AdminUserController::class, 'agencies'])->name('admin.agencies');
+            Route::get('/customers', [AdminUserController::class, 'customers'])->name('admin.customers');
+            Route::get('/agent-detail/{id}', [AdminUserController::class, 'agentDetail'])->name('admin.agent_detail');
+            Route::get('/customer-detail/{id}', [AdminUserController::class, 'customerDetail'])->name('admin.customer_detail');
+
+        });
+
+
     });
 
 });

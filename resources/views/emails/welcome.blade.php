@@ -18,7 +18,7 @@
         .header {
             text-align: center;
             padding: 20px 0;
-            background-color: #00ba74;
+            background-color: #EC3323;
             color: #ffffff;
         }
         .header h1 {
@@ -29,14 +29,14 @@
             color: #333333;
         }
         .content h2 {
-            color: #00ba74;
+            color: #EC3323;
         }
         .button-container {
             text-align: center;
             margin: 20px 0;
         }
         .button {
-            background-color: #00ba74;
+            background-color: #EC3323;
             color: #ffffff;
             padding: 10px 20px;
             text-decoration: none;
@@ -85,8 +85,8 @@
                             </tr>
                             <tr>
                                 <td class="footer">
-                                    <p>Thank you for using {{ config('app.name') }}. If you have any questions, please contact our support team.</p>
-                                    <p>&copy; {{ date('Y') }} {{ config('app.name') }}. All rights reserved.</p>
+                                    <p>Thank you for using {{ App\Helpers\AppHelper::site_name() }}. If you have any questions, please contact our support team.</p>
+                                    <p>&copy; {{ date('Y') }} {{ App\Helpers\AppHelper::site_name() }}. All rights reserved.</p>
                                 </td>
                             </tr>
                         </table>

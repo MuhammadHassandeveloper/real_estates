@@ -290,6 +290,34 @@
                                         </div>
                                     </div>
 
+
+                                    <!-- Section for Nearby Places -->
+                                    <div id="nearbyPlacesSection">
+                                        <h5>Add Nearby Places</h5>
+                                        <div class="row" id="nearbyPlaceRows">
+                                            <!-- Template for a nearby place row -->
+                                            <div class="col-md-12 nearby-place-row">
+                                                <div class="form-group mb-2">
+                                                    <label for="nearby_place_name[]">Name</label>
+                                                    <input type="text" name="nearby_place_name[]" required class="form-control" placeholder="Name">
+                                                </div>
+                                                <div class="form-group mb-2">
+                                                    <label for="nearby_place_type[]">Type</label>
+                                                    <input type="text" name="nearby_place_type[]" required class="form-control" placeholder="Type (e.g., school, hospital)">
+                                                </div>
+
+                                                <div class="form-group mb-2">
+                                                    <label for="nearby_place_distance[]">Distance (km)</label>
+                                                    <input type="number" step="0.01" name="nearby_place_distance[]" required class="form-control" placeholder="Distance">
+                                                </div>
+                                                <button type="button" class="remove-row btn btn-danger btn-sm mt-2 mb-2 text-right text-end float-end"><i class="bi bi-x-circle"></i></button>
+
+                                            </div>
+                                        </div>
+                                        <button type="button" id="addNearbyPlaceRow"  class="btn btn-success btn-sm add-city-btn"><i class="bi bi-plus-circle"></i></button>
+
+                                    </div>
+
                                     <div class="col-lg-12">
                                         <div class="hstack gap-2 justify-content-end">
                                             <button type="submit" class="btn btn-primary"><i class="bi bi-clipboard2-check align-baseline me-1"></i> Save</button>
@@ -375,6 +403,40 @@
             } else {
                 $('#city_id').empty();
             }
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const addRowButton = document.getElementById('addNearbyPlaceRow');
+            const nearbyPlaceRowsContainer = document.getElementById('nearbyPlaceRows');
+            const rowTemplate = `
+                <div class="col-md-12 nearby-place-row mt-2">
+                    <div class="form-group mb-2">
+                        <label for="nearby_place_name[]">Name</label>
+                        <input type="text" name="nearby_place_name[]"  class="form-control" placeholder="Name">
+                    </div>
+                    <div class="form-group mb-2">
+                        <label for="nearby_place_type[]">Type</label>
+                        <input type="text" name="nearby_place_type[]" class="form-control" placeholder="Type (e.g., school, hospital)">
+                    </div>
+
+                    <div class="form-group mb-2">
+                        <label for="nearby_place_distance[]">Distance (km)</label>
+                        <input type="number" step="0.01" name="nearby_place_distance[]" class="form-control" placeholder="Distance">
+                    </div>
+                  <button type="button" class="remove-row btn btn-danger btn-sm mt-2 mb-2 text-right text-end float-end"><i class="bi bi-x-circle"></i></button>
+                </div>
+            `;
+
+            addRowButton.addEventListener('click', function () {
+                nearbyPlaceRowsContainer.insertAdjacentHTML('beforeend', rowTemplate);
+            });
+
+            nearbyPlaceRowsContainer.addEventListener('click', function (event) {
+                if (event.target.classList.contains('remove-row')) {
+                    event.target.parentElement.remove();
+                }
+            });
         });
     </script>
 @endsection

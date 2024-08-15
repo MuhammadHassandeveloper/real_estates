@@ -2,20 +2,20 @@
 <div class="app-menu navbar-menu">
     <!-- LOGO -->
     <div class="navbar-brand-box">
-        <a href="{{ url('agent/dashboard')}}" class="logo logo-dark">
+        <a href="{{ url('agent/dashboard') }}" class="logo logo-dark">
             <span class="logo-sm">
-                <img src="{{ asset('admin/assets/images/logo-sm.png') }}" alt="" height="22">
+                <img src="{{ App\Helpers\AppHelper::dashboard_logo() }}" alt="" height="22">
             </span>
             <span class="logo-lg">
-                <img src="a{{ asset('admin/assets/images/logo-dark.png') }}" alt="" height="22">
+                <img src="{{ App\Helpers\AppHelper::dashboard_logo() }}" alt="" height="22">
             </span>
         </a>
-        <a href="{{ url('agent/dashboard')}}" class="logo logo-light">
+        <a href="{{ url('agent/dashboard') }}" class="logo logo-light">
             <span class="logo-sm">
-                <img src="{{ asset('admin/assets/images/logo-sm.png') }}" alt="" height="22">
+                <img src="{{ App\Helpers\AppHelper::dashboard_logo() }}" alt="" height="22">
             </span>
             <span class="logo-lg">
-                <img src="{{ asset('admin/assets/images/logo-light.png') }}" alt="" height="22">
+                <img src="{{ App\Helpers\AppHelper::dashboard_logo() }}" alt="" height="22">
             </span>
         </a>
         <button type="button" class="btn btn-sm p-0 fs-3xl header-item float-end btn-vertical-sm-hover" id="vertical-hover">
@@ -29,6 +29,14 @@
             <div id="two-column-menu">
             </div>
             <ul class="navbar-nav" id="navbar-nav">
+
+                <li class="nav-item">
+                    <a href="{{ url('/') }}" class="nav-link menu-link active">
+                        <i class="ph-gauge"></i>
+                        <span data-key="t-calendar">Go To Site</span>
+                    </a>
+                </li>
+
                 <li class="nav-item">
                     <a href="{{ url('agent/dashboard') }}" class="nav-link menu-link">
                         <i class="ph-gauge"></i>
@@ -62,10 +70,32 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="widgets.html">
-                        <i class="ph-paint-brush-broad"></i> <span data-key="t-widgets">Widgets</span>
+                    <a href="#customersidebarRealeEstate" class="nav-link menu-link collapsed" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarRealeEstate">
+                        <i class="ph-buildings"></i>
+                        <span data-key="t-real-estate">Customer Properties</span>
                     </a>
+                    <div class="collapse menu-dropdown @yield('customer-properties-drops')" id="customersidebarRealeEstate">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="{{ route('agent.customer.favourite.properties') }}" class="nav-link @yield('properties_customer_favourite_list')">Favourite Properties</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a href="{{ route('agent.customer.purchased.properties') }}" class="nav-link @yield('properties_customer_purchased_list')">Purchased Properties</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('agent.customer.rent.properties') }}" class="nav-link @yield('properties_customer_rent_list')">Rental Properties</a>
+                            </li>
+
+                        </ul>
+                    </div>
                 </li>
+
+                {{--                <li class="nav-item">--}}
+{{--                    <a class="nav-link menu-link" href="widgets.html">--}}
+{{--                        <i class="ph-paint-brush-broad"></i> <span data-key="t-widgets">Widgets</span>--}}
+{{--                    </a>--}}
+{{--                </li>--}}
 
             </ul>
         </div>

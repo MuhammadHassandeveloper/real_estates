@@ -8,6 +8,7 @@ use App\Models\City;
 use App\Models\Property;
 use App\Models\PropertyFeature;
 use App\Models\PropertyImage;
+use App\Models\PropertyNearbyPlace;
 use App\Models\PropertyType;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -93,7 +94,7 @@ class AgentPropertyController extends Controller
             'rooms' => 'required|integer',
             'garages' => 'required|integer',
             'size_sqft' => 'required|integer',
-            'price' => 'required|integer',
+            'price' => 'required',
             'address' => 'required|max:255',
             'city_id' => 'required|max:255',
             'state_id' => 'required|max:255',
@@ -104,6 +105,9 @@ class AgentPropertyController extends Controller
             'short_description' => 'nullable|string',
             'long_description' => 'nullable|string',
             'property_images' => 'required|array',
+            'nearby_place_name.*' => 'required|string|max:255',
+            'nearby_place_type.*' => 'required|string|max:255',
+            'nearby_place_distance.*' => 'required|numeric|min:0',
         ]);
 
         $property = new Property();
@@ -131,7 +135,9 @@ class AgentPropertyController extends Controller
         $property->property_features = $property_features;
         $property->short_description = $request->short_description;
         $property->long_description = $request->long_description;
-        $property->rental_duration = $request->rental_duration;
+        if($request->get('rental_duration')) {
+            $property->rental_duration = $request->rental_duration;
+        }
         //owner details
         $property->owner_name = Sentinel::getUser()->first_name . ' ' . Sentinel::getUser()->last_name;
         $property->owner_email = Sentinel::getUser()->email;
@@ -139,9 +145,9 @@ class AgentPropertyController extends Controller
         $property->save();
 
         //send email notification to admin
-        $agent = User::find(Sentinel::getUser()->id);
-        $adminEmail = AppHelper::adminEmail();
-        Mail::to($adminEmail)->send(new NewPropertyNotification($property, $agent));
+//        $agent = User::find(Sentinel::getUser()->id);
+//        $adminEmail = AppHelper::adminEmail();
+//        Mail::to($adminEmail)->send(new NewPropertyNotification($property, $agent));
 
         foreach ($request->property_images as $imageData) {
             $fileDetails = json_decode($imageData, true);
@@ -156,6 +162,19 @@ class AgentPropertyController extends Controller
                         $image->property_id = $property->id;
                         $image->save();
                     }
+                }
+            }
+        }
+
+        if ($request->has('nearby_place_name')) {
+            foreach ($request->nearby_place_name as $index => $name) {
+                if (!empty($name)) {
+                    PropertyNearbyPlace::create([
+                        'property_id' => $property->id,
+                        'name' => $name,
+                        'type' => $request->nearby_place_type[$index] ?? '',
+                        'distance' => $request->nearby_place_distance[$index] ?? 0,
+                    ]);
                 }
             }
         }
@@ -181,6 +200,7 @@ class AgentPropertyController extends Controller
         $data['pimages'] = PropertyImage::where('property_id', $id)->get();
         $data['title'] = 'Update Property';
         $data['states'] = AppHelper::states();
+        $data['nearplaces'] = PropertyNearbyPlace::where('property_id', $id)->get();
         $data['cities'] = City::where('state_id', $data['property']->state_id)->get();
         return view('agent.properties.edit', $data);
     }
@@ -196,7 +216,7 @@ class AgentPropertyController extends Controller
             'rooms' => 'required|integer',
             'garages' => 'required|integer',
             'size_sqft' => 'required|integer',
-            'price' => 'required|integer',
+            'price' => 'required|',
             'address' => 'required|string|max:255',
             'city_id' => 'required|',
             'city_id' => 'required|',
@@ -232,7 +252,9 @@ class AgentPropertyController extends Controller
         $property->owner_name = Sentinel::getUser()->first_name . ' ' . Sentinel::getUser()->last_name;
         $property->owner_email = Sentinel::getUser()->email;
         $property->owner_phone = Sentinel::getUser()->phone;
-        $property->rental_duration = $request->rental_duration;
+        if($request->get('rental_duration')) {
+            $property->rental_duration = $request->rental_duration;
+        }
         $property->save();
 
         $imageDetails = json_decode($request->image_details, true);
@@ -266,6 +288,50 @@ class AgentPropertyController extends Controller
                 ['image_path' => 'property_images/' . $imageName]
             );
         }
+
+
+        // Process nearby places
+        $existingNearbyPlaces = $request->input('nearby_place_id', []);
+        $existingNearbyPlaces = array_filter($existingNearbyPlaces); // Remove any empty values
+
+        $newNearbyPlaces = [];
+        $updatedNearbyPlaces = [];
+
+        if ($request->has('nearby_place_name')) {
+            foreach ($request->input('nearby_place_name') as $index => $name) {
+                if ($name) {
+                    $nearbyPlaceData = [
+                        'name' => $name,
+                        'type' => $request->input('nearby_place_type')[$index],
+                        'distance' => $request->input('nearby_place_distance')[$index],
+                        'property_id' => $property->id,
+                    ];
+
+                    if (!empty($request->input('nearby_place_id')[$index])) {
+                        $updatedNearbyPlaces[$request->input('nearby_place_id')[$index]] = $nearbyPlaceData;
+                    } else {
+                        // New place, create
+                        $newNearbyPlaces[] = $nearbyPlaceData;
+                    }
+                }
+            }
+        }
+
+        // Update existing nearby places
+        foreach ($updatedNearbyPlaces as $id => $data) {
+            PropertyNearbyPlace::where('id', $id)->update($data);
+        }
+        // Create new nearby places
+        PropertyNearbyPlace::insert($newNearbyPlaces);
+//        // Delete old nearby places that are no longer in the form
+//        PropertyNearbyPlace::where('property_id', $property->id)
+//            ->whereNotIn('id', array_keys($updatedNearbyPlaces))
+//            ->delete();
+
+
+
+
+
         AppHelper::storeActivity(
             'Property Updated', // Heading
             'Property updated by Agent ' . Sentinel::getUser()->first_name . ' ' . Sentinel::getUser()->last_name . '.', // Content
@@ -289,6 +355,7 @@ class AgentPropertyController extends Controller
         $data['property'] = Property::find($id);
         $data['pimages'] = PropertyImage::where('property_id', $id)->get();
         $data['title'] = 'Property Details';
+        $data['nearplaces'] = PropertyNearbyPlace::where('property_id', $id)->get();
         return view('agent.properties.detail', $data);
     }
 
@@ -306,6 +373,46 @@ class AgentPropertyController extends Controller
             'Agent' // Role
         );
         return redirect()->route('agent.properties')->with('success', 'Property deleted successfully.');
+    }
+
+
+
+    public function customerFavouriteProperties() {
+        $data = array();
+        $data['title'] = 'Customer Favourite Properties';
+        $data['properties'] = Property::join('favourite_properties', 'properties.id', '=', 'favourite_properties.property_id')
+            ->where('properties.agency_id', Sentinel::getUser()->id)
+            ->select('properties.*','favourite_properties.user_id')
+            ->get();
+        return view('agent.customers.favourite', $data);
+    }
+
+
+    public function customerPurchasedProperties() {
+
+        $data = array();
+        $data['title'] = 'Customer Purchased Properties';
+        $data['properties'] = Property::join('property_purchases', 'properties.id', '=', 'property_purchases.property_id')
+            ->where('properties.agency_id', Sentinel::getUser()->id)
+            ->select('properties.*','property_purchases.purchased_price','property_purchases.purchased_date',
+                'property_purchases.purchased_time','property_purchases.purchased_status','property_purchases.purchased_payment_status','property_purchases.customer_id')
+            ->get();
+
+        return view('agent.customers.purchased', $data);
+
+    }
+
+    public function customerRentalProperties() {
+        $data = array();
+        $data['title'] = 'Rental Properties';
+        $data['properties'] = Property::join('property_rentals', 'properties.id', '=', 'property_rentals.property_id')
+            ->where('properties.agency_id', Sentinel::getUser()->id)
+            ->select('properties.*','property_rentals.rental_price','property_rentals.start_date',
+                'property_rentals.end_date','property_rentals.rental_status','property_rentals.rental_payment_status','property_rentals.rental_days','property_rentals.rental_price','property_rentals.customer_id')
+            ->get();
+
+        return view('agent.customers.rental', $data);
+
     }
 
 }

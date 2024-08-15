@@ -2,15 +2,12 @@
 namespace App\Helpers;
 
 use App\Models\ActivityReport;
-use App\Models\AgentBooking;
-use App\Models\Booking;
 use App\Models\City;
-use App\Models\CleaningPrice;
-use App\Models\PaypalAccount;
 use App\Models\Property;
 use App\Models\PropertyFeature;
 use App\Models\PropertyImage;
 use App\Models\PropertyType;
+use App\Models\SiteData;
 use App\Models\SiteSetting;
 use App\Models\State;
 use App\Models\Subscriptions;
@@ -29,23 +26,13 @@ use Illuminate\Support\Facades\Cache;
 class AppHelper
 {
 
-    public static function stripe_publich_key()
-    {
-        $siteSettings = 'pk_test_51O7I8oAZ0UHvqN9MrghpSQQtLwiu1AocMEVJH061wgBwcE1PF8k8OAKBMEJ5uTePqwalQBlkm8zekhkOofvGbv5o00ttwEIoIf';
-        return $siteSettings;
-    }
 
-    public static function stripe_secret_key()
-    {
-        $siteSettings = 'sk_test_51O7I8oAZ0UHvqN9MsTAG6scrpai9LHnMqbqkm5dWDPBhyXClu5czpLazeNizUNrLPmwR40C2lpnKawjuMggi3uJ600wkuFVuvy';
-        return $siteSettings;
-    }
 
     public static function property_status($status) {
         $color = '';
         $text = '';
         if($status == 1) {
-            $text = 'Confirmed';
+            $text = 'Display';
             $color = 'text-success';
             $bgColor = 'bg-light-success';
         } else if($status == 2) {
@@ -57,11 +44,11 @@ class AppHelper
             $color = 'text-danger';
             $bgColor = 'bg-light-danger';
         } else if($status == 4) {
-            $text = 'Started';
-            $color = 'text-primary-color';
-            $bgColor = 'bg-light-primary';
+            $text = 'Not Paid';
+            $color = 'text-danger-color';
+            $bgColor = 'bg-light-danger';
         }else if($status == 5) {
-            $text = 'Completed';
+            $text = 'Paid';
             $color = 'text-success';
             $bgColor = 'bg-light-success';
         } else {
@@ -71,6 +58,78 @@ class AppHelper
         }
         return array($bgColor,$color,$text);
     }
+
+    public static function property_retal_status($status) {
+        $color = '';
+        $text = '';
+        $bgColor = '';
+        if($status == 1) {
+            $text = 'Active';
+            $color = 'text-success';
+            $bgColor = 'bg-light-success';
+        } else if($status == 0) {
+            $text = 'InActive';
+            $color = 'text-danger-color';
+            $bgColor = 'bg-light-danger';
+        } else if($status == 2) {
+            $text = 'Expired';
+            $color = 'text-danger';
+            $bgColor = 'bg-light-danger';
+        } else {
+            $text = 'InActive';
+            $color = 'text-danger';
+            $bgColor = 'bg-light-danger';
+        }
+        return array($bgColor,$color,$text);
+    }
+
+    public static function property_purchased_status($status) {
+        $color = '';
+        $text = '';
+        $bgColor = '';
+        if($status == 1) {
+            $text = 'Purchased';
+            $color = 'text-success';
+            $bgColor = 'bg-light-success';
+        } else if($status == 0) {
+            $text = 'Not Purchased';
+            $color = 'text-danger-color';
+            $bgColor = 'bg-light-danger';
+        } else if($status == 2) {
+            $text = 'Not Purchased';
+            $color = 'text-danger';
+            $bgColor = 'bg-light-danger';
+        } else {
+            $text = 'Not Purchased';
+            $color = 'text-danger';
+            $bgColor = 'bg-light-danger';
+        }
+        return array($bgColor,$color,$text);
+    }
+
+
+    public static function property_payment_status($status) {
+        $color = '';
+        $text = '';
+        $bgColor= '';
+        if($status == 1) {
+            $text = 'Paid';
+            $color = 'text-success';
+            $bgColor = 'bg-light-success';
+
+        } else  if($status == 2) {
+            $text = 'Unpaid';
+            $color = 'text-danger';
+            $bgColor = 'bg-light-danger';
+
+        } else {
+            $text = 'Unpaid';
+            $color = 'text-danger';
+            $bgColor = 'bg-light-danger';
+        }
+        return array($bgColor,$color,$text);
+    }
+
 
     public static function country_status($status) {
         $color = '';
@@ -89,25 +148,9 @@ class AppHelper
         return array($bgColor,$color,$text);
     }
 
-    public static function property_payment_status($status) {
-        $color = '';
-        $text = '';
-        $bgColor= '';
-        if($status == 1) {
-            $text = 'Paid';
-            $color = 'text-success';
-            $bgColor = 'bg-light-success';
-
-        } else {
-            $text = 'Unpaid';
-            $color = 'text-warning';
-            $bgColor = 'bg-light-warning';
-        }
-        return array($bgColor,$color,$text);
-    }
 
     public static function site_name() {
-        return 'Real Estate';
+        return 'HomeSeeker';
     }
 
    public static function adminEmail() {
@@ -118,20 +161,8 @@ class AppHelper
         return User::find($id);
     }
 
-    public static function agencyAgents($id) {
-        return User::where('agency_id', $id)
-            ->whereHas('country', function ($query) {
-                $query->where('status', 1);
-            })
-            ->whereNotNull('photo')
-            ->whereNotNull('city_id')
-            ->whereNotNull('state_id')
-            ->latest()
-            ->with(['city', 'state', 'country'])
-            ->get();
-    }
 
-    public static function tenNonFeaturedProerties() {
+    public static function tenNonFeaturedProperties() {
         return Property::where('is_featured', 0)
             ->whereHas('country', function ($query) {
                 $query->where('status', 1);
@@ -142,7 +173,7 @@ class AppHelper
             ->get();
     }
 
-    public static function tenFeaturedProerties() {
+    public static function tenFeaturedProperties() {
         return Property::where('is_featured', 1)
             ->whereHas('country', function ($query) {
                 $query->where('status', 1);
@@ -151,11 +182,6 @@ class AppHelper
             ->limit(10)
             ->inRandomOrder()
             ->get();
-    }
-
-
-    public static function propertyDetail($id) {
-        return Property::find($id);
     }
 
     public static function cityProperties() {
@@ -170,9 +196,10 @@ class AppHelper
     }
 
 
-    public static function allFeaturedProperties() {
-
+    public static function propertyDetail($id) {
+        return Property::find($id);
     }
+
 
     public static function agentProperties($id) {
         return Property::where('agent_id', $id)
@@ -200,37 +227,11 @@ class AppHelper
             ->get();
     }
 
-    public static function agencyProperties($id) {
-        return Property::where('agency_id', $id)
-            ->whereHas('country', function ($query) {
-                $query->where('status', 1);
-            })
-            ->get();
-    }
-
-
-    public static function agencyRentProperties($id) {
-        return Property::where('agency_id', $id)
-            ->where('property_category', 'Rent')
-            ->whereHas('country', function ($query) {
-                $query->where('status', 1);
-            })
-            ->get();
-    }
-
-    public static function agencySaleProperties($id) {
-        return Property::where('agency_id', $id)
-            ->where('property_category', 'Sale')
-            ->whereHas('country', function ($query) {
-                $query->where('status', 1);
-            })
-            ->get();
-    }
-
 
     public static function agentPropertiescount($id) {
         return Property::where('agent_id',$id)->count();
     }
+
 
     public static function customerProperties($id) {
         return Property::where('user_id',$id)->get();
@@ -247,10 +248,6 @@ class AppHelper
         return PropertyType::find($id);
     }
 
-    public static function agency($id)
-    {
-        return User::where('id',$id)->first();
-    }
 
     public static function property_category($status) {
         if($status == 'Rent') {
@@ -308,38 +305,6 @@ class AppHelper
             ->get();
     }
 
-    public static function agencies() {
-        return User::whereHas('roles', function($query) {
-            $query->where('slug', 'agency');
-        })
-            ->whereHas('country', function ($query) {
-                $query->where('status', 1);
-            })
-            ->whereNotNull('agency_logo')
-            ->whereNotNull('city_id')
-            ->whereNotNull('state_id')
-            ->latest()
-            ->with(['city', 'state', 'country'])
-            ->paginate(12);
-    }
-
-    public static function latestAgencies() {
-        return User::whereHas('roles', function($query) {
-            $query->where('slug', 'agency');
-        })
-            ->whereHas('country', function ($query) {
-                $query->where('status', 1);
-            })
-            ->whereNotNull('agency_logo')
-            ->whereNotNull('city_id')
-            ->whereNotNull('state_id')
-            ->whereNotNull('whatsapp_phone')
-            ->orderBy('created_at', 'desc')
-            ->limit(4)
-            ->with(['city', 'state', 'country'])
-            ->get();
-    }
-
     public  static function SingleFeaturedProperty() {
         return Property::where('is_featured',1)->inRandomOrder()->first();
     }
@@ -375,28 +340,6 @@ class AppHelper
         return $missingFields;
     }
 
-    public static function checkAgencyProfileCompletion($id)
-    {
-        $user = User::find($id);
-        $missingFields = [];
-
-        if (empty($user->city)) {
-            $missingFields[] = 'city';
-        }
-        if (empty($user->state)) {
-            $missingFields[] = 'state';
-        }
-        if (empty($user->agency_logo)) {
-            $missingFields[] = 'agency_logo';
-        }
-        if (empty($user->bio)) {
-            $missingFields[] = 'bio';
-        }
-        if (empty($user->whatsapp_phone)) {
-            $missingFields[] = 'whatsapp_phone';
-        }
-        return $missingFields;
-    }
 
     public static function storeActivity($heading, $detail, $color, $uid, $type, $system_id,$role)
     {
@@ -449,20 +392,134 @@ class AppHelper
             ->get();
     }
 
-    public static function CustometFavoriteproperties($customer_id) {
-       return Property::join('favourite_properties', 'properties.id', '=', 'favourite_properties.property_id')
-            ->where('favourite_properties.user_id', $customer_id)
-            ->select('properties.*')
-            ->latest()
-           ->limit(5)
-            ->get();
+
+
+
+
+    //site data section start here
+    public static function getSiteDataValue($key)
+    {
+        $siteData = SiteData::first();
+        return $siteData ? $siteData->$key : null;
     }
 
-    public static function CustometerAllFavoriteproperties($customer_id) {
-        return Property::join('favourite_properties', 'properties.id', '=', 'favourite_properties.property_id')
-            ->where('favourite_properties.user_id', $customer_id)
-            ->select('properties.*')
-            ->get();
+    public static function phone()
+    {
+        return self::getSiteDataValue('phone');
     }
 
+    public static function email()
+    {
+        return self::getSiteDataValue('email');
+    }
+
+    public static function owner_name()
+    {
+        return self::getSiteDataValue('owner_name');
+    }
+
+    public static function site_title()
+    {
+        return self::getSiteDataValue('site_title');
+    }
+
+    public static function appCurrencyCode()
+    {
+        return self::getSiteDataValue('currency_code');
+    }
+
+    public static function currency_sign()
+    {
+        return self::getSiteDataValue('currency_sign');
+    }
+
+    public static function site_logo()
+    {
+        return self::getSiteDataValue('site_logo');
+    }
+
+    public static function favicon()
+    {
+        return self::getSiteDataValue('favicon');
+    }
+
+    public static function dashboard_favicon()
+    {
+        return self::getSiteDataValue('dashboard_favicon');
+    }
+
+    public static function dashboard_logo()
+    {
+        return self::getSiteDataValue('dashboard_logo');
+    }
+
+    public static function stripe_public_key()
+    {
+        return self::getSiteDataValue('stripe_public_key');
+    }
+
+    public static function stripe_secret_key()
+    {
+        return self::getSiteDataValue('stripe_secret_key');
+    }
+
+    public static function facebook_url()
+    {
+        return self::getSiteDataValue('facebook_url');
+    }
+
+    public static function twitter_url()
+    {
+        return self::getSiteDataValue('twitter_url');
+    }
+
+    public static function linkedin_url()
+    {
+        return self::getSiteDataValue('linkedin_url');
+    }
+
+    public static function instagram_url()
+    {
+        return self::getSiteDataValue('instagram_url');
+    }
+
+    public static function meta_description()
+    {
+        return self::getSiteDataValue('meta_description');
+    }
+
+    public static function meta_keywords()
+    {
+        return self::getSiteDataValue('meta_keywords');
+    }
+
+    public static function contact_address()
+    {
+        return self::getSiteDataValue('contact_address');
+    }
+
+    public static function contact_city()
+    {
+        return self::getSiteDataValue('contact_city');
+    }
+
+    public static function contact_state()
+    {
+        return self::getSiteDataValue('contact_state');
+    }
+
+    public static function contact_zip()
+    {
+        return self::getSiteDataValue('contact_zip');
+    }
+
+    public static function contact_country()
+    {
+        return self::getSiteDataValue('contact_country');
+    }
+
+    public static function additional_data()
+    {
+        return self::getSiteDataValue('additional_data');
+    }
 }

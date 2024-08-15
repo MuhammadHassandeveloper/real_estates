@@ -39,7 +39,7 @@
                         <div class="card-body">
                             <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
                                 <div class="d-flex justify-content-between align-items-center mx-0 row">
-                                    <table class="datatables-basic table" id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info" style="width: 952px;">
+                                    <table class="datatables-basic table" id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info">
                                     <thead class="text-muted table-light">
                                     <tr>
                                         <th scope="col" class="sort cursor-pointer">#</th>

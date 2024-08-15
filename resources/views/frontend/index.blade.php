@@ -40,7 +40,7 @@
                             <div class="col-lg-6 col-md-6 col-sm-6">
                                 <div class="form-group">
                                     <div class="input-with-icon">
-                                        <select name="bedrooms" class="form-control">
+                                        <select name="bedrooms" id="bedrooms" class="form-control select2-hidden-accessible" data-select2-id="bedrooms" tabindex="-1" aria-hidden="true">
                                             <option value="">Bedrooms</option>
                                             @for ($i = 1; $i <= 15; $i++)
                                                 <option
@@ -54,7 +54,7 @@
                             <div class="col-lg-6 col-md-6 col-sm-6">
                                 <div class="form-group">
                                     <div class="input-with-icon">
-                                        <select name="bathrooms" class="form-control">
+                                        <select name="bathrooms" id="bathrooms" class="form-control select2-hidden-accessible" data-select2-id="bathrooms" tabindex="-1" aria-hidden="true">
                                             <option value="">Bathrooms</option>
                                             @for ($i = 1; $i <= 15; $i++)
                                                 <option
@@ -71,7 +71,7 @@
                             <div class="col-lg-12 col-md-12 col-sm-12">
                                 <div class="form-group">
                                     <div class="input-with-icon">
-                                        <select name="city_id" class="form-control">
+                                        <select name="city_id" id="cities" class="form-control select2-hidden-accessible" data-select2-id="cities" tabindex="-1" aria-hidden="true">
                                             <option value="">--City--</option>
                                             @foreach($cities as $city)
                                                 <option value="{{$city->id}}" {{ request('city_id') == $city->name ? 'selected' : '' }}>{{ $city->name }}</option>
@@ -137,8 +137,10 @@
                                             </div>
                                             <span class="tag_t">{{ $property->property_category }}</span>
                                             <span class="tag_p">{{ $property->country->currency_sign }}{{ number_format($property->price) }}
-                                                @if(!is_null($property->rental_duration))
-                                                    <i>/ {{ $property->rental_duration }}</i>
+                                                @if($property->property_category == 'Rent')
+                                                    @if(!is_null($property->rental_duration))
+                                                        <i>/ {{ $property->rental_duration }}</i>
+                                                    @endif
                                                 @endif
                                 </span>
                                         </div>
@@ -186,57 +188,6 @@
     </section>
     @endif
     <!-- ============================ Slide Property End ================================== -->
-
-    <!-- ============================ Agencies Start ================================== -->
-    @if($agencies->count() > 0)
-    <section>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 col-md-12">
-                    <div class="sec-heading2 center">
-                        <div class="sec-left">
-                            <h3>Featured agencies</h3>
-                            <p>Find new & featured property for you.</p>
-                        </div>
-                        <div class="sec-right">
-                            <a href="{{ url('agencies') }}">View All<i class="ti-angle-double-right ml-2"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                    @foreach($agencies as $agency)
-                        <div class="col-lg-3 col-md-4 col-sm-6">
-                            <div class="agents-grid">
-                                <div class="agent-call">
-                                    <a href="https://wa.me/{{ $agency->whatsapp_phone }}">
-                                        <i class="lni-whatsapp"></i>
-                                    </a>
-                                </div>
-                                <div class="agents-grid-wrap">
-                                    <div class="fr-grid-thumb">
-                                        <a href="{{ route('frontend.agency',$agency->id) }}">
-                                            <img src="{{ asset('uploads/'.$agency->agency_logo) }}" class="img-fluid mx-auto" alt=""/>
-                                        </a>
-                                    </div>
-                                    <div class="fr-grid-deatil">
-                                        <h5 class="fr-can-name font-14">
-                                            <a href="{{ route('frontend.agency',$agency->id) }}">{{ $agency->first_name .' '. $agency->last_name }}</a>
-                                        </h5>
-                                        <span class="fr-position"><i class="lni-map-marker"></i>{{ $agency->city->name .' '. $agency->state->name }}</span>
-                                        <span class="agent-type theme-cl">Agency</span>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    @endforeach
-            </div>
-        </div>
-    </section>
-    @endif
-    <!-- ============================ Agencies End ================================== -->
 
     <!-- ============================ Slide Location Start ================================== -->
     <section>
@@ -317,8 +268,10 @@
                                             <span class="tag_t">{{ $property->property_category }}</span>
                                             <span class="tag_p">
                                                 {{ $property->country->currency_sign }}{{ number_format($property->price) }}
-                                                @if(!is_null($property->rental_duration) && $property->rental_duration != null)
-                                                    <i>/ {{ $property->rental_duration}}</i>
+                                                @if($property->property_category == 'Rent')
+                                                    @if(!is_null($property->rental_duration) && $property->rental_duration != null)
+                                                        <i>/ {{ $property->rental_duration}}</i>
+                                                    @endif
                                                 @endif
                                             </span>
                                         </div>

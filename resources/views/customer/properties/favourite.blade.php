@@ -34,23 +34,18 @@
                     <div class="card" id="agentList">
                         <div class="card-body">
                             <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
-                                <div class="d-flex justify-content-between align-items-center mx-0 row">
-                                    <table class="datatables-basic table" id="DataTables_Table_0" role="grid"
-                                           aria-describedby="DataTables_Table_0_info" style="width: 952px;">
+                                <div class="table-responsive d-flex justify-content-between align-items-center mx-0 row">
+                                    <table class="datatables-basic table table-sm" id="DataTables_Table_0" role="grid"
+                                           aria-describedby="DataTables_Table_0_info">
                                         <thead class="text-muted table-light">
                                         <tr>
-                                            <th scope="col" class="sort cursor-pointer" data-sort="propert_id">#</th>
-                                            <th scope="col" class="sort cursor-pointer" data-sort="propert_type">Type
-                                            </th>
-                                            <th scope="col" class="sort cursor-pointer" data-sort="propert_name">Title
-                                            </th>
-                                            <th scope="col" class="sort cursor-pointer" data-sort="address">City</th>
-                                            <th scope="col" class="sort cursor-pointer desc" data-sort="agent_name">
-                                                State
-                                            </th>
-                                            <th scope="col" class="sort cursor-pointer" data-sort="price">Price</th>
-                                            <th scope="col" class="sort cursor-pointer" data-sort="status">Status</th>
-                                            <th scope="col" class="sort cursor-pointer">Action</th>
+                                            <th>#</th>
+                                            <th>Title</th>
+                                            <th>Address</th>
+                                            <th>Post By</th>
+                                            <th>Price</th>
+                                            <th>Category</th>
+                                            <th>Action</th>
                                         </tr>
                                         </thead>
                                         <tbody class="list form-check-all">
@@ -64,20 +59,24 @@
                                             @endphp
                                             <tr data-id="{{ $property->id }}">
                                                 <td class="propert_id">
-                                                    <a href="{{url('agent/property-detail',$property->id)}}"
+                                                    <a href="{{ route('customer.detail_property',$property->id)}}"
                                                        class="fw-medium link-primary">#{{ $i++  }}</a>
                                                 </td>
-                                                <td class="propert_type">
-                                                    {{ $property->propertyType->name }}
-                                                </td>
+
                                                 <td>
                                                     <div class="d-flex align-items-center gap-2 position-relative">
-                                                        <a href="{{url('agent/property-detail',$property->id)}}"
+                                                        <a href="{{ route('customer.detail_property',$property->id)}}"
                                                            class="propert_name text-reset stretched-link">{{ $property->title }}</a>
                                                     </div>
                                                 </td>
-                                                <td class="address">{{ $property->city->name }}</td>
-                                                <td class="agent_name">{{ $property->state->name }}</td>
+                                                <td>
+                                                    <b>City:</b>{{ $property->city->name }} <br>
+                                                    <b>Address:</b>{{ $property->address }}
+                                                </td>
+                                                <td class="agent_name">
+                                                    {{ $property->agent->first_name . ' ' .$property->last_name}} <br>
+                                                    {{ $property->agent->phone}}
+                                                </td>
                                                 <td class="price">
                                                     <span class="fw-medium">{{ App\Helpers\AppHelper::appCurrencySign() }}{{ $property->price }}</span>
                                                 </td>
@@ -87,8 +86,16 @@
                                                 </td>
                                                 <td>
                                                     <ul class="d-flex gap-2 list-unstyled mb-0">
+                                                        @if($property->status != 5)
+                                                            <li>
+                                                                <a title="purchase now " href="{{ route('frontend.property.purchased',$property->id)}}"
+                                                                   class="btn btn-subtle-primary btn-icon btn-sm ">
+                                                                    <i class="ph-currency-dollar-bold"></i>
+                                                                </a>
+                                                            </li>
+                                                        @endif
                                                         <li>
-                                                            <a href="{{url('agent/property-detail',$property->id)}}"
+                                                            <a href="{{ route('customer.detail_property',$property->id)}}"
                                                                class="btn btn-subtle-primary btn-icon btn-sm ">
                                                                 <i class="ph-eye"></i>
                                                             </a>

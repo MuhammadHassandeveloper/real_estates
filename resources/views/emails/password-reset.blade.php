@@ -36,7 +36,7 @@
             color: #333333;
         }
         .content h1 {
-            color: #00ba74;
+            color: #EC3323;
             font-size: 24px;
             margin-bottom: 20px;
         }
@@ -49,7 +49,7 @@
             display: inline-block;
             padding: 10px 20px;
             margin: 20px 0;
-            background-color: #00ba74;
+            background-color: #EC3323;
             color: #ffffff;
             text-decoration: none;
             border-radius: 5px;
@@ -101,7 +101,7 @@
                 <tr>
                     <td class="content">
                         <h1>Hello, {{ $name }}</h1>
-                        <p>You recently requested to reset your password for your {{ config('app.name') }} account. Click the button below to reset it:</p>
+                        <p>You recently requested to reset your password for your {{ App\Helpers\AppHelper::site_name() }} account. Click the button below to reset it:</p>
                         <p style="text-align: center;">
                             <a style="color: white;" href="{{ $link }}" class="button">Reset Password</a>
                         </p>
@@ -110,8 +110,8 @@
                 </tr>
                 <tr>
                     <td class="footer">
-                        <p>Thank you for using {{ config('app.name') }}. If you have any questions, please contact our support team.</p>
-                        <p>&copy; {{ date('Y') }} {{ config('app.name') }}. All rights reserved.</p>
+                        <p>Thank you for using {{ App\Helpers\AppHelper::site_name() }}. If you have any questions, please contact our support team.</p>
+                        <p>&copy; {{ date('Y') }} {{ App\Helpers\AppHelper::site_name() }}. All rights reserved.</p>
                     </td>
                 </tr>
             </table>

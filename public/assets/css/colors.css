@@ -1,5 +1,5 @@
 /*===============================================
-	All Colors Option 
+	All Colors Option
 ================================================ */
 .red-skin .btn-theme-2, .red-skin .top-header, .red-skin .pricing-bottom .btn-pricing,
 .green-skin .btn-theme-2, .green-skin .top-header, .green-skin .pricing-bottom .btn-pricing,
@@ -10,7 +10,7 @@
 .purple-skin .btn-theme-2, .purple-skin .top-header, .purple-skin .pricing-bottom .btn-pricing,
 .goodred-skin .btn-theme-2, .goodred-skin .top-header, .goodred-skin .pricing-bottom .btn-pricing,
 .goodgreen-skin .btn-theme-2, .goodgreen-skin .top-header, .goodgreen-skin .pricing-bottom .btn-pricing,
-.blue2-skin .btn-theme-2, .blue2-skin .top-header, .blue2-skin .pricing-bottom .btn-pricing{ 
+.blue2-skin .btn-theme-2, .blue2-skin .top-header, .blue2-skin .pricing-bottom .btn-pricing{
 	background-color:#252c41;
 	background:#252c41;
 	border-color:#252c41;
@@ -48,7 +48,7 @@
 	background-color:#f02c2d;
 	background:#f02c2d;
 }
- 
+
 .red-skin a.link:hover, .red-skin a.link:focus, .red-skin a:hover, a:focus,
 .red-skin .theme-cl,
 .red-skin .btn.btn-theme-light,
@@ -122,10 +122,10 @@
 .green-skin .single-widgets.widget_search form button,
 .green-skin .single-widgets.widget_tags ul li a:hover, .green-skin .single-widgets.widget_tags ul li a:focus,
 .green-skin .pagination>.active>a, .green-skin .pagination>.active>a:focus, .green-skin .pagination>.active>a:hover, .green-skin .pagination>.active>span, .green-skin .pagination>.active>span:focus, .green-skin .pagination>.active>span:hover, .green-skin .pagination>li>a:focus, .green-skin .pagination>li>a:hover{
-	background-color:#00ba74;
-	background:#00ba74;
+	background-color:#EC3323;
+	background:#EC3323;
 }
- 
+
 .green-skin a.link:hover, .green-skin a.link:focus, .green-skin a:hover, a:focus,
 .green-skin .theme-cl,
 .green-skin .btn.btn-theme-light,
@@ -147,7 +147,7 @@
 .green-skin .blog-page .blog-details .comment-area .all-comments article .comment-details .comment-meta .comment-left-meta .comment-date,
 .green-skin .cn-info-icon i, .green-skin .client-info h5,
 .green-skin .listing-card-info-price{
-	color:#00ba74;
+	color:#EC3323;
 }
 
 .green-skin .pagination>.active>a, .green-skin .pagination>.active>a:focus, .green-skin .pagination>.active>a:hover, .green-skin .pagination>.active>span, .green-skin .pagination>.active>span:focus, .green-skin .pagination>.active>span:hover, .green-skin .pagination>li>a:focus, .green-skin .pagination>li>a:hover,
@@ -167,7 +167,7 @@
 .green-skin .nav-tabs .nav-item.show .nav-link, .green-skin .nav-tabs .nav-link.active,
 .green-skin .btn.pop-login,
 .green-skin .single-widgets.widget_tags ul li a:hover, .green-skin .single-widgets.widget_tags ul li a:focus{
-	border-color:#00ba74;
+	border-color:#EC3323;
 }
 
 .green-skin li.login-attri.theme-log a {
@@ -205,7 +205,7 @@
 	background-color:#0058f3;
 	background:#0058f3;
 }
- 
+
 .blue-skin a.link:hover, .blue-skin a.link:focus, .blue-skin a:hover, a:focus,
 .blue-skin .theme-cl,
 .blue-skin .btn.btn-theme-light,
@@ -285,7 +285,7 @@
 	background-color:#ffa50d;
 	background:#ffa50d;
 }
- 
+
 .yellow-skin a.link:hover, .yellow-skin a.link:focus, .yellow-skin a:hover, a:focus,
 .yellow-skin .theme-cl,
 .yellow-skin .btn.btn-theme-light,
@@ -365,7 +365,7 @@
 	background-color:#0F52BA;
 	background:#0F52BA;
 }
- 
+
 .darkblue-skin a.link:hover, .darkblue-skin a.link:focus, .darkblue-skin a:hover, a:focus,
 .darkblue-skin .theme-cl,
 .darkblue-skin .btn.btn-theme-light,
@@ -445,7 +445,7 @@
 	background-color:#00A877;
 	background:#00A877;
 }
- 
+
 .oceangreen-skin a.link:hover, .oceangreen-skin a.link:focus, .oceangreen-skin a:hover, a:focus,
 .oceangreen-skin .theme-cl,
 .oceangreen-skin .btn.btn-theme-light,
@@ -527,7 +527,7 @@
 	background-color:#7065ef;
 	background:#7065ef;
 }
- 
+
 .purple-skin a.link:hover, .purple-skin a.link:focus, .purple-skin a:hover, a:focus,
 .purple-skin .theme-cl,
 .purple-skin .btn.btn-theme-light,
@@ -609,7 +609,7 @@
 	background-color:#f40c43;
 	background:#f40c43;
 }
- 
+
 .goodred-skin a.link:hover, .goodred-skin a.link:focus, .goodred-skin a:hover, a:focus,
 .goodred-skin .theme-cl,
 .goodred-skin .btn.btn-theme-light,
@@ -691,7 +691,7 @@
 	background-color:#19b521;
 	background:#19b521;
 }
- 
+
 .goodgreen-skin a.link:hover, .goodgreen-skin a.link:focus, .goodgreen-skin a:hover, a:focus,
 .goodgreen-skin .theme-cl,
 .goodgreen-skin .btn.btn-theme-light,
@@ -773,7 +773,7 @@
 	background-color:#0176ff;
 	background:#0176ff;
 }
- 
+
 .blue2-skin a.link:hover, .blue2-skin a.link:focus, .blue2-skin a:hover, a:focus,
 .blue2-skin .theme-cl,
 .blue2-skin .btn.btn-theme-light,

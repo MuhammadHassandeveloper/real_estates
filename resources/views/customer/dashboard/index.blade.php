@@ -1,6 +1,7 @@
 @extends('customer.main')
 @section('title',$title)
 @section('style')
+    @section('dashboard','active')
 @stop
 @section('content')
     @php
@@ -11,101 +12,123 @@
     <!-- Start Page-content -->
     <div class="page-content">
             <div class="container-fluid">
-            <div class="row">
-                <div class="col-xxl-3 col-md-6">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="d-flex">
-                                <div class="flex-grow-1">
-                                    <div class="d-flex flex-column h-100">
-                                        <p class="fs-md text-muted mb-4">Properties for sale</p>
-                                        <h3 class="mb-0 mt-auto"><span class="counter-value" data-target="3652">0</span>
-                                            <small class="text-success fs-xs mb-0 ms-1"><i
-                                                        class="bi bi-arrow-up me-1"></i> 06.19%</small></h3>
-                                    </div>
-                                </div>
-                                <div class="flex-shrink-0">
-                                    <div id="property_sale" data-colors='["--tb-primary"]' dir="ltr"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div><!--end col-->
-                <div class="col-xxl-3 col-md-6">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="d-flex">
-                                <div class="flex-grow-1">
-                                    <div class="d-flex flex-column h-100">
-                                        <p class="fs-md text-muted mb-4">Properties for rent</p>
-                                        <h3 class="mb-0 mt-auto"><span class="counter-value" data-target="1524">0</span>
-                                            <small class="text-success fs-xs mb-0 ms-1"><i
-                                                        class="bi bi-arrow-up me-1"></i> 02.33%</small></h3>
-                                    </div>
-                                </div>
-                                <div class="flex-shrink-0">
-                                    <div id="property_rent" data-colors='["--tb-warning"]' dir="ltr"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div><!--end col-->
-                <div class="col-xxl-3 col-md-6">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="d-flex">
-                                <div class="flex-grow-1">
-                                    <div class="d-flex flex-column h-100">
-                                        <p class="fs-md text-muted mb-4">Visitors</p>
-                                        <h3 class="mb-0 mt-auto"><span class="counter-value"
-                                                                       data-target="149.36">0</span>k <small
-                                                    class="text-success fs-xs mb-0 ms-1"><i
-                                                        class="bi bi-arrow-up me-1"></i> 12.33%</small></h3>
-                                    </div>
-                                </div>
-                                <div class="flex-shrink-0">
-                                    <div id="visitors_chart" data-colors='["--tb-secondary"]' dir="ltr"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div><!--end col-->
-                <div class="col-xxl-3 col-md-6">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="d-flex">
-                                <div class="flex-grow-1">
-                                    <div class="d-flex flex-column h-100">
-                                        <p class="fs-md text-muted mb-4">Residency Property</p>
-                                        <h3 class="mb-0 mt-auto"><span class="counter-value" data-target="2376">0</span>
-                                            <small class="text-danger fs-xs mb-0 ms-1"><i
-                                                        class="bi bi-arrow-down me-1"></i> 09.57%</small></h3>
-                                    </div>
-                                </div>
-                                <div class="flex-shrink-0">
-                                    <div id="residency_property" data-colors='["--tb-success"]' dir="ltr"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div><!--end col-->
-            </div><!--end row-->
 
-            <div class="row">
+                <div class="row">
+                    <div class="col-xxl-4 col-lg-4 col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex">
+                                    <div class="flex-grow-1">
+                                        <div class="d-flex flex-column h-100">
+                                            <p class="fs-md text-muted mb-4">Favorite Properties</p>
+                                            <h3 class="mb-0 mt-auto">
+                                                <span>{{ $favoritePropertiesCount }}</span>
+                                            </h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!--end col-->
+
+                    <div class="col-xxl-4 col-lg-4 col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex">
+                                    <div class="flex-grow-1">
+                                        <div class="d-flex flex-column h-100">
+                                            <p class="fs-md text-muted mb-4">Properties for Rent</p>
+                                            <h3 class="mb-0 mt-auto">
+                                                <span>{{ $rentedPropertiesCount }}</span>
+                                            </h3>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div><!--end col-->
+
+                    <div class="col-xxl-4 col-lg-4 col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex">
+                                    <div class="flex-grow-1">
+                                        <div class="d-flex flex-column h-100">
+                                            <p class="fs-md text-muted mb-4">Properties Purchased</p>
+                                            <h3 class="mb-0 mt-auto">
+                                                <span>{{ $purchasedPropertiesCount }}</span>
+                                            </h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!--end col-->
+                </div><!--end row-->
+
+                @if($messages->isNotEmpty())
+                    <div class="row">
+                    <div class="col-xxl-12 col-lg-12">
+                        <div class="card">
+                            <div class="card-header d-flex align-items-center">
+                                <h4 class="card-title mb-0 flex-grow-1">Latest Agents  Feedback</h4>
+                            </div>
+                            <div class="card-body px-0">
+                                <div data-simplebar="init" style="max-height: 400px;" class="simplebar-scrollable-y">
+                                    <div class="simplebar-wrapper" style="margin: 0px;">
+                                        <div class="simplebar-height-auto-observer-wrapper">
+                                            <div class="simplebar-height-auto-observer"></div>
+                                        </div>
+                                        <div class="simplebar-mask">
+                                            <div class="simplebar-offset" style="right: 0px; bottom: 0px;">
+                                                <div class="simplebar-content-wrapper" tabindex="0" role="region" aria-label="scrollable content" style="height: auto; overflow: hidden scroll;">
+                                                    <div class="simplebar-content" style="padding: 0px;">
+                                                        @foreach ($messages as $message)
+                                                            <div class="card border-bottom rounded-0 border-0 shadow-none mb-0">
+                                                                <div class="card-body pt-0">
+                                                                    <div class="d-flex gap-2">
+                                                                        <div class="flex-grow-1">
+                                                                            <span class="text-muted clearfix float-end">{{ $message->created_at->format('h:i A') }}</span>
+                                                                            <h6 class="fs-md mb-1">
+                                                                               <b>Message From</b> <a href="javascript:void(0);" class="text-reset">{{ $message->agent->first_name }} {{ $message->agent->last_name }}</a>
+                                                                            </h6>
+                                                                            <h6 class="fs-md mb-1">
+                                                                                <b>For Property</b> <a href="javascript:void(0);" class="text-reset">{{ $message->property->title }}</a>
+                                                                            </h6>
+                                                                            <p class="text-muted mb-0">"{{ $message->message }}"</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        @endforeach
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!--end card-->
+                    </div>
+
+                </div>
+                @endif
+
+                <div class="row">
                 <div class="col-xxl-9">
                     <div class="card" id="propertyList">
                         <div class="card-header align-items-center d-flex">
-                            <h4 class="card-title mb-0 flex-grow-1">Recently Added Property</h4>
+                            <h4 class="card-title mb-0 flex-grow-1">Recently Added Favourite Property</h4>
                             <div class="flex-shrink-0">
-                                <a href="{{ url('admin.agent.properties') }}" class="text-muted">View All <i
+                                <a href="{{ route('customer.fav-properties') }}" class="text-muted">View All <i
                                             class="bi bi-chevron-right align-baseline"></i></a>
                             </div>
                         </div>
                         <div class="card-body">
                             <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
-                                <div class="d-flex justify-content-between align-items-center mx-0 row">
-                                    <table class="datatables-basic table" role="grid"
-                                           aria-describedby="DataTables_Table_0_info" style="width: 952px;">
+                                <div class="d-flex table-responsive justify-content-between align-items-center mx-0 row">
+                                    <table class="table-sm datatables-basic table">
                                         <thead class="text-muted table-light">
                                         <tr>
                                             <th scope="col" class="sort cursor-pointer" data-sort="propert_id">#</th>
@@ -124,7 +147,7 @@
                                         </thead>
                                         <tbody class="list form-check-all">
                                         @php $i = 1; @endphp
-                                        @foreach($properties as $property)
+                                        @foreach($favoriteProperties as $property)
                                             @php
                                                 $res =  AppHelper::property_category($property->property_category);
                                                 $bgColor = $res[0];

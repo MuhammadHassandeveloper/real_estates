@@ -31,11 +31,6 @@ class SentinelAdmin
                 return $next($request);
             }
             return redirect('/customer/dashboard');
-        } elseif ($user->inRole('agency')) {
-            if ($request->is('agency/*')) {
-                return $next($request);
-            }
-            return redirect('/agency/dashboard');
         }
         return $next($request);
     }

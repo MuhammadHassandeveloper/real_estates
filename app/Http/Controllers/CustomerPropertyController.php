@@ -17,9 +17,38 @@ class CustomerPropertyController extends Controller
     {
         $data = array();
         $data['title'] = 'Customer Properties';
-        $data['properties'] = AppHelper::CustometerAllFavoriteproperties(Sentinel::getUser()->id);
+        $data['properties'] = Property::join('favourite_properties', 'properties.id', '=', 'favourite_properties.property_id')
+            ->where('favourite_properties.user_id', Sentinel::getUser()->id)
+            ->select('properties.*','favourite_properties.user_id')
+            ->get();
         return view('customer.properties.favourite', $data);
     }
+
+    public function purchasedProperties()
+    {
+        $data = array();
+        $data['title'] = 'Purchased Properties';
+        $data['properties'] = Property::join('property_purchases', 'properties.id', '=', 'property_purchases.property_id')
+            ->where('property_purchases.customer_id', Sentinel::getUser()->id)
+            ->select('properties.*','property_purchases.purchased_price','property_purchases.purchased_date',
+                'property_purchases.purchased_time','property_purchases.purchased_status','property_purchases.purchased_payment_status')
+            ->get();
+        return view('customer.properties.purchased', $data);
+    }
+
+    public function rentalProperties()
+    {
+        $data = array();
+        $data['title'] = 'Rental Properties';
+        $data['properties'] = Property::join('property_rentals', 'properties.id', '=', 'property_rentals.property_id')
+            ->where('property_rentals.customer_id', Sentinel::getUser()->id)
+            ->select('properties.*','property_rentals.rental_price','property_rentals.start_date',
+                'property_rentals.end_date','property_rentals.rental_status','property_rentals.rental_payment_status','property_rentals.rental_days','property_rentals.rental_price')
+            ->get();
+        return view('customer.properties.rent', $data);
+    }
+
+
 
 
 
@@ -33,6 +62,8 @@ class CustomerPropertyController extends Controller
         $data['title'] = 'Property Details';
         return view('customer.properties.detail', $data);
     }
+
+
     public function propertyDelete(Request $request) {
         $pid = $request->property_id;
        $delete = FavoriteProperty::where('property_id', $pid)->where('user_id',Sentinel::getUser()->id)->delete();

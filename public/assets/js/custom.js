@@ -1,11 +1,11 @@
 $(function() {
     "use strict";
-	
+
 	$(window).on('load', function () {
 		$('#preloader').delay(350).fadeOut('slow');
 		$('body').delay(350).css({ 'overflow': 'visible' });
 	})
-	
+
 	/*---- Bottom To Top Scroll Script ---*/
 	$(window).on('scroll', function() {
 		var height = $(window).scrollTop();
@@ -15,7 +15,7 @@ $(function() {
 			$('#back2Top').fadeOut();
 		}
 	});
-	
+
 	$("#back2Top").on('click', function(event) {
 		event.preventDefault();
 		$("html, body").animate({ scrollTop: 0 }, "slow");
@@ -167,8 +167,8 @@ $(function() {
 	(jQuery, window, document), $(document).ready(function() {
 		$("#navigation").navigation()
 	});
-	
-	$(window).scroll(function() {    
+
+	$(window).scroll(function() {
 		var scroll = $(window).scrollTop();
 
 		if (scroll >= 50) {
@@ -177,8 +177,8 @@ $(function() {
 			$(".header").removeClass("header-fixed");
 		}
 	});
-	
-	
+
+
 	// Compare Slide
 	$('.csm-trigger').on('click', function() {
 		$('.compare-slide-menu').toggleClass('active');
@@ -186,7 +186,7 @@ $(function() {
 	$('.compare-button').on('click', function() {
 		$('.compare-slide-menu').addClass('active');
 	});
-	
+
 	// smart-textimonials
 	$('#smart-textimonials').slick({
 	  slidesToShow:1,
@@ -209,7 +209,7 @@ $(function() {
 		}
 	  ]
 	});
-	
+
 	// Property Slide
 	$('.property-slide').slick({
 	  slidesToShow:3,
@@ -233,7 +233,7 @@ $(function() {
 		}
 	  ]
 	});
-	
+
 	// location Slide
 	$('.location-slide').slick({
 	  slidesToShow:4,
@@ -257,7 +257,7 @@ $(function() {
 		}
 	  ]
 	});
-	
+
 	// Single Sidebar Property Slide
 	$('.sidebar-property-slide').slick({
 	  slidesToShow:1,
@@ -280,7 +280,7 @@ $(function() {
 		}
 	  ]
 	});
-	
+
 	// Property Slide
 	$('.testi-slide').slick({
 	  slidesToShow:2,
@@ -310,7 +310,7 @@ $(function() {
 		}
 	  ]
 	});
-	
+
 	// Property Slide
 	$('.team-slide').slick({
 	  slidesToShow:4,
@@ -342,7 +342,7 @@ $(function() {
 		}
 	  ]
 	});
-	
+
 	// Range Slider
 	$(".range-slider-ui").each(function () {
         var minRangeValue = $(this).attr('data-min');
@@ -380,73 +380,79 @@ $(function() {
         $(this).children(".current-min").val(currentMin);
         $(this).children(".current-max").val(currentMax);
     });
-	
+
 	// Select Bedrooms
 	$('#bedrooms').select2({
 		placeholder: "Bedrooms",
 		allowClear: true
 	});
-	
+
 	// Select Bathrooms
 	$('#bathrooms').select2({
 		placeholder: "Bathrooms",
 		allowClear: true
 	});
-	
+
 	// Select Property Types
 	$('#ptypes').select2({
 		placeholder: "Property Types",
 		allowClear: true
 	});
-	
+
+    // Select Property Types
+	$('#cities').select2({
+		placeholder: "Cities",
+		allowClear: true
+	});
+
 	// Select Country
 	$('#country').select2({
 		placeholder: "Country",
 		allowClear: true
 	});
-	
+
 	// Select Town
 	$('#town').select2({
 		placeholder: "City/Town",
 		allowClear: true
 	});
-	
+
 	// Select Town
 	$('#location').select2({
 		placeholder: "Location",
 		allowClear: true
 	});
-	
+
 	// Select Cities
 	$('#cities').select2({
 		placeholder: "All Cities",
 		allowClear: true
 	});
-	
+
 	// Select Status
 	$('#status').select2({
 		placeholder: "Select Status",
 		allowClear: true
 	});
-	
+
 	// Select Rooms
 	$('#rooms').select2({
 		placeholder: "Choose Rooms",
 		allowClear: true
 	});
-	
+
 	// Select Garage
 	$('#garage').select2({
 		placeholder: "Choose Rooms",
 		allowClear: true
 	});
-	
+
 	// Select Rooms
 	$('#bage').select2({
 		placeholder: "Select An Option",
 		allowClear: true
 	});
-	
+
 	// Home Slider
 	$('.home-slider').slick({
 	  centerMode:false,
@@ -468,16 +474,16 @@ $(function() {
 		}
 	  ]
 	});
-	
+
 	$('.click').slick({
 	  slidesToShow:1,
 	  slidesToScroll: 1,
 	  autoplay:false,
 	  autoplaySpeed: 2000,
 	});
-	
+
 	// Advance Single Slider
-	$(function() { 
+	$(function() {
 	// Card's slider
 	  var $carousel = $('.slider-for');
 
@@ -544,10 +550,10 @@ $(function() {
 		centerMode: false,
 		focusOnSelect: true
 	  });
-	  
-	  
+
+
 	});
-	
+
 	// Featured Slick Slider
 	$('.featured-slick-slide').slick({
 		centerMode: true,
@@ -574,7 +580,7 @@ $(function() {
 		}
 		]
 	});
-	
+
 	// MagnificPopup
 	$('body').magnificPopup({
 		type: 'image',
@@ -590,7 +596,7 @@ $(function() {
 			enabled: true
 		}
 	});
-	
+
 	// fullwidth home slider
 	function inlineCSS() {
 		$(".home-slider .item").each(function() {
@@ -605,7 +611,7 @@ $(function() {
 		});
 	}
 	inlineCSS();
-	
+
 	// Search Radio
 	function searchTypeButtons() {
 		$('.property-search-type label.active input[type="radio"]').prop('checked', true);
@@ -629,5 +635,5 @@ $(function() {
 			searchTypeButtons();
 		});
 	}
-	
+
 });

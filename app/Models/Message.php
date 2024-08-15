@@ -17,6 +17,7 @@ class Message extends Model
         'email',
         'phone',
         'message',
+        'sender_type'
     ];
 
     public function customer()

@@ -296,7 +296,35 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-lg-12">
+                                    <div id="nearbyPlacesSection">
+                                        <h5>Add Nearby Places</h5>
+                                        <div class="row" id="nearbyPlaceRows">
+                                            <!-- Template for a nearby place row -->
+                                            @foreach ($nearplaces as $place)
+                                                <div class="col-md-12 nearby-place-row">
+                                                    <div class="form-group mb-2">
+                                                        <label for="nearby_place_name[]">Name</label>
+                                                        <input type="text" name="nearby_place_name[]" value="{{ $place->name }}" required class="form-control" placeholder="Name">
+                                                    </div>
+                                                    <div class="form-group mb-2">
+                                                        <label for="nearby_place_type[]">Type</label>
+                                                        <input type="text" name="nearby_place_type[]" value="{{ $place->type }}" required class="form-control" placeholder="Type (e.g., school, hospital)">
+                                                    </div>
+
+                                                    <div class="form-group mb-2">
+                                                        <label for="nearby_place_distance[]">Distance (km)</label>
+                                                        <input type="number" step="0.01" name="nearby_place_distance[]" value="{{ $place->distance }}" required class="form-control" placeholder="Distance">
+                                                    </div>
+                                                    <input type="hidden" name="nearby_place_id[]" value="{{ $place->id }}">
+                                                    <button type="button" class="remove-row btn btn-danger btn-sm mt-2 mb-2 text-right text-end float-end"><i class="bi bi-x-circle"></i></button>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                        <button type="button" id="addNearbyPlaceRow"  class="btn btn-success btn-sm add-city-btn"><i class="bi bi-plus-circle"></i></button>
+                                    </div>
+
+
+                                    <div class="col-lg-12">
                                             <div class="hstack gap-2 justify-content-end">
                                                 <button type="submit" class="btn btn-primary"><i class="bi bi-clipboard2-check align-baseline me-1"></i> Update</button>
                                             </div>
@@ -431,5 +459,42 @@
             });
         });
     </script>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const nearbyPlaceRows = document.getElementById('nearbyPlaceRows');
+                const addRowButton = document.getElementById('addNearbyPlaceRow');
+
+                addRowButton.addEventListener('click', function() {
+                    const rowCount = nearbyPlaceRows.children.length;
+                    const newRow = document.createElement('div');
+                    newRow.classList.add('col-md-12', 'nearby-place-row');
+                    newRow.innerHTML = `
+            <div class="form-group mb-2">
+                <label for="nearby_place_name[]">Name</label>
+                <input type="text" name="nearby_place_name[]" required class="form-control" placeholder="Name">
+            </div>
+            <div class="form-group mb-2">
+                <label for="nearby_place_type[]">Type</label>
+                <input type="text" name="nearby_place_type[]" required class="form-control" placeholder="Type (e.g., school, hospital)">
+            </div>
+
+            <div class="form-group mb-2">
+                <label for="nearby_place_distance[]">Distance (km)</label>
+                <input type="number" step="0.01" name="nearby_place_distance[]" required class="form-control" placeholder="Distance">
+            </div>
+            <button type="button" class="remove-row btn btn-danger btn-sm mt-2 mb-2 text-right text-end float-end"><i class="bi bi-x-circle"></i></button>
+
+        `;
+                    nearbyPlaceRows.appendChild(newRow);
+                });
+
+                nearbyPlaceRows.addEventListener('click', function(e) {
+                    if (e.target.classList.contains('remove-row')) {
+                        e.target.closest('.nearby-place-row').remove();
+                    }
+                });
+            });
+        </script>
 
 @endsection

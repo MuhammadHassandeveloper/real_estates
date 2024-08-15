@@ -1,4 +1,4 @@
-@extends('agent.main')
+@extends('customer.main')
 @section('title',$title)
 @section('style')
 @stop

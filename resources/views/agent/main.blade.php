@@ -8,7 +8,7 @@
     <title>{{ App\Helpers\AppHelper::site_name() }} - @yield('title')</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content=">{{ App\Helpers\AppHelper::site_name() }}" name="{{ App\Helpers\AppHelper::site_name() }}">
-    <link rel="shortcut icon" href="{{ asset('admin/assets/images/favicon.ico') }}">
+    <link rel="shortcut icon" href="{{ App\Helpers\AppHelper::dashboard_favicon() }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
     <link id="fontsLink" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -43,6 +43,13 @@
             margin-bottom: 10px !important;
         }
     }
+    @media screen and (max-width: 767px) {
+        div.dataTables_wrapper div.dataTables_length, div.dataTables_wrapper div.dataTables_filter, div.dataTables_wrapper div.dataTables_info, div.dataTables_wrapper div.dataTables_paginate {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+    }
 
     div.dt-buttons {
         position: relative;
@@ -52,8 +59,9 @@
     }
     #DataTables_Table_0_filter {
         display: inline !important;
-        float: inline-end !important;
+        float: right !important;
         margin-bottom: 10px !important;
+        width: 100% !important;
     }
     div.dataTables_wrapper div.dataTables_info {
         display: block !important;

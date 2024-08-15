@@ -21,8 +21,10 @@ class PropertyRental extends Model
         'end_date',
         'payment_method',
         'payment_stripe_id',
-        'status',
-        'payment_status',
+        'rental_status',
+        'note',
+        'rental_days',
+        'rental_payment_status',
     ];
 
     public function customer()

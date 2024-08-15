@@ -45,22 +45,18 @@
                         <div class="card-body">
                             <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
                                 <div class="d-flex justify-content-between align-items-center mx-0 row">
-                                    <table class="datatables-basic table" id="DataTables_Table_0" role="grid"
-                                           aria-describedby="DataTables_Table_0_info" style="width: 952px;">
+                                    <table class="datatables-basic table table-sm" id="DataTables_Table_0" role="grid"
+                                           aria-describedby="DataTables_Table_0_info">
                                         <thead class="text-muted table-light">
                                         <tr>
-                                            <th scope="col" class="sort cursor-pointer" data-sort="propert_id">#</th>
-                                            <th scope="col" class="sort cursor-pointer" data-sort="propert_type">Type
-                                            </th>
-                                            <th scope="col" class="sort cursor-pointer" data-sort="propert_name">Title
-                                            </th>
-                                            <th scope="col" class="sort cursor-pointer" data-sort="address">City</th>
-                                            <th scope="col" class="sort cursor-pointer desc" data-sort="agent_name">
-                                                State
-                                            </th>
-                                            <th scope="col" class="sort cursor-pointer" data-sort="price">Price</th>
-                                            <th scope="col" class="sort cursor-pointer" data-sort="status">Status</th>
-                                            <th scope="col" class="sort cursor-pointer">Action</th>
+                                            <th>#</th>
+                                            <th>Type</th>
+                                            <th>Title</th>
+                                            <th>City</th>
+                                            <th>State</th>
+                                            <th>Price</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
                                         </tr>
                                         </thead>
                                         <tbody class="list form-check-all">

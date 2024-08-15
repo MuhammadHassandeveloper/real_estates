@@ -93,8 +93,6 @@ class AuthController extends Controller
             $role = Sentinel::findRoleByName('customer');
          }elseif($request->has('role_type') && $request->input('role_type') == 'agent' ) {
           $role = Sentinel::findRoleByName('agent');
-        }elseif($request->has('role_type') && $request->input('role_type') == 'agency' ) {
-            $role = Sentinel::findRoleByName('agency');
         }
         if ($role) {
             $role->users()->attach($user);
@@ -152,17 +150,6 @@ class AuthController extends Controller
                     'Customer' // Role
                 );
                 return redirect('/customer/dashboard')->with('success', 'Successfully logged in');
-            } elseif ($user->inRole('agency')) {
-                AppHelper::storeActivity(
-                    'Agency Login',
-                    'Agency ' . Sentinel::getUser()->first_name . ' ' . Sentinel::getUser()->last_name . ' logged in successfully.', // Content
-                    'success',
-                    Sentinel::getUser()->id,
-                    1, // Type
-                    Sentinel::getUser()->id,
-                    'Agency' // Role
-                );
-                return redirect('/agency/dashboard')->with('success', 'Successfully logged in');
             }
         } else {
             return redirect()->back()->with('error', 'Invalid email or password');

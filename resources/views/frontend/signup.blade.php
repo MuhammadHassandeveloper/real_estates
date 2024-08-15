@@ -88,10 +88,6 @@
                                                     <option value="agent"
                                                             @if(old('role_type') == 'agent') selected @endif>As an Agent
                                                     </option>
-                                                    <option value="agency"
-                                                            @if(old('role_type') == 'agency') selected @endif>As an
-                                                        Agency
-                                                    </option>
                                                 </select>
                                                 <i class="ti-briefcase"></i>
                                             </div>

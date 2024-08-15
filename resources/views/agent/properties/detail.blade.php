@@ -5,9 +5,11 @@
 @section('style')
 @stop
 @section('content')
+    @php
+        use Carbon\Carbon;
+    @endphp
     <div class="page-content">
         <div class="container-fluid">
-
             <!-- start page title -->
             <div class="row">
                 <div class="col-12">
@@ -25,6 +27,185 @@
                 </div>
             </div>
             <!-- end page title -->
+            @if($property->property_category == 'Sale')
+                @php
+                    $ppdetail = App\Models\PropertyPurchase::where('property_id', $property->id)->first();
+                @endphp
+
+                @if($ppdetail && $ppdetail->customer_id)
+                    @php
+                        $res =  App\Helpers\AppHelper::property_purchased_status($ppdetail->purchased_status);
+                              $bgColor = $res[0];
+                              $color = $res[1];
+                              $text = $res[2];
+
+
+                              $ress =  App\Helpers\AppHelper::property_payment_status($ppdetail->purchased_payment_status);
+                              $pay_bgColor = $ress[0];
+                              $pay_color = $ress[1];
+                              $pay_text = $ress[2];
+
+                              $dateString = $ppdetail['purchased_date'] . ' ' . $ppdetail['purchased_time'];
+                              $dateTime = new DateTime($dateString);
+                              $formattedDate = $dateTime->format("d M Y,h:i A");
+                              $customer = App\Models\User::find($ppdetail->customer_id);
+                              $agent = App\Models\User::find($ppdetail->agent_id);
+                    @endphp
+                    <div class="row">
+                        <h6 class="card-title mb-2 mt-2">More About Property Purchase </h6>
+                        <div class="col-xxl-6 col-md-6 col-12">
+                            <div class="card border-bottom border-2 border-secondary">
+                                <div class="card-body d-flex gap-3">
+                                    <div class="flex-grow-1">
+                                        <h6 class="card-title mb-3">Purchased By:</h6>
+                                        <p class="fw-medium fs-md mb-1">{{ $customer->first_name }} {{ $customer->last_name }}</p>
+                                        <p class="text-muted mb-1">{{ $customer->email }}</p>
+                                        <p class="text-muted mb-0">+{{ $customer->phone }}</p>
+                                        <p class="text-muted mb-0">{{ $customer->state->name }} {{ $customer->city->name }}</p>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div><!--end col-->
+                        <div class="col-xxl-6 col-md-6  col-12">
+                            <div class="card border-bottom border-2 border-primary">
+                                <div class="card-body d-flex gap-3">
+                                    <div class="flex-grow-1">
+                                        <h6 class="card-title mb-3">Purchased Detail:</h6>
+                                        <p class="fw-medium fs-md mb-0">
+                                            <b>Status:</b>
+                                            <span class="badge {{ $bgColor }} {{ $color }} status">{{ $text  }}</span>
+                                        </p>
+                                        <p class="fw-medium fs-md mb-0">
+                                            <b>Payment Status:</b>
+                                            <span
+                                                class="badge {{ $pay_bgColor }} {{ $pay_color }} status">{{ $pay_text  }}</span>
+                                        </p>
+
+                                        <p class="fw-medium fs-md mb-0">
+                                            <b>Purchased
+                                                Amount: </b> {{ App\Helpers\AppHelper::appCurrencySign() }}{{ $ppdetail->purchased_price }}
+                                        </p>
+                                        <p class="fw-medium fs-md mb-0">
+                                            <b>Purchased At: </b> {{ $formattedDate }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!--end col-->
+                    </div>
+                @endif
+            @endif
+            @if($property->property_category == 'Rent')
+                @php
+                    $rdetail = App\Models\PropertyRental::where('property_id', $property->id)->first();
+                @endphp
+                @if($rdetail && $rdetail->customer_id)
+                    @php
+                        $startDate = Carbon::parse($rdetail->start_date);
+                        $endDate = Carbon::parse($rdetail->end_date);
+                        $formattedStartDate = $startDate->format('d M Y');
+                        $formattedEndDate = $endDate->format('d M Y');
+                        $daysDifference = $startDate->diffInDays($endDate);
+                        $customer = App\Models\User::find($rdetail->customer_id);
+                        $agent = App\Models\User::find($rdetail->agent_id);
+                    @endphp
+                    <div class="row">
+                        <h6 class="card-title mb-2 mt-2">More About Property Rent </h6>
+                        <div class="col-xxl-6 col-lg-6 col-md-6 col-12">
+                            <div class="card border-bottom border-2 border-secondary">
+                                <div class="card-body d-flex gap-3">
+                                    <div class="flex-grow-1">
+                                        <h6 class="card-title mb-3">Rental By:</h6>
+                                        <p class="fw-medium fs-md mb-1">{{ $customer->first_name }} {{ $customer->last_name }}</p>
+                                        <p class="text-muted mb-1">{{ $customer->email }}</p>
+                                        <p class="text-muted mb-0">+{{ $customer->phone }}</p>
+                                        <p class="text-muted mb-0">{{ $customer->state->name }} {{ $customer->city->name }}</p>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div><!--end col-->
+                        <div class="col-xxl-6 col-lg-6 col-md-6 col-12">
+                            <div class="card border-bottom border-2 border-secondary">
+                                <div class="card-body d-flex gap-3">
+                                    <div class="flex-grow-1">
+                                        <h6 class="card-title mb-3">Post By:</h6>
+                                        <p class="fw-medium fs-md mb-1">{{ $agent->first_name }} {{ $agent->last_name }}</p>
+                                        <p class="text-muted mb-1">{{ $agent->email }}</p>
+                                        <p class="text-muted mb-0">+{{ $agent->phone }}</p>
+                                        <p class="text-muted mb-0">{{ $agent->state->name }} {{ $agent->city->name }}</p>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div><!--end col-->
+
+                        <div class="col-xxl-12 col-12">
+                            <div class="card border-bottom border-2 border-primary">
+                                <div class="card-body d-flex gap-3">
+                                    <div class="flex-grow-1">
+                                        <h6 class="card-title mb-3">Rental Detail:</h6>
+                                        <p class="fw-medium fs-md mb-0">
+                                            <b>Payment Status:</b>
+                                            @php
+                                                $res =  App\Helpers\AppHelper::property_payment_status($rdetail->rental_payment_status);
+                                                $bgColor = $res[0];
+                                                $color = $res[1];
+                                                $text = $res[2];
+                                            @endphp
+                                            <span class="badge {{ $bgColor }} {{ $color }} status">{{ $text  }}</span>
+
+                                            @php
+                                                $res =  App\Helpers\AppHelper::property_retal_status($rdetail->rental_status);
+                                                $bgColor = $res[0];
+                                                $color = $res[1];
+                                                $text = $res[2];
+                                            @endphp
+                                            <b>Status:</b>
+                                            <span class="badge {{ $bgColor }} {{ $color }} status">{{ $text  }}</span>
+                                        </p>
+
+                                        <p class="fw-medium fs-md mb-0">
+                                            <b>Rental
+                                                Amount: </b> {{ App\Helpers\AppHelper::appCurrencySign() }}{{ $rdetail->rental_price }}
+                                        </p>
+                                        <p class="fw-medium fs-md mb-0">
+                                            <b>From:</b> {{ $rdetail->start_date }} <br>
+                                            <b>To:</b> {{ $rdetail->end_date }} <br>
+                                            <b>Days:</b> {{ $daysDifference }}
+                                        </p>
+                                        <p class="fw-medium fs-md mb-0">
+                                            <b>Customer Note :</b>{{ $rdetail->note }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!--end col-->
+
+                    </div>
+                @endif
+            @endif
+            <div class="row">
+                @if(isset($nearplaces))
+                    @foreach($nearplaces as $place)
+                        <div class="col-xl-6 col-md-6 col-12">
+                            <div class="card border-bottom border-2 border-secondary">
+                                <div class="card-body d-flex gap-3">
+                                    <div class="flex-grow-1">
+                                        <h6 class="card-title mb-3">Near Places </h6>
+                                        <p class="fw-medium fs-md mb-1"><b>Name:</b>{{ $place->name }}</p>
+                                        <p class="text-muted mb-1"><b>Type:</b>{{ $place->type }}</p>
+                                        <p class="text-muted mb-0"><b>Distance
+                                                (Km):</b>{{ $place->distance }}</p>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                @endif
+            </div>
             <div class="row">
                 <div class="col-xl-12 col-lg-12">
                     <div class="card">
@@ -40,11 +221,12 @@
                                                 For {{ $property->property_category }}
                                             </div>
 
-                                            <div class="ribbon {{ $property->is_featured ? 'ribbon-success' : 'ribbon-danger' }} fw-medium rounded-end mt-5 mb-2">
+                                            <div
+                                                class="ribbon {{ $property->is_featured ? 'ribbon-success' : 'ribbon-danger' }} fw-medium rounded-end mt-5 mb-2">
                                                 {{ $property->is_featured ? 'Featured' : 'Not Featured' }}
                                             </div>
 
-                                        @if($pimages->isNotEmpty())
+                                            @if($pimages->isNotEmpty())
                                                 <img src="{{ asset($pimages->first()->image_path) }}"
                                                      class="img-fluid w-100" style="height: 350px;">
                                             @endif
@@ -57,12 +239,12 @@
                             <div class="pt-1">
                                 <h6 class="card-title">{{ $property->title }}
                                     (<span class="badge text-bg-info align-middle ms-1">
-                                        {{ $property->propertyType->name }}
-                                    </span>)
+                            {{ $property->propertyType->name }}
+                        </span>)
                                     @if(!is_null($property->rental_duration))
-                                    (<span class="badge text-bg-warning align-middle ms-1">
-                                        {{ $property->rental_duration}}
-                                    </span>)
+                                        (<span class="badge text-bg-warning align-middle ms-1">
+                            {{ $property->rental_duration}}
+                        </span>)
                                     @endif
                                 </h6>
                                 <div class="text-muted hstack gap-2 flex-wrap list-unstyled mb-3">
@@ -121,7 +303,6 @@
                                             </div>
                                         </div>
                                     </div>
-
                                     <div class="col-xl-3 col-sm-6">
                                         <div class="p-3 border border-dashed rounded">
                                             <div class="d-flex align-items-center gap-2">
@@ -135,7 +316,6 @@
                                             </div>
                                         </div>
                                     </div>
-
                                     <div class="col-xl-3 col-sm-6">
                                         <div class="p-3 border border-dashed rounded">
                                             <div class="d-flex align-items-center gap-2">
@@ -149,7 +329,6 @@
                                             </div>
                                         </div>
                                     </div>
-
                                     <div class="col-xl-3 col-sm-6">
                                         <div class="p-3 border border-dashed rounded">
                                             <div class="d-flex align-items-center gap-2">
@@ -163,7 +342,6 @@
                                             </div>
                                         </div>
                                     </div>
-
                                     <div class="col-xl-6 col-sm-6">
                                         <div class="p-3 border border-dashed rounded">
                                             <div class="d-flex align-items-center gap-2">
@@ -178,8 +356,6 @@
                                             </div>
                                         </div>
                                     </div>
-
-
                                 </div>
                             </div>
 
@@ -195,7 +371,8 @@
                                 </ul>
                             </div>
 
-                            <div class="swiper-wrapper" id="swiper-wrapper-daa4ad5163e03110e" aria-live="polite">
+                            <div class="swiper-wrapper mb-5" id="swiper-wrapper-daa4ad5163e03110e"
+                                 aria-live="polite">
                                 <div class="swiper-slide swiper-slide-active" role="group" aria-label="1 / 3"
                                      data-swiper-slide-index="0" style="width: 100%; margin-right: 20px;">
                                     <h6 class="card-title mb-3">Property Images</h6>
@@ -224,15 +401,17 @@
 
                                 </div>
                             </div>
-                        </div><!--end col-->
-                    </div><!--end row-->
+                        </div>
+                        <!--end col-->
 
+
+                    </div><!--end row-->
                 </div>
                 <!-- container-fluid -->
             </div>
+
         </div>
     </div>
-
 @stop
 @section('script')
 

@@ -20,8 +20,8 @@ class PropertyPurchase extends Model
         'purchased_time',
         'payment_method',
         'payment_stripe_id',
-        'status',
-        'payment_status',
+        'purchased_status',
+        'purchased_payment_status',
     ];
 
     public function customer()

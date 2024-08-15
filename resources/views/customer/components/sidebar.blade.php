@@ -2,20 +2,20 @@
 <div class="app-menu navbar-menu">
     <!-- LOGO -->
     <div class="navbar-brand-box">
-        <a href="{{ url('customer/dashboard')}}" class="logo logo-dark">
+        <a href="{{ url('customer/dashboard') }}" class="logo logo-dark">
             <span class="logo-sm">
-                <img src="{{ asset('admin/assets/images/logo-sm.png') }}" alt="" height="22">
+                <img src="{{ App\Helpers\AppHelper::dashboard_logo() }}" alt="" height="22">
             </span>
             <span class="logo-lg">
-                <img src="a{{ asset('admin/assets/images/logo-dark.png') }}" alt="" height="22">
+                <img src="{{ App\Helpers\AppHelper::dashboard_logo() }}" alt="" height="22">
             </span>
         </a>
-        <a href="{{ url('customer/dashboard')}}" class="logo logo-light">
+        <a href="{{ url('customer/dashboard') }}" class="logo logo-light">
             <span class="logo-sm">
-                <img src="{{ asset('admin/assets/images/logo-sm.png') }}" alt="" height="22">
+                <img src="{{ App\Helpers\AppHelper::dashboard_logo() }}" alt="" height="22">
             </span>
             <span class="logo-lg">
-                <img src="{{ asset('admin/assets/images/logo-light.png') }}" alt="" height="22">
+                <img src="{{ App\Helpers\AppHelper::dashboard_logo() }}" alt="" height="22">
             </span>
         </a>
         <button type="button" class="btn btn-sm p-0 fs-3xl header-item float-end btn-vertical-sm-hover" id="vertical-hover">
@@ -29,8 +29,16 @@
             <div id="two-column-menu">
             </div>
             <ul class="navbar-nav" id="navbar-nav">
+
                 <li class="nav-item">
-                    <a href="{{ url('customer/dashboard') }}" class="nav-link menu-link">
+                    <a href="{{ url('/') }}" class="nav-link menu-link active">
+                        <i class="ph-gauge"></i>
+                        <span data-key="t-calendar">Go To Site</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="{{ url('customer/dashboard') }}" class="nav-link menu-link @yield('dashboard')">
                         <i class="ph-gauge"></i>
                         <span data-key="t-calendar">Dashboard</span>
                     </a>
@@ -48,10 +56,10 @@
                                 <a href="{{ route('customer.fav-properties') }}" class="nav-link @yield('properties_list')">Favourite Properties</a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('customer.sale.properties') }}" class="nav-link @yield('properties_sale_list')">Sale Properties</a>
+                                <a href="{{ route('customer.purchased.properties') }}" class="nav-link @yield('properties_sale_list')">Purchased Properties</a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('customer.rent.properties') }}" class="nav-link @yield('properties_rent_list')">Rent Properties</a>
+                                <a href="{{ route('customer.rent.properties') }}" class="nav-link @yield('properties_rent_list')">Rental Properties</a>
                             </li>
                         </ul>
                     </div>

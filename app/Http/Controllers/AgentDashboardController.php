@@ -5,7 +5,11 @@ namespace App\Http\Controllers;
 use App\Helpers\AppHelper;
 use App\Models\ActivityReport;
 use App\Models\City;
+use App\Models\FavoriteProperty;
 use App\Models\Property;
+use App\Models\PropertyPurchase;
+use App\Models\PropertyRental;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
 use Illuminate\Support\Facades\Hash;
@@ -16,8 +20,76 @@ class AgentDashboardController extends Controller
     public function index()
     {
         $data = array();
+
+        $userId = Sentinel::getUser()->id;
         $data['title'] = 'Agent Dashboard';
-        $data['properties'] = Property::where('agent_id', Sentinel::getUser()->id)->latest()->limit(8)->get();
+
+        $data['propertiesCount'] = Property::where('agent_id', $userId)->count();
+
+        $data['rentedPropertiesCount'] = Property::join('property_rentals', 'properties.id', '=', 'property_rentals.property_id')
+            ->where('properties.agent_id', $userId)
+            ->count();
+
+        $data['purchasedPropertiesCount'] = Property::join('property_purchases', 'properties.id', '=', 'property_purchases.property_id')
+            ->where('properties.agent_id', $userId)
+            ->count();
+
+        $data['rentalSum'] = Property::join('property_rentals', 'properties.id', '=', 'property_rentals.property_id')
+            ->where('properties.agent_id', $userId)
+            ->where('property_rentals.rental_payment_status', 5)
+            ->sum('property_rentals.rental_price');
+
+        $data['purchaseSum'] = Property::join('property_purchases', 'properties.id', '=', 'property_purchases.property_id')
+            ->where('properties.agent_id', $userId)
+            ->where('property_purchases.purchased_payment_status', 1)
+            ->sum('property_purchases.purchased_price');
+
+        $data['favoritePropertiesCount'] = Property::join('favourite_properties', 'properties.id', '=', 'favourite_properties.property_id')
+            ->where('properties.agent_id', $userId)
+            ->count();
+
+        $now = Carbon::now();
+
+        // Weekly sums
+        $data['rentalSumWeek'] = Property::join('property_rentals', 'properties.id', '=', 'property_rentals.property_id')
+            ->where('properties.agent_id', $userId)
+            ->where('property_rentals.rental_payment_status', 5)
+            ->whereBetween('property_rentals.created_at', [$now->startOfWeek(), $now->endOfWeek()])
+            ->sum('property_rentals.rental_price');
+
+        $data['purchaseSumWeek'] = Property::join('property_purchases', 'properties.id', '=', 'property_purchases.property_id')
+            ->where('properties.agent_id', $userId)
+            ->where('property_purchases.purchased_payment_status', 1)
+            ->whereBetween('property_purchases.created_at', [$now->startOfWeek(), $now->endOfWeek()])
+            ->sum('property_purchases.purchased_price');
+
+        // Monthly sums
+        $data['rentalSumMonth'] = Property::join('property_rentals', 'properties.id', '=', 'property_rentals.property_id')
+            ->where('properties.agent_id', $userId)
+            ->where('property_rentals.rental_payment_status', 5)
+            ->whereBetween('property_rentals.created_at', [$now->startOfMonth(), $now->endOfMonth()])
+            ->sum('property_rentals.rental_price');
+
+        $data['purchaseSumMonth'] = Property::join('property_purchases', 'properties.id', '=', 'property_purchases.property_id')
+            ->where('properties.agent_id', $userId)
+            ->where('property_purchases.purchased_payment_status', 1)
+            ->whereBetween('property_purchases.created_at', [$now->startOfMonth(), $now->endOfMonth()])
+            ->sum('property_purchases.purchased_price');
+
+        // Yearly sums
+        $data['rentalSumYear'] = Property::join('property_rentals', 'properties.id', '=', 'property_rentals.property_id')
+            ->where('properties.agent_id', $userId)
+            ->where('property_rentals.rental_payment_status', 5)
+            ->whereBetween('property_rentals.created_at', [$now->startOfYear(), $now->endOfYear()])
+            ->sum('property_rentals.rental_price');
+
+        $data['purchaseSumYear'] = Property::join('property_purchases', 'properties.id', '=', 'property_purchases.property_id')
+            ->where('properties.agent_id', $userId)
+            ->where('property_purchases.purchased_payment_status', 1)
+            ->whereBetween('property_purchases.created_at', [$now->startOfYear(), $now->endOfYear()])
+            ->sum('property_purchases.purchased_price');
+
+
         return view('agent.dashboard.index', $data);
     }
 

@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use App\Helpers\AppHelper;
 use App\Models\ActivityReport;
 use App\Models\City;
+use App\Models\Message;
 use App\Models\Property;
+use App\Models\PropertyPurchase;
+use App\Models\PropertyRental;
 use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -15,11 +18,22 @@ class CustomerDashboardController extends Controller
 {
     public function index()
     {
+        $userId = Sentinel::getUser()->id;
         $data = array();
         $data['title'] = 'Customer Dashboard';
-        $data['properties'] = AppHelper::CustometFavoriteproperties(Sentinel::getUser()->id);
+        $data['favoriteProperties'] = Property::join('favourite_properties', 'properties.id', '=', 'favourite_properties.property_id')
+            ->where('favourite_properties.user_id', $userId)
+            ->select('properties.*')
+            ->latest()
+            ->limit(5)
+            ->get();
+        $data['favoritePropertiesCount'] = $data['favoriteProperties']->count();
+        $data['rentedPropertiesCount'] = PropertyRental::where('customer_id', $userId)->count();
+        $data['purchasedPropertiesCount'] = PropertyPurchase::where('customer_id', $userId)->count();
+        $data['messages'] = Message::where('customer_id', $userId)->where('sender_type','agent')->latest()->limit(5)->get();
         return view('customer.dashboard.index', $data);
     }
+
 
     public function profile()
     {

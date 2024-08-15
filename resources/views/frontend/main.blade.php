@@ -6,8 +6,7 @@
     <title>{{ App\Helpers\AppHelper::site_name() }} - @yield('title')</title>
     <link href="{{ asset('assets/css/styles.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/css/colors.css') }}" rel="stylesheet">
-    <link href="{{ asset('admin/assets/css/select2.css') }}" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css">
+    <link rel="shortcut icon" href="{{ App\Helpers\AppHelper::favicon() }} }}">
     <style>
         h4.modal-header-title {
             font-size: 2em !important;
@@ -30,7 +29,7 @@
             bottom: 20px;
             display: inline-block;
             padding: 7px 15px;
-            background: #00ba74;
+            background: #EC3323;
             border-radius: 4px;
             color: #fff;
         }
@@ -52,50 +51,51 @@
         /*.select2-container {*/
         /*    width: 100% !important;*/
         /*}*/
-        .select2-dropdown {
-            z-index: 1050 !important;
-            max-height: 200px;
-            overflow-y: auto;
-        }
-        .select2-selection__rendered {
-            line-height: 1.5 !important;
-        }
-        .select2-selection__arrow {
-            height: 34px !important;
-        }
-        .select2-container .select2-selection--single .select2-selection__rendered {
-            display: block;
-            width: 100%;
-            text-align: left;
-            margin-top: 10px;
-            padding: .525rem .9rem;
-            font-size: var(--tb-font-base);
-            font-weight: var(--tb-font-weight-normal);
-            line-height: 1.5;
-            color: var(--tb-body-color);
-            background-color: #fff;
-            background-clip: padding-box;
-            border: var(--tb-border-width) solid var(--tb-border-color-translucent);
-            border-radius: .25rem;
-        }
+        /*.select2-dropdown {*/
+        /*    z-index: 1050 !important;*/
+        /*    max-height: 200px;*/
+        /*    overflow-y: auto;*/
+        /*}*/
+        /*.select2-selection__rendered {*/
+        /*    line-height: 1.5 !important;*/
+        /*}*/
+        /*.select2-selection__arrow {*/
+        /*    height: 34px !important;*/
+        /*}*/
+        /*.select2-container .select2-selection--single .select2-selection__rendered {*/
+        /*    display: block;*/
+        /*    width: 100%;*/
+        /*    text-align: left;*/
+        /*    margin-top: 10px;*/
+        /*    padding: .525rem .9rem;*/
+        /*    font-size: var(--tb-font-base);*/
+        /*    font-weight: var(--tb-font-weight-normal);*/
+        /*    line-height: 1.5;*/
+        /*    color: var(--tb-body-color);*/
+        /*    background-color: #fff;*/
+        /*    background-clip: padding-box;*/
+        /*    border: var(--tb-border-width) solid var(--tb-border-color-translucent);*/
+        /*    border-radius: .25rem;*/
+        /*}*/
 
-        .select2-search--dropdown .select2-search__field {
-            display: block;
-            width: 100%;
-            padding: .525rem .9rem !important;
-            font-size: var(--tb-font-base);
-            font-weight: var(--tb-font-weight-normal);
-            line-height: 1.5;
-            color: var(--tb-body-color);
-            background-color: #ededed;
-            background-clip: padding-box;
-            border: var(--tb-border-width) solid var(--tb-border-color-translucent);
-            border-radius: .25rem;
-            box-sizing: border-box;
+        /*.select2-search--dropdown .select2-search__field {*/
+        /*    display: block;*/
+        /*    width: 100%;*/
+        /*    padding: .525rem .9rem !important;*/
+        /*    font-size: var(--tb-font-base);*/
+        /*    font-weight: var(--tb-font-weight-normal);*/
+        /*    line-height: 1.5;*/
+        /*    color: var(--tb-body-color);*/
+        /*    background-color: #ededed;*/
+        /*    background-clip: padding-box;*/
+        /*    border: var(--tb-border-width) solid var(--tb-border-color-translucent);*/
+        /*    border-radius: .25rem;*/
+        /*    box-sizing: border-box;*/
 
-        }
+        /*}*/
         .city-img-fluid {
             max-width: 100%;
+            width: 380px !important;
             height: 160px !important;
             max-height: 250px !important;
         }

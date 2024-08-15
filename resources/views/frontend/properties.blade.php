@@ -44,9 +44,9 @@
                                     <div class="col-lg-3 col-sm-6">
                                         <div class="form-group">
                                             <div class="input-with-icon">
-                                                <select name="bedrooms" class="form-control">
+                                                <select name="bedrooms" id="bedrooms" class="form-control select2-hidden-accessible" data-select2-id="bedrooms" tabindex="-1" aria-hidden="true">
                                                     <option value="">Bedrooms</option>
-                                                    @for ($i = 1; $i <= 50; $i++)
+                                                    @for ($i = 1; $i <= 20; $i++)
                                                         <option
                                                             value="{{ $i }}" {{ request('bedrooms') == $i ? 'selected' : '' }}>{{ $i }}</option>
                                                     @endfor
@@ -54,15 +54,18 @@
                                             </div>
                                         </div>
                                     </div>
+
+
                                     <div class="col-lg-3 col-sm-6">
                                         <!-- Bathrooms -->
                                         <div class="form-group">
                                             <div class="input-with-icon">
-                                                <select name="bathrooms" class="form-control">
+                                                <select name="bathrooms" id="bathrooms" class="form-control select2-hidden-accessible" data-select2-id="bathrooms" tabindex="-1" aria-hidden="true">
                                                     <option value="">Bathrooms</option>
-                                                    @for ($i = 1; $i <= 50; $i++)
+                                                    @for ($i = 1; $i <= 20; $i++)
                                                         <option
-                                                            value="{{ $i }}" {{ request('bathrooms') == $i ? 'selected' : '' }}>{{ $i }}</option>
+                                                            value="{{ $i }}" {{ request('bathrooms') == $i ? 'selected' : '' }}>{{ $i }}
+                                                        </option>
                                                     @endfor
                                                 </select>
                                             </div>
@@ -71,7 +74,7 @@
                                     <div class="col-lg-3 col-sm-6">
                                         <div class="form-group">
                                             <div class="input-with-icon">
-                                                <select name="property_category" class="form-control">
+                                                <select name="property_category"  id="ptypes" class="form-control select2-hidden-accessible" data-select2-id="ptypes" tabindex="-1" aria-hidden="true">
                                                     <option value="">Type</option>
                                                     <option value="Rent" {{ request('property_category') == 'Rent' ? 'selected' : '' }}>For Rent</option>
                                                     <option value="Sale" {{ request('property_category') == 'Sale' ? 'selected' : '' }}>For Sale</option>
@@ -82,7 +85,7 @@
                                     <div class="col-lg-3 col-sm-6">
                                         <div class="form-group">
                                             <div class="input-with-icon">
-                                                <select name="city_id" class="form-control">
+                                                <select name="city_id"  id="cities" class="form-control select2-hidden-accessible" data-select2-id="cities" tabindex="-1" aria-hidden="true">
                                                     <option value="">--City--</option>
                                                     @foreach($cities->unique('name') as $city)
                                                         <option value="{{$city->id}}" {{ request('city_id') == $city->id ? 'selected' : '' }}>
@@ -95,15 +98,16 @@
                                         </div>
                                     </div>
 
+
                                     <div class="col-lg-3 col-sm-6">
                                         <div class="form-group">
-                                            <a href="{{ route('frontend.properties') }}" class="btn reset-btn-outline p-3">Search Reset</a>
+                                            <button type="submit" class="btn search-btn-outline p-3">Filter Now</button>
                                         </div>
                                     </div>
 
                                     <div class="col-lg-3 col-sm-6">
                                         <div class="form-group">
-                                            <button type="submit" class="btn search-btn-outline p-3">Filter Now</button>
+                                            <a href="{{ route('frontend.properties') }}" class="btn reset-btn-outline p-3">Search Reset</a>
                                         </div>
                                     </div>
                                 </div>
@@ -164,13 +168,15 @@
 
                                             <div class="listing-footer-wrapper">
                                                 <div class="listing-price">
+                                                        <h4 class="list-pr">
+                                                            {{ $property->country->currency_sign }}{{ number_format($property->price) }}
+                                                            @if($property->property_category == 'Rent')
+                                                                @if(!is_null($property->rental_duration) && $property->rental_duration)
+                                                                    <i>/ {{ $property->rental_duration}}</i>
+                                                                @endif
+                                                            @endif
+                                                        </h4>
 
-                                                    <h4 class="list-pr">
-                                                        {{ $property->country->currency_sign }}{{ number_format($property->price) }}
-                                                        @if(!is_null($property->rental_duration) && $property->rental_duration)
-                                                            <i>/ {{ $property->rental_duration}}</i>
-                                                        @endif
-                                                    </h4>
                                                 </div>
                                                 <div class="listing-detail-btn">
                                                     <a href="{{ route('frontend.property-detail',['id' => $property->id,'title' => $property->title]) }}"

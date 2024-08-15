@@ -14,7 +14,6 @@ class Property extends Model
         'title',
         'property_type_id',
         'agent_id',
-        'agency_id',
         'property_category',
         'property_features',
         'size_sqft',
@@ -94,5 +93,15 @@ class Property extends Model
     public function favoriteByUsers()
     {
         return $this->hasMany(FavoriteProperty::class);
+    }
+
+    public function favourite_properties()
+    {
+        return $this->hasMany(FavoriteProperty::class, 'property_id');
+    }
+
+    public function reviews()
+    {
+        return $this->hasMany(PropertyCustomerReviews::class);
     }
 }
